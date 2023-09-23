@@ -1,0 +1,6 @@
+[submodule "taller.front"]
+	path = taller.front
+	url = https://github.com/ValentinCabrera/taller.front
+[submodule "taller.back"]
+	path = taller.back
+	url = https://github.com/ValentinCabrera/taller.back

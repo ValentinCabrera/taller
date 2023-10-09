@@ -26,6 +26,10 @@ public class Vehiculo {
     @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
 
+    @ManyToOne
+    @JoinColumn(name = "año")
+    private int año;
+
     @Column(name = "estado")
     private boolean estado = true;
 
@@ -51,5 +55,9 @@ public class Vehiculo {
 
     public boolean getEstado() {
         return estado;
+    }
+
+    public int getAño() {
+        return año;
     }
 }

@@ -1,0 +1,112 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
+  border-radius: 60px;
+
+}
+
+body {
+  width: 100vw; /* 100% del ancho del viewport */
+  height: 100vh; /* 100% de la altura del viewport */
+  margin: 0; /* Elimina los márgenes predeterminados del body */
+  padding: 0; /* Elimina el padding predeterminado del body */
+  background-color: black;
+}
+
+.app > div {
+  background-color: skyblue;
+  width: 200px;
+  height: 50px;
+  font-size:xx-large;
+  font-style: oblique;
+  font-family: sans-serif; 
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.app > div:hover {
+  background-color: #0056b3;
+}
+
+.conteiner {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 700px;
+  min-height: 350px;
+  margin-left: 200px;
+}
+
+.conteiner > div {
+  background-color: skyblue;
+  width: 300px;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: x-large;
+  font-style: oblique;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+
+.listado {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.listado > button {
+  height: 30px;
+}
+
+.button {
+  height: 30px;
+  background-color: skyblue;
+  width: 150px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 100px;
+  margin-left: 200px;
+  border-radius: 60px;
+}
+
+.button:hover {
+  background-color:#0056b3;
+}
+
+.entidad {
+  background-color:#0056b3;
+}
+
+.entidad:hover {
+  background-color:#0056b3;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.form > select {
+  height: 30px;
+}
+
+.form > input {
+  height: 30px;
+}
+
+.form > button {
+  height: 30px;
+}

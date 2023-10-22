@@ -20,7 +20,7 @@ public class ModeloService {
     }
 
     public List<Modelo> getAll() {
-        List<Modelo> modelos = modeloRepository.findAll();
+        List<Modelo> modelos = modeloRepository.findAllActive();
         return modelos;
     }
 

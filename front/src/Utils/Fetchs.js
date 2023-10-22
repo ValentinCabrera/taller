@@ -13,13 +13,18 @@ async function postFetch(url, body, token) {
 
     const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(body) });
 
+    if (!response.ok) {
+        throw new Error(response.status);
+    }
+
+    const responseText = await response.text();
+
     try {
-        const data = await response.json();
-        return data;
+        return JSON.parse(responseText);
     } catch (error) {
-        return {};
-    };
-};
+        throw new Error("Error al analizar la respuesta JSON");
+    }
+}
 
 export const host = "http://localhost:8080/";
 
@@ -31,6 +36,10 @@ export async function getClientes() {
     return getFetch(`${host}api/cliente/listar`)
 }
 
+export async function getClientesDeleted() {
+    return getFetch(`${host}api/cliente/listar/deleted`);
+}
+
 export async function postAlterCliente(data) {
     return postFetch(`${host}api/cliente/alter`, data);
 }
@@ -39,13 +48,16 @@ export async function postDeleteCliente(clienteId) {
     return postFetch(`${host}api/cliente/delete`, { "id": clienteId });
 }
 
-
 export async function postNewTecnico(nombre, apellido, telefono) {
     return postFetch(`${host}api/tecnico/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono });
 };
 
 export async function getTecnicos() {
     return getFetch(`${host}api/tecnico/listar`)
+}
+
+export async function getTecnicosDeleted() {
+    return getFetch(`${host}api/tecnico/listar/deleted`);
 }
 
 export async function postAlterTecnico(data) {
@@ -65,6 +77,10 @@ export async function getMarcas() {
     return getFetch(`${host}api/marca/listar`)
 }
 
+export async function getMarcasDeleted() {
+    return getFetch(`${host}api/marca/listar/deleted`);
+}
+
 export async function postDeleteMarca(marcaNombre) {
     return postFetch(`${host}api/marca/delete`, { "nombre": marcaNombre });
 }
@@ -78,6 +94,10 @@ export async function getModelos() {
     return getFetch(`${host}api/modelo/listar`)
 }
 
+export async function getModelosDeleted() {
+    return getFetch(`${host}api/modelo/listar/deleted`);
+}
+
 export async function postAlterModelo(data) {
     return postFetch(`${host}api/modelo/alter`, data);
 }
@@ -86,12 +106,20 @@ export async function postDeleteModelo(modeloId) {
     return postFetch(`${host}api/modelo/delete`, { "id": modeloId });
 }
 
-export async function postNewVehiculo(patente, modelo, cliente, tecnico) {
-    return postFetch(`${host}api/vehiculo/new`, { "patente": patente, "modelo": { "id": modelo }, "cliente": { "id": cliente }, "tecnico": { "id": tecnico } });
+export async function postNewVehiculo(patente, modelo, cliente) {
+    return postFetch(`${host}api/vehiculo/new`, { patente: patente, modelo: { "id": modelo }, cliente: { "id": cliente } });
 };
 
 export async function getVehiculos() {
-    return getFetch(`${host}api/vehiculo/listar`)
+    return getFetch(`${host}api/vehiculo/listar`);
+}
+
+export async function postRecoverVehiculo(patente) {
+    return postFetch(`${host}api/vehiculo/recover`, { patente: patente });
+}
+
+export async function getVehiculosDeleted() {
+    return getFetch(`${host}api/vehiculo/listar/deleted`);
 }
 
 export async function postDeleteVehiculo(patente) {

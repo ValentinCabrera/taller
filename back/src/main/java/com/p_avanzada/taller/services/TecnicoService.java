@@ -19,7 +19,7 @@ public class TecnicoService {
     }
 
     public List<Tecnico> getAll() {
-        List<Tecnico> tecnicos = tecnicoRepository.findAll();
+        List<Tecnico> tecnicos = tecnicoRepository.findAllActive();
         return tecnicos;
     }
 

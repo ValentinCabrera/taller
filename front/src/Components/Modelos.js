@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMarcas, getModelos, postAlterModelo, postDeleteModelo, postNewModelo } from "../Utils/Fetchs";
+import { getMarcas, getModelos, postDeleteModelo, postNewModelo } from "../Utils/Fetchs";
+import NewModelo from "./NewModelo";
 
 function Modelos() {
     const [data, setData] = useState();
@@ -8,31 +9,19 @@ function Modelos() {
 
     useEffect(() => {
         updateData();
-    }, [data]);
+    }, []);
 
     function updateData() {
         getModelos()
             .then(response => {
-                setData(response.filter(modelo => modelo.estado == true));
+                setData(response.filter(modelo => modelo.estado === true));
             });
 
         getMarcas()
             .then(response => {
-                setMarcas(response.filter(marca => marca.estado == true))
+                setMarcas(response.filter(marca => marca.estado === true))
             })
     }
-
-    function newModelo() {
-        let nombre = document.getElementById("nombre");
-        let marca_nombre = document.getElementById("marca_nombre");
-
-        if (nombre.value && marca_nombre.value) {
-
-            postNewModelo(nombre.value, marca_nombre.value);
-            nombre.value = marca_nombre.value = "";
-        } else
-            alert("Por favor, rellena todos los campos");
-    };
 
     function deleteModelo() {
         postDeleteModelo(currentModelo.id)
@@ -65,16 +54,7 @@ function Modelos() {
                         <button onClick={deleteModelo}>Eliminar modelo</button>
                     </div>
                     :
-                    <div className="form">
-                        <h2>Crear modelo</h2>
-                        <input id="nombre" type="text" placeholder="Nombre" />
-                        <select id="marca_nombre">
-                            {marcas && marcas.map(marca => (
-                                <option values={marca.nombre} key={marca.nombre}>{marca.nombre}</option>
-                            ))}
-                        </select>
-                        <button onClick={newModelo}>Guardar modelo</button>
-                    </div>
+                    <NewModelo />
                 }
             </div>
         </div >

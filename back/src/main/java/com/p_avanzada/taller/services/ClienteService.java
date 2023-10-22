@@ -19,7 +19,7 @@ public class ClienteService {
     }
 
     public List<Cliente> getAll() {
-        List<Cliente> clientes = clienteRepository.findAll();
+        List<Cliente> clientes = clienteRepository.findAllActive();
         return clientes;
     }
 

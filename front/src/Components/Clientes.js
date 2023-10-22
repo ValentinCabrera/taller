@@ -12,7 +12,7 @@ function Clientes() {
     function updateData() {
         getClientes()
             .then(response => {
-                setData(response.filter(cliente => cliente.estado == true));
+                setData(response.filter(cliente => cliente.estado === true));
             });
     }
 

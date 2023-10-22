@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMarcas, postNewMarca, postDeleteMarca } from "../Utils/Fetchs";
+import NewMarca from "./NewMarca";
 
 function Marcas() {
     const [data, setData] = useState();
@@ -12,21 +13,9 @@ function Marcas() {
     function updateData() {
         getMarcas()
             .then(response => {
-                setData(response.filter(marca => marca.estado == true));
+                setData(response.filter(marca => marca.estado === true));
             });
     }
-
-    function newMarca() {
-        let nombre = document.getElementById("nombre");
-
-        if (nombre.value) {
-
-            postNewMarca(nombre.value);
-            nombre.value = "";
-        }
-        else
-            alert("Por favor, rellena todos los campos");
-    };
 
     function deleteMarca() {
         postDeleteMarca(currentMarca.nombre)
@@ -56,11 +45,7 @@ function Marcas() {
                         <button onClick={deleteMarca}>Eliminar marca</button>
                     </div>
                     :
-                    <div className="form">
-                        <h2>Crear Marca</h2>
-                        <input id="nombre" type="text" placeholder="Nombre" />
-                        <button onClick={newMarca}>Guardar marca</button>
-                    </div>
+                    <NewMarca />
                 }
             </div>
         </div >

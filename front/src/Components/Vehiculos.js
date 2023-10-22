@@ -1,112 +1,80 @@
 import { useEffect, useState } from "react";
-import { getModelos, getClientes, getTecnicos, getVehiculos, postAlterVehiculo, postDeleteVehiculo, postNewVehiculo } from "../Utils/Fetchs";
+import { getVehiculos, getVehiculosDeleted, postRecoverVehiculo } from "../Utils/Fetchs";
+import Listar from "./Listar";
+import DetailVehiculo from "./DetailVehiculo";
 
-function Vehiculos() {
-    const [data, setData] = useState();
+export default function Vehiculos() {
+    const [activeData, setActiveData] = useState();
+    const [deletedData, setDeletedData] = useState();
+    const [frame, setFrame] = useState();
     const [currentVehiculo, setCurrentVehiculo] = useState();
-    const [modelos, setModelos] = useState();
-    const [clientes, setClientes] = useState();
-    const [tecnicos, setTecnicos] = useState();
+    const [forceRender, setForceRender] = useState({});
 
     useEffect(() => {
         updateData();
-    }, [data]);
+    }, [forceRender]);
 
     function updateData() {
         getVehiculos()
-            .then(response => {
-                setData(response.filter(vehiculo => vehiculo.estado == true));
-            });
+            .then(response => setActiveData(response));
 
-        getModelos()
-            .then(response => {
-                setModelos(response.filter(modelo => modelo.estado == true))
-            })
-
-        getTecnicos()
-            .then(response => {
-                setTecnicos(response.filter(tecnico => tecnico.estado == true))
-            })
-
-        getClientes()
-            .then(response => {
-                setClientes(response.filter(cliente => cliente.estado == true))
-            })
+        getVehiculosDeleted()
+            .then(response => setDeletedData(response));
     }
 
-    function newVehiculo() {
-        let patente = document.getElementById("patente");
-        let modelo = document.getElementById("modelo");
-        let cliente = document.getElementById("cliente");
-        let tecnico = document.getElementById("tecnico");
-
-        if (patente.value && modelo.value && cliente.value && tecnico.value) {
-
-            postNewVehiculo(patente.value, modelo.value, cliente.value, tecnico.value);
-            patente.value = cliente.value = modelo.value = tecnico.value = "";
-        } else
-            alert("Por favor, rellena todos los campos");
-    };
-
-    function deleteVehiculo() {
-        postDeleteVehiculo(currentVehiculo.patente)
-            .then(response => {
-                setCurrentVehiculo();
-            });
-
+    function handleSetView() {
+        setFrame(!frame);
         setCurrentVehiculo();
-        updateData();
-    };
+    }
+
+    function handleRecoverVehiculo() {
+        postRecoverVehiculo(currentVehiculo.patente)
+            .then(response => {
+                setForceRender({})
+                setCurrentVehiculo()
+                alert(`Vehiculo ${currentVehiculo.patente} recuperado con exito.`)
+            })
+            .catch(error => console.log(error))
+    }
+
+    const listarActivos =
+        <Listar
+            data={activeData}
+            titulo="Vehiculos"
+            itemName="patente"
+            itemKey="patente"
+            buttonView={<button onClick={handleSetView}>Eliminados</button>}
+            buttonCurrent={<button onClick={() => setCurrentVehiculo()}>Crear vehiculo</button>}
+            currentItem={currentVehiculo}
+            setCurrentItem={setCurrentVehiculo} />
+
+    const listarDeleted =
+        <Listar
+            data={deletedData}
+            titulo="Eliminados"
+            itemName="patente"
+            itemKey="patente"
+            buttonView={<button onClick={handleSetView}>Activos</button>}
+            currentItem={currentVehiculo}
+            setCurrentItem={setCurrentVehiculo} />
+
+    function RecoverVehiculo() {
+        if (currentVehiculo) return (
+            <div>
+                <p>Reucuperar vehiculo</p>
+                <p>Patente: {currentVehiculo.patente}</p>
+                <p>Año: {currentVehiculo.año}</p>
+                <p>Modelo: {currentVehiculo.modelo}</p>
+                <p>Cliente: {currentVehiculo.cliente}</p>
+                <button onClick={handleRecoverVehiculo}>Recuperar</button>
+            </div>
+        );
+    }
 
     return (
         <div className="conteiner">
-            <div className="listado">
-                <h1>Vehiculos</h1>
-                {data && data.map(vehiculo => (
-                    <div key={vehiculo.patente} onClick={() => setCurrentVehiculo(vehiculo)} className="entidad">
-                        <p>{vehiculo.patente}</p>
-                    </div>
-                ))}
-
-                {currentVehiculo ? <button onClick={() => setCurrentVehiculo()}>Crear vehiculo</button> : <></>}
-            </div>
-            <div>
-                {currentVehiculo ?
-                    <div className="form">
-                        <h2>Eliminar vehiculo</h2>
-                        <p>Patente: {currentVehiculo.patente}</p>
-                        <p>Modelo: {currentVehiculo.modelo.nombre}</p>
-                        <p>Cliente: {currentVehiculo.cliente.nombre} {currentVehiculo.cliente.apellido}</p>
-                        <p>Tecnico: {currentVehiculo.tecnico.nombre} {currentVehiculo.tecnico.apellido}</p>
-                        <button onClick={deleteVehiculo}>Eliminar vehiculo</button>
-                    </div>
-                    :
-                    <div className="form">
-                        <h2>Crear vehiculo</h2>
-                        <input id="patente" type="text" placeholder="Patente" />
-                        <select id="modelo">
-                            {modelos && modelos.map(modelo => (
-                                <option value={modelo.id} key={modelo.id} selected>{modelo.nombre}</option>
-                            ))}
-                        </select>
-
-                        <select id="cliente">
-                            {clientes && clientes.map(cliente => (
-                                <option value={cliente.id} key={cliente.id} selected>{cliente.nombre} {cliente.apellido}</option>
-                            ))}
-                        </select>
-
-                        <select id="tecnico">
-                            {tecnicos && tecnicos.map(tecnico => (
-                                <option value={tecnico.id} key={tecnico.id} selected>{tecnico.nombre} {tecnico.apellido}</option>
-                            ))}
-                        </select>
-                        <button onClick={newVehiculo}>Guardar vehiculo</button>
-                    </div>
-                }
-            </div>
+            {!frame ? activeData && listarActivos : deletedData && listarDeleted}
+            {!frame ? <DetailVehiculo vehiculo={currentVehiculo} setForceRender={setForceRender} setCurrentVehiculo={setCurrentVehiculo} /> : <RecoverVehiculo />}
         </div >
     )
 };
-
-export default Vehiculos;

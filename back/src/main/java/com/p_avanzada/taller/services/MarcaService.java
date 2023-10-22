@@ -1,6 +1,5 @@
 package com.p_avanzada.taller.services;
 
-import com.p_avanzada.taller.models.Cliente;
 import com.p_avanzada.taller.models.Marca;
 import com.p_avanzada.taller.repositories.MarcaRepository;
 
@@ -20,7 +19,7 @@ public class MarcaService {
     }
 
     public List<Marca> getAll() {
-        List<Marca> marcas = marcaRepository.findAll();
+        List<Marca> marcas = marcaRepository.findAllActive();
         return marcas;
     }
 

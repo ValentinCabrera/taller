@@ -47,12 +47,16 @@ public class VehiculoService {
     }
 
     public void delete(Vehiculo vehiculo) {
-        vehiculo.delete();
-        save(vehiculo);
+        Optional<Vehiculo> vehiculoOptional = getByPatente(vehiculo.getPatente());
+
+        if (vehiculoOptional.isPresent()) {
+            vehiculoOptional.get().delete();
+            save(vehiculoOptional.get());
+        }
     }
 
     public Optional<Vehiculo> newVehiculo(Vehiculo vehiculo) {
-        Optional<Vehiculo> vehiculoOptional = vehiculoRepository.findByPatente(vehiculo.getPatente());
+        Optional<Vehiculo> vehiculoOptional = getByPatente(vehiculo.getPatente());
         if (vehiculoOptional.isPresent())
             return Optional.empty();
         else {

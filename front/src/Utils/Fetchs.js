@@ -106,8 +106,8 @@ export async function postDeleteModelo(modeloId) {
     return postFetch(`${host}api/modelo/delete`, { "id": modeloId });
 }
 
-export async function postNewVehiculo(patente, modelo, cliente) {
-    return postFetch(`${host}api/vehiculo/new`, { patente: patente, modelo: { "id": modelo }, cliente: { "id": cliente } });
+export async function postNewVehiculo(patente, modelo, cliente, año) {
+    return postFetch(`${host}api/vehiculo/new`, { patente: patente, modelo: { "id": modelo }, cliente: { "id": cliente }, año: año });
 };
 
 export async function getVehiculos() {

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import './App.css';
-import Clientes from './Components/Clientes';
-import Marcas from './Components/Marcas';
-import Modelos from './Components/Modelos';
-import Tecnicos from './Components/Tecnicos';
-import Vehiculos from './Components/Vehiculos';
+import Clientes from './Components/Clientes/Clientes';
+import Marcas from './Components/Marcas/Marcas';
+import Modelos from './Components/Modelos/Modelos';
+import Tecnicos from './Components/Tecnicos/Tecnicos';
+import Vehiculos from './Components/Vehiculo/Vehiculos';
 
 function App() {
   const [currentApp, setCurrentApp] = useState(null);

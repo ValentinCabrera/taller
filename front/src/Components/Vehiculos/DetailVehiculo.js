@@ -12,7 +12,7 @@ export default function DetailVehiculo(props) {
 
     useEffect(() => {
         if (focus) {
-            let divPatente = document.getElementById("patente");
+            let divPatente = document.getElementById("patente_vehiculo");
             let inputs = divPatente.querySelectorAll("input");
 
             if (focus >= 0 && inputs) inputs[focus].focus();
@@ -37,7 +37,7 @@ export default function DetailVehiculo(props) {
     }
 
     function handleNewVehiculo() {
-        let año = document.getElementById("año");
+        let año = document.getElementById("año_vehiculo");
 
         if (getPatente().length === 6 && modelo && cliente && año.value) {
             if (2024 >= parseInt(año.value) && parseInt(año.value) >= 1886) {
@@ -48,11 +48,8 @@ export default function DetailVehiculo(props) {
                     })
                     .catch(error => alert(`El vehiculo con la patente ${getPatente()} ya existe.`));
 
-                const inputs = document.querySelectorAll("input");
-                inputs.forEach(input => {
-                    input.value = "";
-                });
                 setPatente(["", "", "", "", "", ""]);
+                año.value = "";
                 setModelo();
                 setCliente();
 
@@ -121,11 +118,11 @@ export default function DetailVehiculo(props) {
         <div>
             <div>
                 <p>Patente:</p>
-                <div id="patente" style={{ display: 'flex' }}>{props.vehiculo ? props.vehiculo.patente : <PatenteRender />}</div>
+                <div id="patente_vehiculo" style={{ display: 'flex' }}>{props.vehiculo ? props.vehiculo.patente : <PatenteRender />}</div>
             </div>
             <div>
                 <p>Año:</p>
-                <input id="año" type="text" onChange={handleAñoChange} placeholder={props.vehiculo ? props.vehiculo.año : "2023"} />
+                <input id="año_vehiculo" type="text" onChange={handleAñoChange} placeholder={props.vehiculo ? props.vehiculo.año : "2023"} />
             </div>
 
             <FrameModelos setModelo={setModelo} modelo={modelo} />

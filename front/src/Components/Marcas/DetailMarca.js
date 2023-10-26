@@ -2,20 +2,17 @@ import { postDeleteMarca, postNewMarca } from "../../Utils/Marca";
 
 export default function DetailMarca(props) {
     function handleNewMarca() {
-        let nombre = document.getElementById("nombre").value;
+        let nombre = document.getElementById("nombre_marca");
 
-        if (nombre) {
-            postNewMarca(nombre)
+        if (nombre.value) {
+            postNewMarca(nombre.value)
                 .then(response => {
-                    alert(`La marca ${nombre} se creo con exito.`);
+                    alert(`La marca ${nombre.value} se creo con exito.`);
                     props.setForceRender({});
                 })
-                .catch(error => alert(`La marca ${nombre} ya esta registrada.`));
+                .catch(error => alert(`La marca ${nombre.value} ya esta registrada.`));
 
-            const inputs = document.querySelectorAll("input");
-            inputs.forEach(input => {
-                input.value = "";
-            });
+            nombre.value = "";
 
 
         } else
@@ -47,7 +44,7 @@ export default function DetailMarca(props) {
         <div>
             <div>
                 <p>Nombre: </p>
-                <input id="nombre" type="text" placeholder={props.marca ? props.marca.nombre : "Jeep"} onChange={handleStringChange}></input>
+                <input id="nombre_marca" type="text" placeholder={props.marca ? props.marca.nombre : "Jeep"} onChange={handleStringChange}></input>
             </div>
 
             {props.marca ?

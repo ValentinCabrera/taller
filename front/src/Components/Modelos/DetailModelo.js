@@ -14,21 +14,17 @@ export default function DetailModelo(props) {
     }, [props.modelo])
 
     function handleNewModelo() {
-        let nombre = document.getElementById("nombre").value;
+        let nombre = document.getElementById("nombre_modelo");
 
-        if (marca && nombre) {
-            postNewModelo(nombre, marca.nombre)
+        if (marca && nombre.value) {
+            postNewModelo(nombre.value, marca.nombre)
                 .then(response => {
-                    alert(`El modelo ${marca.nombre} ${nombre} se creo con exito.`);
+                    alert(`El modelo ${marca.nombre} ${nombre.value} se creo con exito.`);
                     props.setForceRender({});
                 })
                 .catch(error => alert(error));
 
-            const inputs = document.querySelectorAll("input");
-            inputs.forEach(input => {
-                input.value = "";
-            });
-
+            nombre.value = "";
             setMarca();
 
         } else
@@ -62,7 +58,7 @@ export default function DetailModelo(props) {
         <div>
             <div>
                 <p>Nombre:</p>
-                <input id="nombre" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
+                <input id="nombre_modelo" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
             </div>
 
             <FrameMarca setMarca={setMarca} marca={marca} />

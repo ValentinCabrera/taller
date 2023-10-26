@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import Clientes from './Components/Clientes/Clientes';
 import Marcas from './Components/Marcas/Marcas';
-import Modelos from './Components/Modelos/Modelos';
+//import Modelos from './Components/Modelos/Modelos';
 import Tecnicos from './Components/Tecnicos/Tecnicos';
 import Vehiculos from './Components/Vehiculo/Vehiculos';
 
@@ -20,7 +20,7 @@ function App() {
         <div className='app'>
           <div onClick={() => setCurrentApp(<Vehiculos />)}>Vehiculos</div>
           <div onClick={() => setCurrentApp(<Marcas />)}>Marcas</div>
-          <div onClick={() => setCurrentApp(<Modelos />)}>Modelos</div>
+          {/* <div onClick={() => setCurrentApp(<Modelos />)}>Modelos</div> */}
           <div onClick={() => setCurrentApp(<Tecnicos />)}>Tecnicos</div>
           <div onClick={() => setCurrentApp(<Clientes />)}>Clientes</div>
         </div>

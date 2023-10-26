@@ -23,21 +23,37 @@ public class MarcaService {
         return marcas;
     }
 
-    public Optional<Marca> getById(String id) {
-        return marcaRepository.findById(id);
+    public Optional<Marca> getByName(String nombre) {
+        return marcaRepository.findByNombre(nombre);
+    }
+
+
+    public List<Marca> getAllDeleted() {
+        List<Marca> marca = marcaRepository.findAllDeleted();
+        return marca;
     }
 
     public Marca save(Marca marca) {
         return marcaRepository.save(marca);
     }
 
+    public Marca recoverMarca(Marca recoverMarca) {
+        Optional<Marca> optionalMarca = getByName(recoverMarca.getNombre());
+
+        Marca marca = optionalMarca.get();
+        marca.recover();
+        save(marca);
+
+        return marca;
+    }
+
     public void delete(Marca deleteMarca) {
-        Optional<Marca> optionalMarca = getById(deleteMarca.getNombre());
+        Optional<Marca> optionalMarca = getByName(deleteMarca.getNombre());
 
         if (optionalMarca.isPresent()) {
             Marca marca = optionalMarca.get();
             marca.delete();
-            marcaRepository.save(marca);
+            save(marca);
         }
     }
 }

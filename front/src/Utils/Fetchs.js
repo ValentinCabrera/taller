@@ -50,23 +50,6 @@ export async function postDeleteTecnico(clienteId) {
 }
 
 
-export async function postNewMarca(nombre) {
-    return postFetch(`${host}api/marca/new`, { "nombre": nombre });
-};
-
-export async function getMarcas() {
-    return getFetch(`${host}api/marca/listar`)
-}
-
-export async function getMarcasDeleted() {
-    return getFetch(`${host}api/marca/listar/deleted`);
-}
-
-export async function postDeleteMarca(marcaNombre) {
-    return postFetch(`${host}api/marca/delete`, { "nombre": marcaNombre });
-}
-
-
 export async function postNewModelo(nombre, marca_nombre) {
     return postFetch(`${host}api/modelo/new`, { "nombre": nombre, "marca": { "nombre": marca_nombre } });
 };

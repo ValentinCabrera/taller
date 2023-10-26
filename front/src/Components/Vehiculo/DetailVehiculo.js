@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getModelos, getClientes, postNewVehiculo, postDeleteVehiculo, postRecoverVehiculo } from "../../Utils/Fetchs";
 
-import FrameModelos from "../Modelos/FrameModelos";
+//import FrameModelos from "../Modelos/FrameModelos";
 import FrameClientes from "../Clientes/FrameClientes";
 
 export default function DetailVehiculo(props) {
@@ -128,7 +128,7 @@ export default function DetailVehiculo(props) {
                 <input id="año" type="text" onChange={handleAñoChange} placeholder={props.vehiculo ? props.vehiculo.año : "2023"} />
             </div>
 
-            <FrameModelos setModelo={setModelo} modelo={modelo} />
+            {/* <FrameModelos setModelo={setModelo} modelo={modelo} /> */}
             <FrameClientes setCliente={setCliente} cliente={cliente} />
 
             {props.vehiculo ?

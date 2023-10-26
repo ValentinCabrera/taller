@@ -19,8 +19,8 @@ public class Marca {
         estado = false;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void recover() {
+        estado = true;
     }
 
     public void setNombre(String nombre) {

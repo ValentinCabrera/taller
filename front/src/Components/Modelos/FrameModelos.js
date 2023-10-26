@@ -32,7 +32,7 @@ export default function FrameModelos(props) {
 
             <Select
                 data={modelos}
-                itemName={[["nombre"]]}
+                itemName={[[["marca"], ["nombre"]], ["nombre"]]}
                 itemKey="id"
                 setCurrentItem={props.setModelo} />
 

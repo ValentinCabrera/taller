@@ -7,13 +7,24 @@ export default function Select(props) {
         if (props.data) setFilterData(props.data);
     }, [props.data])
 
+
     function handleFilter(e) {
         let filtro = e.target.value;
         let regex = new RegExp(`^.*${filtro}.*$`);
-        let filtrada = props.data.filter(item => regex.test(item[props.itemName]));
+        let filtrada = props.data.filter(item => {
+            for (let i = 0; i < props.itemName.length; i++) {
+                for (let j = 0; j < props.itemName[i].length; j++) {
+                    const itemName = props.itemName[i][j];
+                    if (regex.test(item[itemName])) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
 
         setFilterData(filtrada);
-    };
+    }
 
     function handleItemName(item) {
         let labels = [];
@@ -29,7 +40,7 @@ export default function Select(props) {
         return (
             <p>
                 {labels.map((label, index) => (
-                    <span key={index}>{label}</span>
+                    <span key={index}>{label} </span>
                 ))}
             </p>
         )

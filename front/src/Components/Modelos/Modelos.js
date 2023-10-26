@@ -38,7 +38,7 @@ export default function Modelos() {
         <Listar
             data={activeData}
             titulo="Modelos"
-            itemName={[["nombre"]]}
+            itemName={[[["marca"], ["nombre"]], ["nombre"]]}
             itemKey="id"
             buttonView={<button onClick={handleSetView}>Eliminados</button>}
             buttonCurrent={<button onClick={() => { setCurrentModelo() }}>Crear modelo</button>}
@@ -49,7 +49,7 @@ export default function Modelos() {
         <Listar
             data={deletedData}
             titulo="Eliminados"
-            itemName={[["nombre"]]}
+            itemName={[[["marca"], ["nombre"]], ["nombre"]]}
             itemKey="id"
             buttonView={<button onClick={handleSetView}>Activos</button>}
             currentItem={currentModelo}

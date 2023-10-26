@@ -15,7 +15,7 @@ export default function DetailVehiculo(props) {
             let divPatente = document.getElementById("patente");
             let inputs = divPatente.querySelectorAll("input");
 
-            if (focus >= 0) inputs[focus].focus();
+            if (focus >= 0 && inputs) inputs[focus].focus();
         }
     })
 

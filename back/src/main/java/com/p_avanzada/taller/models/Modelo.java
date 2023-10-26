@@ -31,6 +31,10 @@ public class Modelo {
         estado = false;
     }
 
+    public void recover() {
+        estado = true;
+    }
+
     public Long getId() {
         return id;
     }
@@ -45,10 +49,6 @@ public class Modelo {
 
     public boolean getEstado() {
         return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
     }
 
     public void setId(Long id) {

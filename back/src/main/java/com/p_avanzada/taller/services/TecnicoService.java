@@ -31,32 +31,55 @@ public class TecnicoService {
         return tecnicoRepository.save(tecnico);
     }
 
-    public void delete(Tecnico tecnico) {
-        tecnico.delete();
-        save(tecnico);
+    public List<Tecnico> getAllDeleted() {
+        List<Tecnico> tecnico = tecnicoRepository.findAllDeleted();
+        return tecnico;
     }
 
     public Tecnico alter(Tecnico alterTecnico) {
-        String nombre = alterTecnico.getNombre();
-        String apellido = alterTecnico.getApellido();
-        int telefono = alterTecnico.getTelefono();
+        // String nombre = alterTecnico.getNombre();
+        // String apellido = alterTecnico.getApellido();
+        // int telefono = alterTecnico.getTelefono();
 
-        Optional<Tecnico> optionalTecnico = getById(alterTecnico.getId());
+        // Optional<Tecnico> optionalTecnico = getById(alterTecnico.getId());
 
-        if (optionalTecnico.isPresent()) {
-            Tecnico tecnico = optionalTecnico.get();
+        // if (optionalTecnico.isPresent()) {
+        //     Tecnico tecnico = optionalTecnico.get();
 
-            if (nombre != null)
-                tecnico.setNombre(nombre);
-            if (apellido != null)
-                tecnico.setApellido(apellido);
-            if (telefono != 0)
-                tecnico.setTelefono(telefono);
+        //     if (nombre != null)
+        //         tecnico.setNombre(nombre);
+        //     if (apellido != null)
+        //         tecnico.setApellido(apellido);
+        //     if (telefono != 0)
+        //         tecnico.setTelefono(telefono);
 
-            return tecnicoRepository.save(tecnico);
-        }
+        //     return tecnicoRepository.save(tecnico);
+        // }
 
         return alterTecnico;
+    }
+
+    public Optional<Tecnico> getByTelefono(Long telefono) {
+        return tecnicoRepository.findByTelefono(telefono);
+    }
+
+    public void delete(Tecnico tecnico) {
+        Optional<Tecnico> optionalTecnico = getByTelefono(tecnico.getTelefono());
+
+        if (optionalTecnico.isPresent()) {
+            optionalTecnico.get().delete();
+            tecnicoRepository.save(optionalTecnico.get());
+        }
+    }
+
+    public Tecnico recoverTecnico(Tecnico recoverTecnico) {
+        Optional<Tecnico> optionalTecnico = getByTelefono(recoverTecnico.getTelefono());
+
+        Tecnico tecnico = optionalTecnico.get();
+        tecnico.recover();
+        tecnicoRepository.save(tecnico);
+
+        return tecnico;
     }
 
 }

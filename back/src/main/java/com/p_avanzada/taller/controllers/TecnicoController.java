@@ -38,14 +38,26 @@ public class TecnicoController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<Tecnico> deleteCleinte(@RequestBody Tecnico tecnico) {
+    public ResponseEntity<String> deleteCleinte(@RequestBody Tecnico tecnico) {
         tecnicoService.delete(tecnico);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("{}");
     }
 
     @PostMapping("/alter")
     public ResponseEntity<Tecnico> altertecnico(@RequestBody Tecnico newTecnico) {
         Tecnico alterTecnico = tecnicoService.alter(newTecnico);
         return ResponseEntity.ok(alterTecnico);
+    }
+
+    @GetMapping("/listar/deleted")
+    public ResponseEntity<List<Tecnico>> getAllTecnicoDeleted() {
+        List<Tecnico> tecnico = tecnicoService.getAllDeleted();
+        return ResponseEntity.ok(tecnico);
+    }
+
+    @PostMapping("/recover")
+    public ResponseEntity<Tecnico> recoverTecnico(@RequestBody Tecnico recoverTecnico) {
+        Tecnico tecnico = tecnicoService.recoverTecnico(recoverTecnico);
+        return ResponseEntity.ok(tecnico);
     }
 }

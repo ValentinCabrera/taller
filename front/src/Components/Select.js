@@ -29,13 +29,11 @@ export default function Select(props) {
         return (
             <p>
                 {labels.map((label, index) => (
-                    <span key={index}>{label} </span>
+                    <span key={index}>{label}</span>
                 ))}
             </p>
         )
     }
-
-
 
     return (
         <div className="listado">
@@ -43,11 +41,11 @@ export default function Select(props) {
 
             <div style={{ overflow: 'scroll', height: 300 }}>
                 {filterData && filterData.map(item => (
-                    <div key={item[props.itemKey]} onClick={() => props.setCurrentItem(item)} className="entidad">
+                    < div key={item[props.itemKey]} onClick={() => props.setCurrentItem(item)} className="entidad">
                         {handleItemName(item)}
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
     );
 }   

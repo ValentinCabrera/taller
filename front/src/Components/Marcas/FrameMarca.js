@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Select from "../Select";
-import DetailCliente from "./DetailCliente";
 import { getMarcas } from "../../Utils/Marca";
+import DetailMarca from "./DetailMarca";
 
 export default function FrameMarca(props) {
     const [marcas, setMarcas] = useState();
@@ -39,7 +39,7 @@ export default function FrameMarca(props) {
             {modalMarca &&
                 <div style={{ position: 'fixed', right: 0, top: 0 }}>
                     <button onClick={() => setModalMarca(false)}>Volver</button>
-                    <DetailCliente setForceRender={setForceRender} />
+                    <DetailMarca setForceRender={setForceRender} />
                 </div>
             }
         </div>

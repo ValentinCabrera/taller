@@ -64,7 +64,7 @@ public class ClienteController {
     }
 
     @PostMapping("/recover")
-    public ResponseEntity<Cliente> recoverVehiculo(@RequestBody Cliente recoverCliente) {
+    public ResponseEntity<Cliente> recoverCliente(@RequestBody Cliente recoverCliente) {
         Cliente cliente = clienteService.recoverCliente(recoverCliente);
         return ResponseEntity.ok(cliente);
     }

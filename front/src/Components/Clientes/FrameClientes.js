@@ -33,7 +33,7 @@ export default function FrameClientes(props) {
             <Select
                 data={clientes}
                 itemName={[["nombre"], ["apellido"]]}
-                itemKey="id"
+                itemKey="telefono"
                 setCurrentItem={props.setCliente} />
 
             {modalCliente &&

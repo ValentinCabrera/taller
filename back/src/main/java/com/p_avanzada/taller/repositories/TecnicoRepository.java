@@ -1,6 +1,8 @@
 package com.p_avanzada.taller.repositories;
 
 import java.util.List;
+import java.util.Optional;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,4 +17,6 @@ public interface TecnicoRepository extends JpaRepository<Tecnico, Long> {
 
     @Query("SELECT t FROM Tecnico t WHERE t.estado = false")
     List<Tecnico> findAllDeleted();
+
+    Optional<Tecnico> findByTelefono(Long telefono);
 }

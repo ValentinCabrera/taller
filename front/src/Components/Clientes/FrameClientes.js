@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import Select from "../Select";
-import { getClientes } from "../../Utils/Fetchs";
-import NewCliente from "./NewCliente";
+import { getClientes } from "../../Utils/Cliente";
+import DetailCliente from "./DetailCliente";
 
 export default function FrameClientes(props) {
     const [clientes, setClientes] = useState();
     const [modalCliente, setModalCliente] = useState();
+    const [forceRender, setForceRender] = useState();
+
+    useEffect(() => {
+        updateData();
+        setModalCliente(false);
+    }, [forceRender])
 
     useEffect(() => {
         updateData();
@@ -26,14 +32,14 @@ export default function FrameClientes(props) {
 
             <Select
                 data={clientes}
-                itemName="nombre"
+                itemName={[["nombre"], ["apellido"]]}
                 itemKey="id"
                 setCurrentItem={props.setCliente} />
 
             {modalCliente &&
                 <div style={{ position: 'fixed', right: 0, top: 0 }}>
                     <button onClick={() => setModalCliente(false)}>Volver</button>
-                    <NewCliente updateData={updateData} />
+                    <DetailCliente setForceRender={setForceRender} />
                 </div>
             }
         </div>

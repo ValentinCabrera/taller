@@ -1,4 +1,4 @@
-async function getFetch(url, token) {
+export async function getFetch(url, token) {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Token'] = token;
 
@@ -7,7 +7,7 @@ async function getFetch(url, token) {
     return data;
 };
 
-async function postFetch(url, body, token) {
+export async function postFetch(url, body, token) {
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Token'] = token;
 
@@ -28,25 +28,6 @@ async function postFetch(url, body, token) {
 
 export const host = "http://localhost:8080/";
 
-export async function postNewCliente(nombre, apellido, telefono) {
-    return postFetch(`${host}api/cliente/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono });
-};
-
-export async function getClientes() {
-    return getFetch(`${host}api/cliente/listar`)
-}
-
-export async function getClientesDeleted() {
-    return getFetch(`${host}api/cliente/listar/deleted`);
-}
-
-export async function postAlterCliente(data) {
-    return postFetch(`${host}api/cliente/alter`, data);
-}
-
-export async function postDeleteCliente(clienteId) {
-    return postFetch(`${host}api/cliente/delete`, { "id": clienteId });
-}
 
 export async function postNewTecnico(nombre, apellido, telefono) {
     return postFetch(`${host}api/tecnico/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono });

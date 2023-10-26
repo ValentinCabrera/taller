@@ -15,15 +15,8 @@ export default function Vehiculos() {
     }, [forceRender]);
 
     function updateData() {
-        getVehiculos()
-            .then(response => setActiveData(response));
-
-        getVehiculosDeleted()
-            .then(response => {
-                setDeletedData(response);
-                console.log(response);
-            }
-            );
+        getVehiculos().then(response => setActiveData(response));
+        getVehiculosDeleted().then(response => setDeletedData(response));
     }
 
     function handleSetView() {
@@ -45,10 +38,10 @@ export default function Vehiculos() {
         <Listar
             data={activeData}
             titulo="Vehiculos"
-            itemName="patente"
+            itemName={[["patente"]]}
             itemKey="patente"
             buttonView={<button onClick={handleSetView}>Eliminados</button>}
-            buttonCurrent={<button onClick={() => setCurrentVehiculo()}>Crear vehiculo</button>}
+            buttonCurrent={<button onClick={() => { setCurrentVehiculo() }}>Crear vehiculo</button>}
             currentItem={currentVehiculo}
             setCurrentItem={setCurrentVehiculo} />
 
@@ -56,7 +49,7 @@ export default function Vehiculos() {
         <Listar
             data={deletedData}
             titulo="Eliminados"
-            itemName="patente"
+            itemName={[["patente"]]}
             itemKey="patente"
             buttonView={<button onClick={handleSetView}>Activos</button>}
             currentItem={currentVehiculo}
@@ -65,10 +58,10 @@ export default function Vehiculos() {
     function RecoverVehiculo() {
         if (currentVehiculo) return (
             <div>
-                <p>Reucuperar vehiculo</p>
+                <h2>Reucuperar vehiculo</h2>
                 <p>Patente: {currentVehiculo.patente}</p>
                 <p>Año: {currentVehiculo.año}</p>
-                <p>Modelo: {currentVehiculo.modelo.nombre}</p>
+                <p>Modelo: {currentVehiculo.modelo.marca.nombre} {currentVehiculo.modelo.nombre}</p>
                 <p>Cliente: {currentVehiculo.cliente.nombre} {currentVehiculo.cliente.apellido}</p>
                 <button onClick={handleRecoverVehiculo}>Recuperar</button>
             </div>

@@ -1,87 +1,76 @@
 import { useEffect, useState } from "react";
-import { getClientes, postAlterCliente, postDeleteCliente, postNewCliente } from "../../Utils/Fetchs";
-import NewCliente from "./NewCliente";
+import { getClientes, getClientesDeleted, postRecoverCliente } from "../../Utils/Cliente";
+import Listar from "../Listar";
+import DetailCliente from "./DetailCliente";
 
-function Clientes() {
-    const [data, setData] = useState();
+export default function Clientes() {
+    const [activeData, setActiveData] = useState();
+    const [deletedData, setDeletedData] = useState();
+    const [frame, setFrame] = useState();
     const [currentCliente, setCurrentCliente] = useState();
+    const [forceRender, setForceRender] = useState({});
 
     useEffect(() => {
         updateData();
-    }, [data]);
+    }, [forceRender]);
 
     function updateData() {
-        getClientes()
-            .then(response => {
-                setData(response.filter(cliente => cliente.estado === true));
-            });
+        getClientes().then(response => setActiveData(response));
+        getClientesDeleted().then(response => setDeletedData(response));
     }
 
-    function alterCliente() {
-        let nombre = document.getElementById("aNombre");
-        let apellido = document.getElementById("aApellido");
-        let telefono = document.getElementById("aTelefono");
-
-        let cliente = { "id": currentCliente.id }
-
-        if (nombre.value) cliente.nombre = nombre.value;
-        if (apellido.value) cliente.apellido = apellido.value;
-        if (telefono.value) cliente.telefono = telefono.value;
-
-        postAlterCliente(cliente);
-        nombre.value = apellido.value = telefono.value = "";
+    function handleSetView() {
+        setFrame(!frame);
         setCurrentCliente();
     }
 
-    function deleteCliente() {
-        postDeleteCliente(currentCliente.id)
+    function handleRecoverCliente() {
+        postRecoverCliente(currentCliente.telefono)
             .then(response => {
+                setForceRender({});
                 setCurrentCliente();
-            });
-
-        setCurrentCliente();
-        updateData();
-    };
-
-    function verificarNum(event) {
-        const inputValue = event.target.value;
-
-        if (isNaN(inputValue)) {
-            alert("Por favor, ingresa solo números.");
-            event.target.value = "";
-        }
+                alert(`Cliente ${currentCliente.nombre} ${currentCliente.apellido} recuperado con exito.`)
+            })
+            .catch(error => console.log(error))
     }
 
+    const listarActivos =
+        <Listar
+            data={activeData}
+            titulo="Clientes"
+            itemName={[["nombre"], ["apellido"]]}
+            itemKey="telefono"
+            buttonView={<button onClick={handleSetView}>Eliminados</button>}
+            buttonCurrent={<button onClick={() => { setCurrentCliente() }}>Crear cliente</button>}
+            currentItem={currentCliente}
+            setCurrentItem={setCurrentCliente} />
+
+    const listarDeleted =
+        <Listar
+            data={deletedData}
+            titulo="Eliminados"
+            itemName={[["nombre"], ["apellido"]]}
+            itemKey="telefono"
+            buttonView={<button onClick={handleSetView}>Activos</button>}
+            currentItem={currentCliente}
+            setCurrentItem={setCurrentCliente} />
+
+    function RecoverCliente() {
+        if (currentCliente) return (
+            <div>
+                <h2>Reucuperar cliente</h2>
+                <p>Nombre: {currentCliente.nombre}</p>
+                <p>Apellido: {currentCliente.apellido}</p>
+                <p>Telefono: {currentCliente.telefono}</p>
+                <button onClick={handleRecoverCliente}>Recuperar</button>
+            </div>
+        );
+    }
 
     return (
         <div className="conteiner">
-            <div className="listado">
-                <h1>Clientes</h1>
-                {data && data.map(cliente => (
-                    <div key={cliente.id} onClick={() => setCurrentCliente(cliente)} className="entidad">
-                        <p>{cliente.nombre} {cliente.apellido}</p>
-                    </div>
-                ))}
-
-                {currentCliente ? <button onClick={() => setCurrentCliente()}>Crear cliente</button> : <></>}
-            </div>
-            <div>
-                {currentCliente ?
-                    <div className="form">
-                        <h2>Modificar cliente</h2>
-                        <input id="aNombre" type="text" placeholder={currentCliente.nombre} />
-                        <input id="aApellido" type="text" placeholder={currentCliente.apellido} />
-                        <input id="aTelefono" onChange={(event) => verificarNum(event)} type="text" placeholder={currentCliente.telefono} />
-                        <button onClick={alterCliente}>Modificar cliente</button>
-                        <button onClick={deleteCliente}>Eliminar cliente</button>
-                    </div>
-                    :
-                    <NewCliente />
-
-                }
-            </div>
+            {!frame ? activeData && listarActivos : deletedData && listarDeleted}
+            {!frame ? <DetailCliente cliente={currentCliente} setForceRender={setForceRender} setCurrentCliente={setCurrentCliente} /> : <RecoverCliente />}
         </div >
     )
 };
-
-export default Clientes;

@@ -23,6 +23,9 @@ export default function DetailVehiculo(props) {
         if (props.vehiculo) {
             setCliente(props.vehiculo.cliente);
             setModelo(props.vehiculo.modelo);
+        } else {
+            setCliente();
+            setModelo();
         }
     }, [props.vehiculo])
 
@@ -37,7 +40,7 @@ export default function DetailVehiculo(props) {
         let año = document.getElementById("año");
 
         if (getPatente().length === 6 && modelo && cliente && año.value) {
-            if (2023 >= parseInt(año.value) && parseInt(año.value) >= 1886) {
+            if (2024 >= parseInt(año.value) && parseInt(año.value) >= 1886) {
                 postNewVehiculo(getPatente(), modelo.id, cliente.id, año.value)
                     .then(response => {
                         alert(`El vehiculo ${getPatente()} se creo con exito.`);

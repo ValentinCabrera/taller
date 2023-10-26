@@ -15,6 +15,28 @@ export default function Select(props) {
         setFilterData(filtrada);
     };
 
+    function handleItemName(item) {
+        let labels = [];
+
+        for (let properties of props.itemName) {
+            let label = item;
+            for (let property of properties) {
+                label = label[property];
+            }
+            labels.push(label);
+        }
+
+        return (
+            <p>
+                {labels.map((label, index) => (
+                    <span key={index}>{label} </span>
+                ))}
+            </p>
+        )
+    }
+
+
+
     return (
         <div className="listado">
             <input type="text" placeholder="Buscar" onChange={handleFilter}></input>
@@ -22,7 +44,7 @@ export default function Select(props) {
             <div style={{ overflow: 'scroll', height: 300 }}>
                 {filterData && filterData.map(item => (
                     <div key={item[props.itemKey]} onClick={() => props.setCurrentItem(item)} className="entidad">
-                        <p>{item[props.itemName]}</p>
+                        {handleItemName(item)}
                     </div>
                 ))}
             </div>

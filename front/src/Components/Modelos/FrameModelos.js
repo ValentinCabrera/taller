@@ -20,13 +20,13 @@ export default function FrameModelos(props) {
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <p>Modelo: </p>
-                {props.modelo && <p>{props.modelo.nombre}</p>}
+                {props.modelo && <p>{props.modelo.marca.nombre} {props.modelo.nombre}</p>}
                 <button onClick={() => setModalModelo(true)}>+</button>
             </div>
 
             <Select
                 data={modelos}
-                itemName="nombre"
+                itemName={[["marca", "nombre"], ["nombre"]]}
                 itemKey="id"
                 setCurrentItem={props.setModelo} />
 

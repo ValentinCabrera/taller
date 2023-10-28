@@ -5,14 +5,12 @@ import com.p_avanzada.taller.repositories.OrdenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 import com.p_avanzada.taller.models.Orden;
 
-import java.util.Optional;
-
 @Service
 public class OrdenService {
-
     private final OrdenRepository ordenRepository;
 
     @Autowired
@@ -21,49 +19,44 @@ public class OrdenService {
     }
 
     public List<Orden> getAll() {
-            List<Orden> Ordens = ordenRepository.findAll();
-            return Ordens;
+        List<Orden> ordenes = ordenRepository.findAllActive();
+        return ordenes;
+    }
+
+    public Orden recoverOrden(Orden recoverOrden) {
+        Optional<Orden> optionalOrden = getById(recoverOrden.getId());
+
+        Orden orden = optionalOrden.get();
+        orden.recover();
+        save(orden);
+
+        return orden;
     }
 
     public Optional<Orden> getById(Long id) {
         return ordenRepository.findById(id);
     }
 
-    public Orden save(Orden Orden) {
-            return ordenRepository.save(Orden);
+    public List<Orden> getAllDeleted() {
+        List<Orden> ordenes = ordenRepository.findAllDeleted();
+        return ordenes;
     }
 
-    public void delete(Orden Orden) {
-            Orden.delete();
-            save(Orden);
+    public Orden save(Orden orden) {
+        return ordenRepository.save(orden);
     }
 
-    public Orden alter(Orden alterOrden) {
-        Long cliente_id = alterOrden.getIdCliente();
-        Long id_vehiculo = alterOrden.getIdVehiculo();
-        String servicio = alterOrden.getServicio();
-        String informacion_adicional = alterOrden.getInformacion();
-
-        Optional<Orden> optionalOrden = getById(alterOrden.getId());
+    public void delete(Orden orden) {
+        Optional<Orden> optionalOrden = getById(orden.getId());
 
         if (optionalOrden.isPresent()) {
-            Orden Orden = optionalOrden.get();
-
-            if (cliente_id != null)
-                Orden.setIdCliente(cliente_id);
-
-            if (id_vehiculo != null)
-                Orden.setIdVehiculo(cliente_id);
-                
-            if (servicio != null)
-                Orden.setServicio(servicio);
-
-            if (informacion_adicional != null)
-                Orden.setInformacion(informacion_adicional);
-            
-            return ordenRepository.save(Orden);
+            optionalOrden.get().delete();
+            save(optionalOrden.get());
         }
+    }
 
-        return alterOrden;
+    public Orden newOrden(Orden orden) {
+        ordenRepository.save(orden);
+        return orden;
     }
 }

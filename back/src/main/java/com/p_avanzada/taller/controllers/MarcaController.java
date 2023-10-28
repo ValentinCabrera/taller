@@ -38,11 +38,10 @@ public class MarcaController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<String> deleteCleinte(@RequestBody Marca marca) {
+    public ResponseEntity<String> deleteMarca(@RequestBody Marca marca) {
         marcaService.delete(marca);
         return ResponseEntity.ok("{}");
     }
-
 
     @PostMapping("/recover")
     public ResponseEntity<Marca> recoverMarca(@RequestBody Marca recoverMarca) {

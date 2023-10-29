@@ -1,7 +1,7 @@
 import { postFetch, getFetch, host } from "./Fetchs";
 
-export async function postNewCliente(nombre, apellido, telefono) {
-    return postFetch(`${host}api/cliente/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono });
+export async function postNewCliente(nombre, apellido, telefono, direccion, mail) {
+    return postFetch(`${host}api/cliente/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono, direccion: direccion, mail: mail });
 };
 
 export async function getClientes() {

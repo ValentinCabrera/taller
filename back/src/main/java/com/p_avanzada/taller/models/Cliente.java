@@ -7,6 +7,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "Cliente", schema = "public")
 public class Cliente {
@@ -25,6 +27,15 @@ public class Cliente {
     @Column(name = "apellido", length = 30)
     private String apellido;
 
+    @Column(name = "mail", length = 100)
+    private String mail;
+
+    @Column(name = "direccion", length = 200)
+    private String direccion;
+
+    @Column(name = "ultima_visita")
+    private LocalDateTime ultima_visita;
+
     @Column(name = "estado")
     private boolean estado = true;
 
@@ -34,6 +45,30 @@ public class Cliente {
 
     public void recover() {
         estado = true;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public LocalDateTime getUltima_visita() {
+        return ultima_visita;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setUltima_visita(LocalDateTime ultima_visita) {
+        this.ultima_visita = ultima_visita;
     }
 
     public void setNombre(String nombre) {

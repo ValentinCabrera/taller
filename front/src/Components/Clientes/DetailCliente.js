@@ -5,10 +5,12 @@ export default function DetailCliente(props) {
         let telefono = document.getElementById("telefono_cliente");
         let nombre = document.getElementById("nombre_cliente");
         let apellido = document.getElementById("apellido_cliente");
+        let mail = document.getElementById("mail_cliente");
+        let direccion = document.getElementById("direccion_cliente");
 
-        if (telefono.value && nombre.value && apellido.value) {
+        if (telefono.value && nombre.value && apellido.value && direccion.value && mail.value) {
             if (telefono.value.length === 10) {
-                postNewCliente(nombre.value, apellido.value, telefono.value)
+                postNewCliente(nombre.value, apellido.value, telefono.value, direccion.value, mail.value)
                     .then(response => {
                         alert(`El cliente ${nombre.value} ${apellido.value} se creo con exito.`);
                         props.setForceRender({});
@@ -18,6 +20,8 @@ export default function DetailCliente(props) {
                 telefono.value = "";
                 nombre.value = "";
                 apellido.value = "";
+                direccion.value = "";
+                mail.value = "";
 
             } else alert("El telefono debe tener 10 digitos.")
 
@@ -56,15 +60,23 @@ export default function DetailCliente(props) {
         <div>
             <div>
                 <p>Nombre: </p>
-                <input id="nombre_cliente" type="text" placeholder="Valentin" onChange={handleStringChange}></input>
+                <input id="nombre_cliente" type="text" placeholder={props.cliente ? props.cliente.nombre : "Valentin"} onChange={handleStringChange}></input>
             </div>
             <div>
                 <p>Apellido: </p>
-                <input id="apellido_cliente" type="text" placeholder="Cabrera" onChange={handleStringChange}></input>
+                <input id="apellido_cliente" type="text" placeholder={props.cliente ? props.cliente.apellido : "Cabrera"} onChange={handleStringChange}></input>
             </div>
             <div>
                 <p>Telefono:</p>
-                <input id="telefono_cliente" type="text" onChange={handleTelefonoChange} placeholder="3534192373" />
+                <input id="telefono_cliente" type="text" onChange={handleTelefonoChange} placeholder={props.cliente ? props.cliente.telefono : "3534192373"} />
+            </div>
+            <div>
+                <p>Mail: </p>
+                <input id="mail_cliente" type="mail" placeholder={props.cliente ? props.cliente.mail : "ejemplo@dominio.com"} />
+            </div>
+            <div>
+                <p>Direccion: </p>
+                <input id="direccion_cliente" type="text" placeholder={props.cliente ? props.cliente.direccion : "Barrio, calle, numero"} />
             </div>
 
             {props.cliente ?

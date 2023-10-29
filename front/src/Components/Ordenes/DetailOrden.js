@@ -13,8 +13,12 @@ export default function DetailOrden(props) {
     useEffect(() => {
         if (props.orden) {
             setCliente(props.orden.cliente);
+            setVehiculo(props.orden.vehiculo);
+            setServicios(props.orden.servicios);
         } else {
             setCliente();
+            setVehiculo();
+            setServicios([]);
         }
     }, [props.orden])
 
@@ -22,7 +26,7 @@ export default function DetailOrden(props) {
         let descripcion = document.getElementById("descripcion_orden");
 
 
-        if (cliente && vehiculo && servicios && descripcion.value) {
+        if (cliente && vehiculo && servicios) {
             postNewOrden(cliente.id, vehiculo.patente, servicios, descripcion.value)
                 .then(response => {
                     alert(`La orden ${response.id} se creo con exito.`);
@@ -54,14 +58,13 @@ export default function DetailOrden(props) {
 
     return (
         <div>
+            <FrameClientes setCliente={setCliente} cliente={cliente} />
+            <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
+            <FrameServicios setServicios={setServicios} servicios={servicios} />
             <div>
                 <p>Descripcion:</p>
                 <input id="descripcion_orden" type="text" placeholder="El motor tiene una falla" />
             </div>
-
-            <FrameClientes setCliente={setCliente} cliente={cliente} />
-            <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
-            <FrameServicios setServicios={setServicios} servicios={servicios} />
 
             {props.orden ?
                 <div>

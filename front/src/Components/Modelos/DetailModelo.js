@@ -21,11 +21,10 @@ export default function DetailModelo(props) {
                 .then(response => {
                     alert(`El modelo ${marca.nombre} ${nombre.value} se creo con exito.`);
                     props.setForceRender({});
+                    nombre.value = "";
+                    setMarca();
                 })
                 .catch(error => alert(error));
-
-            nombre.value = "";
-            setMarca();
 
         } else
             alert("Por favor, rellena todos los campos.");

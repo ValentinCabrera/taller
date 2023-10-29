@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getOrdenes, getOrdenesDeleted, postRecoverOrden } from "../../Utils/Orden";
 import Listar from "../Listar";
 import DetailOrden from "./DetailOrden";
+import Select from "../Select";
 
 export default function Ordenes() {
     const [activeData, setActiveData] = useState();
@@ -61,6 +62,12 @@ export default function Ordenes() {
                 <h2>Reucuperar orden</h2>
                 <p>Id: {currentOrden.id}</p>
                 <p>Cliente: {currentOrden.cliente.nombre} {currentOrden.cliente.apellido}</p>
+                <p>Vehiculo: {currentOrden.vehiculo.patente}</p>
+                <Select
+                    data={currentOrden.servicios}
+                    itemName={[["nombre"]]}
+                    itemKey="nombre" />
+                {currentOrden.descripcion ? <p>Descripcion: {currentOrden.descripcion}</p> : <p>Descripcion: Ninguna</p>}
                 <button onClick={handleRecoverOrden}>Recuperar</button>
             </div>
         );

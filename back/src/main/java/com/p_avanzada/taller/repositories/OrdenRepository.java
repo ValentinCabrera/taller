@@ -10,21 +10,9 @@ import com.p_avanzada.taller.models.Orden;
 @Repository
 public interface OrdenRepository extends JpaRepository<Orden, Long> {
 
-    @Query("SELECT o, o.vehiculo, o.vehiculo.modelo, o.vehiculo.modelo.marca, o.cliente, o.servicios FROM Orden o " +
-            "LEFT JOIN FETCH o.cliente " +
-            "LEFT JOIN FETCH o.vehiculo " +
-            "LEFT JOIN FETCH o.vehiculo.modelo " +
-            "LEFT JOIN FETCH o.vehiculo.modelo.marca " +
-            "LEFT JOIN FETCH o.servicios " +
-            "WHERE o.estado = true")
-    List<Orden> findAllActive();
+        @Query("SELECT o FROM Orden  o WHERE o.estado = true")
+        List<Orden> findAllActive();
 
-    @Query("SELECT o, o.vehiculo, o.vehiculo.modelo, o.vehiculo.modelo.marca, o.cliente, o.servicios FROM Orden o " +
-            "LEFT JOIN FETCH o.cliente " +
-            "LEFT JOIN FETCH o.vehiculo " +
-            "LEFT JOIN FETCH o.vehiculo.modelo " +
-            "LEFT JOIN FETCH o.vehiculo.modelo.marca " +
-            "LEFT JOIN FETCH o.servicios " +
-            "WHERE o.estado = false")
-    List<Orden> findAllDeleted();
+        @Query("SELECT o FROM Orden o WHERE o.estado = false")
+        List<Orden> findAllDeleted();
 }

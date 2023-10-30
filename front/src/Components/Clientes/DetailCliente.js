@@ -59,7 +59,23 @@ export default function DetailCliente(props) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
             if (e.target.value.length === 1) {
                 e.target.value = e.target.value.toUpperCase();
-            } else if (!/^([A-Z]*[a-z]*)*$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1)
+                if (!/^[A-Z]{1}$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+            } else if (!/^([A-Z](([A-Za-z-]+)\s{0,1})*)$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+        }
+    }
+
+    function handleDireccionChange(e) {
+        if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
+            if (e.target.value.length === 1) {
+                e.target.value = e.target.value.toUpperCase();
+                if (!/^[A-Z]{1}$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+            } else if (!/^([A-Z](([A-Za-z0-9,]+)\s{0,1})*)$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+        }
+    }
+
+    function handleMailChange(e) {
+        if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
+            if (!/^([a-zA-Z0-9._%+-]+|[a-zA-Z0-9._%+-]+@|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\.|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._%+-]+\.[a-zA-Z]{2,})$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
         }
     }
 
@@ -120,11 +136,11 @@ export default function DetailCliente(props) {
             </div>
             <div>
                 <p>Mail: </p>
-                <input id="mail_cliente" type="mail" placeholder={props.cliente ? props.cliente.mail : "ejemplo@dominio.com"} />
+                <input id="mail_cliente" type="text" placeholder={props.cliente ? props.cliente.mail : "ejemplo@dominio.com"} onChange={handleMailChange} />
             </div>
             <div>
                 <p>Direccion: </p>
-                <input id="direccion_cliente" type="text" placeholder={props.cliente ? props.cliente.direccion : "Barrio, calle, numero"} />
+                <input id="direccion_cliente" type="text" placeholder={props.cliente ? props.cliente.direccion : "Barrio, calle, numero"} onChange={handleDireccionChange} />
             </div>
             {props.cliente && props.cliente.ultima_visita ?
                 <div>

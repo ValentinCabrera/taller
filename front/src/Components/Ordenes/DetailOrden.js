@@ -74,6 +74,15 @@ export default function DetailOrden(props) {
             .catch(error => alert(`La orden ${props.orden.id} no se pudo modificar.`));
     };
 
+    function handleStringChange(e) {
+        if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
+            if (e.target.value.length === 1) {
+                e.target.value = e.target.value.toUpperCase();
+                if (!/^[A-Z]{1}$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+            } else if (!/^([A-Z](([A-Za-z0-9,-.]+)\s{0,1})*)$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+        }
+    }
+
     return (
         <div>
             <FrameClientes setCliente={setCliente} cliente={cliente} />
@@ -81,7 +90,7 @@ export default function DetailOrden(props) {
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <div>
                 <p>Descripcion:</p>
-                <input id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} />
+                <input id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} onChange={handleStringChange} />
             </div>
 
             {props.orden ?

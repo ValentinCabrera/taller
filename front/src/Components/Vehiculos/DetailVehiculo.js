@@ -101,7 +101,7 @@ export default function DetailVehiculo(props) {
 
     function handleAñoChange(e) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
-            if (!/^\d*$/.test(e.target.value) || e.target.value.length >= 5) e.target.value = e.target.value.slice(0, -1)
+            if (!/^([12]|1[89]|20|1[89][89]|20[0-2]|1[89][89][6-9]|200[0-9]|201[0-9]|202[0-4])$/.test(e.target.value) || e.target.value.length >= 5) e.target.value = e.target.value.slice(0, -1)
         }
     }
 

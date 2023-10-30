@@ -48,7 +48,8 @@ export default function DetailModelo(props) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
             if (e.target.value.length === 1) {
                 e.target.value = e.target.value.toUpperCase();
-            } else if (!/^([A-Z]*[a-z]*)*$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1)
+                if (!/^[A-Z]{1}$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
+            } else if (!/^([A-Z](([A-Za-z-]+)\s{0,1})*)$/.test(e.target.value)) e.target.value = e.target.value.slice(0, -1);
         }
     }
 

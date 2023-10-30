@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.p_avanzada.taller.models.Servicio;
+import com.p_avanzada.taller.models.Vehiculo;
+
 import java.util.List;
+import java.util.Optional;
 
 import com.p_avanzada.taller.services.ServicioService;
 
@@ -33,8 +36,13 @@ public class ServicioController {
 
     @PostMapping("/new")
     public ResponseEntity<Servicio> newServicio(@RequestBody Servicio newServicio) {
-        Servicio servicio = servicioService.save(newServicio);
-        return ResponseEntity.ok(servicio);
+        Optional<Servicio> serOptional = servicioService.newServicio(newServicio);
+
+        if (serOptional.isPresent()) {
+            return ResponseEntity.ok(serOptional.get());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/delete")

@@ -1,6 +1,7 @@
 package com.p_avanzada.taller.services;
 
 import com.p_avanzada.taller.models.Servicio;
+import com.p_avanzada.taller.models.Vehiculo;
 import com.p_avanzada.taller.repositories.ServicioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,16 @@ public class ServicioService {
             Servicio servicio = optionalServicio.get();
             servicio.delete();
             save(servicio);
+        }
+    }
+
+    public Optional<Servicio> newServicio(Servicio servicio) {
+        Optional<Servicio> serOptional = getByName(servicio.getNombre());
+        if (serOptional.isPresent())
+            return Optional.empty();
+        else {
+            Servicio newServicio = servicioRepository.save(servicio);
+            return Optional.of(newServicio);
         }
     }
 }

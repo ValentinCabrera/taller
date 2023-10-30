@@ -12,13 +12,11 @@ export default function DetailTecnico(props) {
                     .then(response => {
                         alert(`El tecnivo ${nombre} ${apellido} se creo con exito.`);
                         props.setForceRender({});
+                        telefono.value = "";
+                        nombre.value = "";
+                        apellido.value = "";
                     })
                     .catch(error => alert(`El numero de telefono ${telefono} ya esta registrado.`));
-
-                const inputs = document.querySelectorAll("input");
-                inputs.forEach(input => {
-                    input.value = "";
-                });
 
             } else alert("El telefono debe tener 10 digitos.")
 

@@ -1,6 +1,7 @@
 package com.p_avanzada.taller.services;
 
 import com.p_avanzada.taller.models.Marca;
+import com.p_avanzada.taller.models.Vehiculo;
 import com.p_avanzada.taller.repositories.MarcaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,6 @@ public class MarcaService {
         return marcaRepository.findByNombre(nombre);
     }
 
-
     public List<Marca> getAllDeleted() {
         List<Marca> marca = marcaRepository.findAllDeleted();
         return marca;
@@ -35,6 +35,16 @@ public class MarcaService {
 
     public Marca save(Marca marca) {
         return marcaRepository.save(marca);
+    }
+
+    public Optional<Marca> newMarca(Marca marca) {
+        Optional<Marca> marOptional = getByName(marca.getNombre());
+        if (marOptional.isPresent())
+            return Optional.empty();
+        else {
+            Marca newMarca = marcaRepository.save(marca);
+            return Optional.of(newMarca);
+        }
     }
 
     public Marca recoverMarca(Marca recoverMarca) {

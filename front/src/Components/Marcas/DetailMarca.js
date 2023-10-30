@@ -9,11 +9,9 @@ export default function DetailMarca(props) {
                 .then(response => {
                     alert(`La marca ${nombre.value} se creo con exito.`);
                     props.setForceRender({});
+                    nombre.value = "";
                 })
                 .catch(error => alert(`La marca ${nombre.value} ya esta registrada.`));
-
-            nombre.value = "";
-
 
         } else
             alert("Por favor, rellena todos los campos.");

@@ -34,13 +34,12 @@ export default function DetailOrden(props) {
                 .then(response => {
                     alert(`La orden ${response.id} se creo con exito.`);
                     props.setForceRender({});
+                    descripcion.value = "";
+                    setCliente();
+                    setVehiculo();
+                    setServicios([]);
                 })
                 .catch(error => alert(error));
-
-            descripcion.value = "";
-            setCliente();
-            setVehiculo();
-            setServicios([]);
 
         } else
             alert("Por favor, rellena todos los campos.");

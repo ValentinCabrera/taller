@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.p_avanzada.taller.models.Marca;
+import com.p_avanzada.taller.models.Servicio;
+
 import java.util.List;
+import java.util.Optional;
 
 import com.p_avanzada.taller.services.MarcaService;
 
@@ -32,9 +35,14 @@ public class MarcaController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Marca> newmarca(@RequestBody Marca newMarca) {
-        Marca marca = marcaService.save(newMarca);
-        return ResponseEntity.ok(marca);
+    public ResponseEntity<Marca> newServicio(@RequestBody Marca newMarca) {
+        Optional<Marca> mOptional = marcaService.newMarca(newMarca);
+
+        if (mOptional.isPresent()) {
+            return ResponseEntity.ok(mOptional.get());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/delete")

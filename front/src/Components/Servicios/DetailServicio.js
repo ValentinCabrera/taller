@@ -7,20 +7,18 @@ export default function DetailServicio(props) {
         if (nombre.value) {
             postNewServicio(nombre.value)
                 .then(response => {
-                    alert(`El servicio ${nombre.value} se creo con exito.`);
+                    alert(`El servicio "${nombre.value}" se creo con exito.`);
                     props.setForceRender({});
+                    nombre.value = "";
                 })
-                .catch(error => alert(`El servicio ${nombre.value} ya esta registrado.`));
-
-            nombre.value = "";
-
+                .catch(error => alert(`El servicio "${nombre.value}" ya esta registrado.`));
 
         } else
             alert("Por favor, rellena todos los campos.");
     };
 
     function handleDeleteServicio() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar el servicio ${props.servicio.nombre}?`)
+        let resultado = window.confirm(`¿Está seguro que desea eliminar el servicio "${props.servicio.nombre}"?`)
 
         if (resultado) (
             postDeleteServicio(props.servicio.nombre)

@@ -29,7 +29,7 @@ export default function Servicios() {
             .then(response => {
                 setForceRender({});
                 setCurrentServicio();
-                alert(`Servicio ${currentServicio.nombre} recuperado con exito.`)
+                alert(`Servicio "${currentServicio.nombre}" recuperado con exito.`)
             })
             .catch(error => console.log(error))
     }

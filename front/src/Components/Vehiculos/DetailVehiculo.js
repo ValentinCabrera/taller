@@ -48,13 +48,12 @@ export default function DetailVehiculo(props) {
                     .then(response => {
                         alert(`El vehiculo ${getPatente()} se creo con exito.`);
                         props.setForceRender({});
+                        setPatente(["", "", "", "", "", ""]);
+                        año.value = "";
+                        setModelo();
+                        setCliente();
                     })
                     .catch(error => alert(`El vehiculo con la patente ${getPatente()} ya existe.`));
-
-                setPatente(["", "", "", "", "", ""]);
-                año.value = "";
-                setModelo();
-                setCliente();
 
             } else alert("El año del vehiculo debe ser entre 1886 y 2023.")
 

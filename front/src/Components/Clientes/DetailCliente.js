@@ -20,15 +20,14 @@ export default function DetailCliente(props) {
                     .then(response => {
                         alert(`El cliente ${nombre.value} ${apellido.value} se creo con exito.`);
                         props.setForceRender({});
+                        telefono.value = "";
+                        nombre.value = "";
+                        apellido.value = "";
+                        direccion.value = "";
+                        mail.value = "";
+                        ultima_visita = "";
                     })
                     .catch(error => alert(`El numero de telefono ${telefono.value} ya esta registrado.`));
-
-                telefono.value = "";
-                nombre.value = "";
-                apellido.value = "";
-                direccion.value = "";
-                mail.value = "";
-                ultima_visita = "";
 
             } else alert("El telefono debe tener 10 digitos.")
 

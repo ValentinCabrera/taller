@@ -44,12 +44,15 @@ export default function DetailMarca(props) {
         <div>
             <div>
                 <p>Nombre: </p>
-                <input id="nombre_marca" type="text" placeholder={props.marca ? props.marca.nombre : "Jeep"} onChange={handleStringChange}></input>
+                {props.marca ?
+                    <p>Marca: {props.marca.nombre}</p>
+                    :
+                    <input id="nombre_marca" type="text" placeholder="Jeep" onChange={handleStringChange} />
+                }
             </div>
 
             {props.marca ?
                 <div>
-                    <button><p>Modificar marca</p></button>
                     <button onClick={handleDeleteMarca}><p>Eliminar marca</p></button>
                 </div>
                 :

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.p_avanzada.taller.models.Orden;
+import com.p_avanzada.taller.models.Vehiculo;
 
 @Service
 public class OrdenService {
@@ -57,6 +58,17 @@ public class OrdenService {
 
     public Orden newOrden(Orden orden) {
         ordenRepository.save(orden);
+        return orden;
+    }
+
+    public Orden alter(Orden alterOrden) {
+        Orden orden = getById(alterOrden.getId()).get();
+        orden.setCliente(alterOrden.getCliente());
+        orden.setDescripcion(alterOrden.getDescripcion());
+        orden.setServicios(alterOrden.getServicios());
+        orden.setVehiculo(alterOrden.getVehiculo());
+
+        save(orden);
         return orden;
     }
 }

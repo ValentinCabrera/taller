@@ -14,6 +14,23 @@ export default function Clientes() {
         updateData();
     }, [forceRender]);
 
+    useEffect(() => {
+        let telefono = document.getElementById("telefono_cliente");
+        let nombre = document.getElementById("nombre_cliente");
+        let apellido = document.getElementById("apellido_cliente");
+        let mail = document.getElementById("mail_cliente");
+        let direccion = document.getElementById("direccion_cliente");
+        let ultima_visita = document.getElementById("ultima_visita_cliente");
+
+        telefono.value = "";
+        nombre.value = "";
+        apellido.value = "";
+        mail.value = "";
+        direccion.value = "";
+        ultima_visita.value = "";
+
+    }, [currentCliente])
+
     function updateData() {
         getClientes().then(response => setActiveData(response));
         getClientesDeleted().then(response => setDeletedData(response));

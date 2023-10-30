@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "../Select";
-import { getVehiculos } from "../../Utils/Fetchs";
+import { getVehiculos } from "../../Utils/Vehiculo";
 import DetailVehiculo from "./DetailVehiculo";
 
 export default function FrameVehiculos(props) {

@@ -55,6 +55,16 @@ public class VehiculoService {
         }
     }
 
+    public Vehiculo alter(Vehiculo alterVehiculo) {
+        Vehiculo vehiculo = getByPatente(alterVehiculo.getPatente()).get();
+        vehiculo.setModelo(alterVehiculo.getModelo());
+        vehiculo.setAño(alterVehiculo.getAño());
+        vehiculo.setCliente(alterVehiculo.getCliente());
+        save(vehiculo);
+
+        return vehiculo;
+    }
+
     public Optional<Vehiculo> newVehiculo(Vehiculo vehiculo) {
         Optional<Vehiculo> vehiculoOptional = getByPatente(vehiculo.getPatente());
         if (vehiculoOptional.isPresent())

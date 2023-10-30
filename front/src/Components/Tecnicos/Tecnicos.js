@@ -15,6 +15,17 @@ export default function Tecnicos() {
         updateData();
     }, [forceRender]);
 
+    useEffect(() => {
+        let telefono = document.getElementById("telefono_tecnico");
+        let nombre = document.getElementById("nombre_tecnico");
+        let apellido = document.getElementById("apellido_tecnico");
+
+        telefono.value = "";
+        nombre.value = "";
+        apellido.value = "";
+
+    }, [currentTecnico])
+
     function updateData() {
         getTecnicos().then(response => setActiveData(response));
         getTecnicosDeleted().then(response => setDeletedData(response));

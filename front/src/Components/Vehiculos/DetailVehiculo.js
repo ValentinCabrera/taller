@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getModelos, getClientes, postNewVehiculo, postDeleteVehiculo, postRecoverVehiculo } from "../../Utils/Fetchs";
+import { postNewVehiculo, postDeleteVehiculo, postAlterVehiculo } from "../../Utils/Vehiculo";
 
 import FrameModelos from "../Modelos/FrameModelos";
 import FrameClientes from "../Clientes/FrameClientes";
@@ -26,7 +26,10 @@ export default function DetailVehiculo(props) {
         } else {
             setCliente();
             setModelo();
+            setPatente(["", "", "", "", "", ""]);
         }
+
+        document.getElementById("año_vehiculo").value = "";
     }, [props.vehiculo])
 
     function getPatente() {
@@ -114,6 +117,25 @@ export default function DetailVehiculo(props) {
         return inputs;
     };
 
+    function handleAlterVehiculo() {
+        let año_input = document.getElementById("año_vehiculo");
+        let año = props.vehiculo.año;
+
+        if (año_input.value) {
+            if (2024 >= parseInt(año_input.value) && parseInt(año_input.value) >= 1886) {
+                año = año_input.value;
+            } else return alert("El año del vehiculo debe ser entre 1886 y 2023.")
+        }
+
+        postAlterVehiculo({ "patente": props.vehiculo.patente, "modelo": { "id": modelo.id }, "cliente": { "id": cliente.id }, "año": año })
+            .then(response => {
+                alert(`El vehiculo ${props.vehiculo.patente} se modifico con exito.`);
+                props.setForceRender({});
+                props.setCurrentVehiculo();
+            })
+            .catch(error => alert(`El vehiculo con la patente ${props.vehiculo.patente} no se pudo modificar.`));
+    };
+
     return (
         <div>
             <div>
@@ -130,7 +152,7 @@ export default function DetailVehiculo(props) {
 
             {props.vehiculo ?
                 <div>
-                    <button><p>Modificar vehiculo</p></button>
+                    <button onClick={handleAlterVehiculo}><p>Modificar vehiculo</p></button>
                     <button onClick={handleDeleteVehiculo}><p>Eliminar vehiculo</p></button>
                 </div>
                 :

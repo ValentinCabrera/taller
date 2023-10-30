@@ -12,9 +12,9 @@ export async function getOrdenesDeleted() {
     return getFetch(`${host}api/orden/listar/deleted`);
 }
 
-// export async function postAlterModelo(data) {
-//     return postFetch(`${host}api/modelo/alter`, data);
-// }
+export async function postAlterModelo(data) {
+    return postFetch(`${host}api/orden/alter`, data);
+}
 
 export async function postDeleteOrden(id) {
     return postFetch(`${host}api/orden/delete`, { id: id });

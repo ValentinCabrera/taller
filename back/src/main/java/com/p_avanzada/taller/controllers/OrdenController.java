@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.p_avanzada.taller.models.Orden;
+import com.p_avanzada.taller.models.Vehiculo;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +56,11 @@ public class OrdenController {
     public ResponseEntity<String> deleteOrden(@RequestBody Orden orden) {
         ordenService.delete(orden);
         return ResponseEntity.ok("{}");
+    }
+
+    @PostMapping("/alter")
+    public ResponseEntity<Orden> alterOrden(@RequestBody Orden alterOrden) {
+        Orden orden = ordenService.alter(alterOrden);
+        return ResponseEntity.ok(orden);
     }
 }

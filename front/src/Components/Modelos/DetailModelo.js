@@ -55,20 +55,24 @@ export default function DetailModelo(props) {
 
     return (
         <div>
-            <div>
-                <p>Nombre:</p>
-                <input id="nombre_modelo" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
-            </div>
-
-            <FrameMarca setMarca={setMarca} marca={marca} />
 
             {props.modelo ?
                 <div>
-                    <button><p>Modificar modelo</p></button>
+                    <p>Nombre: {props.modelo.nombre}</p>
+                    <p>Marca: {props.modelo.marca.nombre}</p>
                     <button onClick={handleDeleteModelo}><p>Eliminar modelo</p></button>
                 </div>
                 :
-                <button onClick={handleNewModelo}><p>Crear modelo</p></button>
+                <div>
+                    <div>
+                        <p>Nombre:</p>
+                        <input id="nombre_modelo" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
+                    </div>
+
+
+                    <FrameMarca setMarca={setMarca} marca={marca} />
+                    <button onClick={handleNewModelo}><p>Crear modelo</p></button>
+                </div>
             }
         </div>
     );

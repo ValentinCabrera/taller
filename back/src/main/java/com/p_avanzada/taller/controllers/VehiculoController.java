@@ -60,4 +60,11 @@ public class VehiculoController {
         vehiculoService.delete(vehiculo);
         return ResponseEntity.ok("{}");
     }
+
+    @PostMapping("/alter")
+    public ResponseEntity<Vehiculo> alterVehiculo(@RequestBody Vehiculo alterVehiculo) {
+        Vehiculo vehiculo = vehiculoService.alter(alterVehiculo);
+        return ResponseEntity.ok(vehiculo);
+    }
+
 }

@@ -44,9 +44,9 @@ public class TecnicoController {
     }
 
     @PostMapping("/alter")
-    public ResponseEntity<Tecnico> altertecnico(@RequestBody Tecnico newTecnico) {
-        Tecnico alterTecnico = tecnicoService.alter(newTecnico);
-        return ResponseEntity.ok(alterTecnico);
+    public ResponseEntity<Tecnico> altertecnico(@RequestBody Tecnico alterTecnico) {
+        Tecnico tecnico = tecnicoService.alter(alterTecnico);
+        return ResponseEntity.ok(tecnico);
     }
 
     @GetMapping("/listar/deleted")

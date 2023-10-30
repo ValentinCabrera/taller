@@ -48,7 +48,7 @@ export default function Select(props) {
 
     return (
         <div className="listado">
-            <input type="text" placeholder="Buscar" onChange={handleFilter}></input>
+            <input type="search" placeholder="Buscar" onChange={handleFilter}></input>
 
             <div style={{ overflow: 'scroll', height: 300 }}>
                 {filterData && filterData.map(item => (

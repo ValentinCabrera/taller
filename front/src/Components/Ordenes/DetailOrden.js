@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { postNewOrden, postDeleteOrden } from "../../Utils/Orden";
+import { postNewOrden, postDeleteOrden, postAlterModelo } from "../../Utils/Orden";
 
 import FrameClientes from "../Clientes/FrameClientes";
 import FrameVehiculos from "../Vehiculos/FrameVehiculos";
@@ -20,6 +20,9 @@ export default function DetailOrden(props) {
             setVehiculo();
             setServicios([]);
         }
+        document.getElementById("descripcion_orden").value = "";
+
+
     }, [props.orden])
 
     function handleNewOrden() {
@@ -56,6 +59,21 @@ export default function DetailOrden(props) {
         );
     }
 
+    function handleAlterOrden() {
+        let descripcion = props.orden.descripcion;
+        let descripcion_input = document.getElementById("descripcion_orden");
+
+        if (descripcion_input.value) descripcion = descripcion_input.value;
+
+        postAlterModelo({ "id": props.orden.id, servicios: servicios, "cliente": { "id": cliente.id }, vehiculo: { patente: vehiculo.patente }, descripcion: descripcion })
+            .then(response => {
+                alert(`La orden ${props.orden.id} se modifico con exito.`);
+                props.setForceRender({});
+                props.setCurrentOrden();
+            })
+            .catch(error => alert(`La orden ${props.orden.id} no se pudo modificar.`));
+    };
+
     return (
         <div>
             <FrameClientes setCliente={setCliente} cliente={cliente} />
@@ -68,7 +86,7 @@ export default function DetailOrden(props) {
 
             {props.orden ?
                 <div>
-                    <button><p>Modificar orden</p></button>
+                    <button onClick={handleAlterOrden}><p>Modificar orden</p></button>
                     <button onClick={handleDeleteOrden}><p>Eliminar orden</p></button>
                 </div>
                 :

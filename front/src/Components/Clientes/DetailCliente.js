@@ -1,4 +1,4 @@
-import { postDeleteCliente, postNewCliente } from "../../Utils/Cliente";
+import { postAlterCliente, postDeleteCliente, postNewCliente } from "../../Utils/Cliente";
 
 export default function DetailCliente(props) {
     var now = new Date();
@@ -63,6 +63,47 @@ export default function DetailCliente(props) {
         }
     }
 
+    function handleAlterCliente() {
+        let telefono = props.cliente.telefono;
+        let nombre = props.cliente.nombre;
+        let apellido = props.cliente.apellido;
+        let mail = props.cliente.mail;
+        let direccion = props.cliente.direccion;
+        let ultima_visita = props.cliente.ultima_visita;
+
+        let telefono_input = document.getElementById("telefono_cliente");
+        let nombre_input = document.getElementById("nombre_cliente");
+        let apellido_input = document.getElementById("apellido_cliente");
+        let mail_input = document.getElementById("mail_cliente");
+        let direccion_input = document.getElementById("direccion_cliente");
+        let ultima_visita_input = document.getElementById("ultima_visita_cliente");
+
+        if (telefono_input.value) {
+            if (telefono_input.value.length === 10) telefono = telefono_input.value;
+            else return alert("El telefono debe tener 10 digitos.")
+        }
+
+        if (nombre_input.value) nombre = nombre_input.value;
+        if (apellido_input.value) apellido = apellido_input.value;
+        if (mail_input.value) mail = mail_input.value;
+        if (direccion_input.value) direccion = direccion_input.value;
+        if (ultima_visita_input.value) ultima_visita = ultima_visita_input.value;
+
+        postAlterCliente({ id: props.cliente.id, nombre: nombre, apellido: apellido, telefono: telefono, mail: mail, direccion: direccion, ultima_visita: ultima_visita })
+            .then(response => {
+                alert(`El cliente ${props.cliente.id} se modifico con exito.`);
+                props.setForceRender({});
+                props.setCurrentCliente();
+                telefono_input.value = "";
+                nombre_input.value = "";
+                apellido_input.value = "";
+                mail_input.value = "";
+                direccion_input.value = "";
+                ultima_visita_input.value = "";
+            })
+            .catch(error => alert(`El cliente ${props.cliente.id} no se pudo modificar.`));
+    };
+
     return (
         <div>
             <div>
@@ -98,7 +139,7 @@ export default function DetailCliente(props) {
 
             {props.cliente ?
                 <div>
-                    <button><p>Modificar cliente</p></button>
+                    <button onClick={handleAlterCliente}><p>Modificar cliente</p></button>
                     <button onClick={handleDeleteCliente}><p>Eliminar cliente</p></button>
                 </div>
                 :

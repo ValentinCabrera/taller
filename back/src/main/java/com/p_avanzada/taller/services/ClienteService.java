@@ -47,26 +47,18 @@ public class ClienteService {
     }
 
     public Cliente alter(Cliente alterCliente) {
-        String nombre = alterCliente.getNombre();
-        String apellido = alterCliente.getApellido();
-        // int telefono = alterCliente.getTelefono();
+        Cliente cliente = getById(alterCliente.getId()).get();
 
-        Optional<Cliente> optionalCliente = getByTelefono(alterCliente.getTelefono());
+        cliente.setNombre(alterCliente.getNombre());
+        cliente.setApellido(alterCliente.getApellido());
+        cliente.setTelefono(alterCliente.getTelefono());
+        cliente.setMail(alterCliente.getMail());
+        cliente.setDireccion(alterCliente.getDireccion());
+        cliente.setUltima_visita(alterCliente.getUltima_visita());
 
-        if (optionalCliente.isPresent()) {
-            Cliente cliente = optionalCliente.get();
+        clienteRepository.save(cliente);
 
-            if (nombre != null)
-                cliente.setNombre(nombre);
-            if (apellido != null)
-                cliente.setApellido(apellido);
-            // if (telefono != 0)
-            // cliente.setTelefono(telefono);
-
-            return clienteRepository.save(cliente);
-        }
-
-        return alterCliente;
+        return cliente;
     }
 
     public Optional<Cliente> newCliente(Cliente cliente) {

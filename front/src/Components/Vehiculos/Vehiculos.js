@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getVehiculos, getVehiculosDeleted, postRecoverVehiculo } from "../../Utils/Fetchs";
+import { getVehiculos, getVehiculosDeleted, postRecoverVehiculo } from "../../Utils/Vehiculo";
 import Listar from "../Listar";
 import DetailVehiculo from "./DetailVehiculo";
 

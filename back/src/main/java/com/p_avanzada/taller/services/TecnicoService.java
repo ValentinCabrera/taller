@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.p_avanzada.taller.models.Tecnico;
+import com.p_avanzada.taller.models.Vehiculo;
 
 import java.util.Optional;
 
@@ -37,26 +38,13 @@ public class TecnicoService {
     }
 
     public Tecnico alter(Tecnico alterTecnico) {
-        // String nombre = alterTecnico.getNombre();
-        // String apellido = alterTecnico.getApellido();
-        // int telefono = alterTecnico.getTelefono();
+        Tecnico tecnico = getById(alterTecnico.getId()).get();
+        tecnico.setApellido(alterTecnico.getApellido());
+        tecnico.setNombre(alterTecnico.getNombre());
+        tecnico.setTelefono(alterTecnico.getTelefono());
+        save(tecnico);
 
-        // Optional<Tecnico> optionalTecnico = getById(alterTecnico.getId());
-
-        // if (optionalTecnico.isPresent()) {
-        //     Tecnico tecnico = optionalTecnico.get();
-
-        //     if (nombre != null)
-        //         tecnico.setNombre(nombre);
-        //     if (apellido != null)
-        //         tecnico.setApellido(apellido);
-        //     if (telefono != 0)
-        //         tecnico.setTelefono(telefono);
-
-        //     return tecnicoRepository.save(tecnico);
-        // }
-
-        return alterTecnico;
+        return tecnico;
     }
 
     public Optional<Tecnico> getByTelefono(Long telefono) {

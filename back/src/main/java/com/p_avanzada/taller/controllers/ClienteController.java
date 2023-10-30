@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.p_avanzada.taller.models.Cliente;
-import com.p_avanzada.taller.models.Vehiculo;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,9 +57,9 @@ public class ClienteController {
     }
 
     @PostMapping("/alter")
-    public ResponseEntity<Cliente> alterCliente(@RequestBody Cliente newCliente) {
-        Cliente alterCliente = clienteService.alter(newCliente);
-        return ResponseEntity.ok(alterCliente);
+    public ResponseEntity<Cliente> alterCliente(@RequestBody Cliente alterCliente) {
+        Cliente cliente = clienteService.alter(alterCliente);
+        return ResponseEntity.ok(cliente);
     }
 
     @PostMapping("/recover")

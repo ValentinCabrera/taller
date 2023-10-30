@@ -62,6 +62,9 @@ export default function Clientes() {
                 <p>Nombre: {currentCliente.nombre}</p>
                 <p>Apellido: {currentCliente.apellido}</p>
                 <p>Telefono: {currentCliente.telefono}</p>
+                <p>Mail: {currentCliente.mail}</p>
+                <p>Direccion: {currentCliente.direccion}</p>
+                <p>Ultima visita: {currentCliente.ultima_visita}</p>
                 <button onClick={handleRecoverCliente}>Recuperar</button>
             </div>
         );

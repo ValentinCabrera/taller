@@ -1,16 +1,22 @@
 import { postDeleteCliente, postNewCliente } from "../../Utils/Cliente";
 
 export default function DetailCliente(props) {
+    var now = new Date();
+    var localDatetime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    var maxDatetime = localDatetime.toISOString().slice(0, 16);
+
     function handleNewCliente() {
         let telefono = document.getElementById("telefono_cliente");
         let nombre = document.getElementById("nombre_cliente");
         let apellido = document.getElementById("apellido_cliente");
         let mail = document.getElementById("mail_cliente");
         let direccion = document.getElementById("direccion_cliente");
+        let ultima_visita = document.getElementById("ultima_visita_cliente");
 
-        if (telefono.value && nombre.value && apellido.value && direccion.value && mail.value) {
+        if (telefono.value && nombre.value && apellido.value && direccion.value && mail.value && ultima_visita.value) {
             if (telefono.value.length === 10) {
-                postNewCliente(nombre.value, apellido.value, telefono.value, direccion.value, mail.value)
+
+                postNewCliente(nombre.value, apellido.value, telefono.value, direccion.value, mail.value, ultima_visita.value)
                     .then(response => {
                         alert(`El cliente ${nombre.value} ${apellido.value} se creo con exito.`);
                         props.setForceRender({});
@@ -22,6 +28,7 @@ export default function DetailCliente(props) {
                 apellido.value = "";
                 direccion.value = "";
                 mail.value = "";
+                ultima_visita = "";
 
             } else alert("El telefono debe tener 10 digitos.")
 
@@ -78,6 +85,16 @@ export default function DetailCliente(props) {
                 <p>Direccion: </p>
                 <input id="direccion_cliente" type="text" placeholder={props.cliente ? props.cliente.direccion : "Barrio, calle, numero"} />
             </div>
+            {props.cliente && props.cliente.ultima_visita ?
+                <div>
+                    <p>Ultima visita: {props.cliente.ultima_visita.replace('T', ' ').slice(0, 16)}</p>
+                    <input id="ultima_visita_cliente" type="datetime-local" max={maxDatetime} />
+                </div> :
+                <div>
+                    <p>Ultima visita: </p>
+                    <input id="ultima_visita_cliente" type="datetime-local" max={maxDatetime} />
+                </div>
+            }
 
             {props.cliente ?
                 <div>

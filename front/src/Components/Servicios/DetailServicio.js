@@ -45,7 +45,7 @@ export default function DetailServicio(props) {
         <div>
             <div>
                 <p>Nombre: </p>
-                <input id="nombre_servicio" type="text" placeholder="Lavar el auto" onChange={handleStringChange}></input>
+                <input id="nombre_servicio" type="text" placeholder={props.servicio ? props.servicio.nombre : "Lavar el auto"} onChange={handleStringChange}></input>
             </div>
 
             {props.servicio ?

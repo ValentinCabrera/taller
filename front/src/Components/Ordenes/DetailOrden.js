@@ -63,7 +63,7 @@ export default function DetailOrden(props) {
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <div>
                 <p>Descripcion:</p>
-                <input id="descripcion_orden" type="text" placeholder="El motor tiene una falla" />
+                <input id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} />
             </div>
 
             {props.orden ?

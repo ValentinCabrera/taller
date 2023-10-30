@@ -57,15 +57,15 @@ export default function DetailTecnico(props) {
         <div>
             <div>
                 <p>Nombre: </p>
-                <input id="nombre" type="text" placeholder="Valentin" onChange={handleStringChange}></input>
+                <input id="nombre" type="text" placeholder={props.tecnico ? props.tecnico.nombre : "Valentin"} onChange={handleStringChange}></input>
             </div>
             <div>
                 <p>Apellido: </p>
-                <input id="apellido" type="text" placeholder="Cabrera" onChange={handleStringChange}></input>
+                <input id="apellido" type="text" placeholder={props.tecnico ? props.tecnico.apellido : "Cabrera"} onChange={handleStringChange}></input>
             </div>
             <div>
                 <p>Telefono:</p>
-                <input id="telefono" type="text" onChange={handleTelefonoChange} placeholder="3534192373" />
+                <input id="telefono" type="text" onChange={handleTelefonoChange} placeholder={props.tecnico ? props.tecnico.telefono : "3534192373"} />
             </div>
 
             {props.tecnico ?

@@ -34,29 +34,13 @@ export default function DetailOrden(props) {
                 .then(response => {
                     alert(`La orden ${response.id} se creo con exito.`);
                     props.setForceRender({});
-                    descripcion.value = "";
-                    setCliente();
-                    setVehiculo();
-                    setServicios([]);
+                    props.handleSetModal();
                 })
                 .catch(error => alert(error));
 
         } else
             alert("Por favor, rellena todos los campos.");
     };
-
-    function handleDeleteOrden() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar el vehiculo ${props.orden.id}?`)
-
-        if (resultado) (
-            postDeleteOrden(props.orden.id)
-                .then(response => {
-                    props.setForceRender({})
-                    props.serCurrentOrden();
-                })
-                .catch(error => { console.log(error) })
-        );
-    }
 
     function handleAlterOrden() {
         let descripcion = props.orden.descripcion;
@@ -88,17 +72,16 @@ export default function DetailOrden(props) {
             <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <div>
-                <p>Descripcion:</p>
-                <input id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} onChange={handleStringChange} />
+                <p className='modal-close-label'>Descripcion:</p>
+                <input className='modal-close-input' id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} onChange={handleStringChange} />
             </div>
 
             {props.orden ?
                 <div>
-                    <button onClick={handleAlterOrden}><p>Modificar orden</p></button>
-                    <button onClick={handleDeleteOrden}><p>Eliminar orden</p></button>
+                    <button className='modal-close-button' onClick={handleAlterOrden}><p>Modificar orden</p></button>
                 </div>
                 :
-                <button onClick={handleNewOrden}><p>Crear orden</p></button>
+                <button className='modal-close-button' onClick={handleNewOrden}><p>Crear orden</p></button>
             }
         </div>
     );

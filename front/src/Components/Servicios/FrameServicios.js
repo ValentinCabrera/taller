@@ -30,12 +30,16 @@ export function FrameServicios(props) {
         }
     }
 
+    function handleSetModal() {
+        setModal(false);
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p>Servicios: </p>
                 <div>{props.servicios.length > 0 ? <p>{props.servicios.length} seleccionados</p> : <p>Ninguno</p>}</div>
-                <button onClick={() => setModal(true)}>Agregar</button>
+                <button className='modal-close-button' onClick={() => setModal(true)}>+</button>
             </div>
             <Select
                 data={props.servicios}
@@ -43,15 +47,20 @@ export function FrameServicios(props) {
                 itemKey="nombre"
                 setCurrentItem={handleRemoveServicio} />
 
-            {modal && <div>
-                <button onClick={() => setModal(false)}>Volver</button>
-
-                <Select
-                    data={servicios}
-                    itemName={[["nombre"]]}
-                    itemKey="nombre"
-                    setCurrentItem={handleAddServicio} />
-            </div>}
+            {modal &&
+                <div class="modal-background">
+                    <div class="modal-content scroll h100">
+                        <div className='row w100'>
+                            <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
+                        </div>
+                        <Select
+                            data={servicios}
+                            itemName={[["nombre"]]}
+                            itemKey="nombre"
+                            setCurrentItem={handleAddServicio} />
+                    </div>
+                </div>
+            }
         </div>
     )
 }

@@ -1,2 +1,3 @@
-verificar que no se pueda repetir entidades
-notificar cuando se crea un vehiculo que fue elminado
+poner claves unicas
+agregar clientes con mismo numero telefono
+agregar verificacion de modelos iguales

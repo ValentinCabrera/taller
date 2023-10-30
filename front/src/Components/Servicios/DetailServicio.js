@@ -43,16 +43,15 @@ export default function DetailServicio(props) {
         <div>
             {props.servicio ?
                 <div>
-                    <p>Nombre: {props.servicio.nombre}</p>
-                    <button onClick={handleDeleteServicio}><p>Eliminar servicio</p></button>
+                    <p className="detail-cliente-label" >Nombre: {props.servicio.nombre}</p>
                 </div>
                 :
                 <div>
                     <div>
-                        <p>Nombre: </p>
-                        <input id="nombre_servicio" type="text" placeholder={props.servicio ? props.servicio.nombre : "Lavar el auto"} onChange={handleStringChange}></input>
+                        <p className="detail-cliente-label">Nombre: </p>
+                        <input className="detail-cliente-input" id="nombre_servicio" type="text" placeholder={props.servicio ? props.servicio.nombre : "Lavar el auto"} onChange={handleStringChange}></input>
                     </div>
-                    <button onClick={handleNewServicio}><p>Crear servicio</p></button>
+                    <button className="detail-cliente-button" onClick={handleNewServicio}><p>Crear servicio</p></button>
                 </div>
             }
         </div>

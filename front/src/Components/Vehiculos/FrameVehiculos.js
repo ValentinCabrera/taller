@@ -21,12 +21,16 @@ export default function FrameVehiculos(props) {
         getVehiculos().then(response => setVehiculos(response));
     }
 
+    function handleSetModal() {
+        setModalVehiculo(false);
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <p>Vehiculo: </p>
                 {props.vehiculo && <p>{props.vehiculo.patente}</p>}
-                <button onClick={() => setModalVehiculo(true)}>+</button>
+                <button className='modal-close-button' onClick={() => setModalVehiculo(true)}>+</button>
             </div>
 
             <Select
@@ -36,9 +40,13 @@ export default function FrameVehiculos(props) {
                 setCurrentItem={props.setVehiculo} />
 
             {modalVehiculo &&
-                <div style={{ position: 'fixed', right: 0, top: 0 }}>
-                    <button onClick={() => setModalVehiculo(false)}>Volver</button>
-                    <DetailVehiculo setForceRender={setForceRender} />
+                <div class="modal-background">
+                    <div class="modal-content scroll h100">
+                        <div className='row w100'>
+                            <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
+                        </div>
+                        <DetailVehiculo setForceRender={setForceRender} handleSetModal={setModalVehiculo} />
+                    </div>
                 </div>
             }
         </div>

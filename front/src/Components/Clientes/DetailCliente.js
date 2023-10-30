@@ -35,19 +35,6 @@ export default function DetailCliente(props) {
             alert("Por favor, rellena todos los campos.");
     };
 
-    function handleDeleteCliente() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar el cliente ${props.cliente.nombre} ${props.cliente.apellido}?`)
-
-        if (resultado) (
-            postDeleteCliente(props.cliente.telefono)
-                .then(response => {
-                    props.setForceRender({})
-                    props.setCurrentCliente();
-                })
-                .catch(error => { console.log(error) })
-        );
-    }
-
     function handleTelefonoChange(e) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
             if (!/^\d*$/.test(e.target.value) || e.target.value.length > 10) e.target.value = e.target.value.slice(0, -1)
@@ -108,58 +95,89 @@ export default function DetailCliente(props) {
             .then(response => {
                 alert(`El cliente ${props.cliente.id} se modifico con exito.`);
                 props.setForceRender({});
-                props.setCurrentCliente();
-                telefono_input.value = "";
-                nombre_input.value = "";
-                apellido_input.value = "";
-                mail_input.value = "";
-                direccion_input.value = "";
-                ultima_visita_input.value = "";
+                props.handleSetModal();
             })
             .catch(error => alert(`El cliente ${props.cliente.id} no se pudo modificar.`));
     };
 
     return (
-        <div>
+        <div className="detail-cliente-container">
             <div>
-                <p>Nombre: </p>
-                <input id="nombre_cliente" type="text" placeholder={props.cliente ? props.cliente.nombre : "Valentin"} onChange={handleStringChange}></input>
+                <label className="detail-cliente-label">Nombre: </label>
+                <input
+                    id="nombre_cliente"
+                    type="text"
+                    placeholder={props.cliente ? props.cliente.nombre : "Valentin"}
+                    className="detail-cliente-input"
+                    onChange={handleStringChange}
+                />
             </div>
             <div>
-                <p>Apellido: </p>
-                <input id="apellido_cliente" type="text" placeholder={props.cliente ? props.cliente.apellido : "Cabrera"} onChange={handleStringChange}></input>
+                <label className="detail-cliente-label">Apellido: </label>
+                <input
+                    id="apellido_cliente"
+                    type="text"
+                    placeholder={props.cliente ? props.cliente.apellido : "Cabrera"}
+                    className="detail-cliente-input"
+                    onChange={handleStringChange}
+                />
             </div>
             <div>
-                <p>Telefono:</p>
-                <input id="telefono_cliente" type="text" onChange={handleTelefonoChange} placeholder={props.cliente ? props.cliente.telefono : "3534192373"} />
+                <label className="detail-cliente-label">Telefono:</label>
+                <input
+                    id="telefono_cliente"
+                    type="text"
+                    onChange={handleTelefonoChange}
+                    placeholder={props.cliente ? props.cliente.telefono : "3534192373"}
+                    className="detail-cliente-input"
+                />
             </div>
             <div>
-                <p>Mail: </p>
-                <input id="mail_cliente" type="text" placeholder={props.cliente ? props.cliente.mail : "ejemplo@dominio.com"} onChange={handleMailChange} />
+                <label className="detail-cliente-label">Mail: </label>
+                <input
+                    id="mail_cliente"
+                    type="text"
+                    placeholder={props.cliente ? props.cliente.mail : "ejemplo@dominio.com"}
+                    onChange={handleMailChange}
+                    className="detail-cliente-input"
+                />
             </div>
             <div>
-                <p>Direccion: </p>
-                <input id="direccion_cliente" type="text" placeholder={props.cliente ? props.cliente.direccion : "Barrio, calle, numero"} onChange={handleDireccionChange} />
+                <label className="detail-cliente-label">Direccion: </label>
+                <input
+                    id="direccion_cliente"
+                    type="text"
+                    placeholder={props.cliente ? props.cliente.direccion : "Barrio, calle, numero"}
+                    onChange={handleDireccionChange}
+                    className="detail-cliente-input"
+                />
             </div>
-            {props.cliente && props.cliente.ultima_visita ?
+            {props.cliente && props.cliente.ultima_visita ? (
                 <div>
-                    <p>Ultima visita: {props.cliente.ultima_visita.replace('T', ' ').slice(0, 16)}</p>
-                    <input id="ultima_visita_cliente" type="datetime-local" max={maxDatetime} />
-                </div> :
-                <div>
-                    <p>Ultima visita: </p>
-                    <input id="ultima_visita_cliente" type="datetime-local" max={maxDatetime} />
+                    <div>
+                        <label className="detail-cliente-label">Ultima visita:</label>
+                    </div>
+                    <div>
+                        <label className="detail-cliente-label">{props.cliente.ultima_visita.replace('T', ' ').slice(0, 16)}</label>
+                        <input id="ultima_visita_cliente" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />
+                    </div>
                 </div>
-            }
+            ) : (
+                <div>
+                    <label className="detail-cliente-label">Ultima visita: </label>
+                    <input id="ultima_visita_cliente" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />
+                </div>
+            )}
 
-            {props.cliente ?
-                <div>
-                    <button onClick={handleAlterCliente}><p>Modificar cliente</p></button>
-                    <button onClick={handleDeleteCliente}><p>Eliminar cliente</p></button>
-                </div>
-                :
-                <button onClick={handleNewCliente}><p>Crear cliente</p></button>
-            }
+            {props.cliente ? (
+                <button className="detail-cliente-button" onClick={handleAlterCliente}>
+                    <p>Modificar cliente</p>
+                </button>
+            ) : (
+                <button className="detail-cliente-button" onClick={handleNewCliente}>
+                    <p>Crear cliente</p>
+                </button>
+            )}
         </div>
     );
 }

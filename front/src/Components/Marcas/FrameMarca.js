@@ -10,7 +10,6 @@ export default function FrameMarca(props) {
 
     useEffect(() => {
         updateData();
-        setModalMarca(false);
     }, [forceRender])
 
     useEffect(() => {
@@ -22,12 +21,16 @@ export default function FrameMarca(props) {
             .then(response => setMarcas(response));
     }
 
+    function handleSetModal() {
+        setModalMarca(false);
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-                <p>Marca: </p>
+                <p className="detail-cliente-label">Marca: </p>
                 {props.marca && <p>{props.marca.nombre}</p>}
-                <button onClick={() => setModalMarca(true)}>+</button>
+                <button className='modal-close-button' onClick={() => setModalMarca(true)}>+</button>
             </div>
 
             <Select
@@ -37,9 +40,13 @@ export default function FrameMarca(props) {
                 setCurrentItem={props.setMarca} />
 
             {modalMarca &&
-                <div style={{ position: 'fixed', right: 0, top: 0 }}>
-                    <button onClick={() => setModalMarca(false)}>Volver</button>
-                    <DetailMarca setForceRender={setForceRender} />
+                <div class="modal-background">
+                    <div class="modal-content">
+                        <div className='row w100'>
+                            <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
+                        </div>
+                        <DetailMarca setForceRender={setForceRender} handleSetModal={setModalMarca} />
+                    </div>
                 </div>
             }
         </div>

@@ -9,26 +9,13 @@ export default function DetailMarca(props) {
                 .then(response => {
                     alert(`La marca ${nombre.value} se creo con exito.`);
                     props.setForceRender({});
-                    nombre.value = "";
+                    props.handleSetModal();
                 })
                 .catch(error => alert(`La marca ${nombre.value} ya esta registrada.`));
 
         } else
             alert("Por favor, rellena todos los campos.");
     };
-
-    function handleDeleteMarca() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar la marca ${props.marca.nombre}?`)
-
-        if (resultado) (
-            postDeleteMarca(props.marca.nombre)
-                .then(response => {
-                    props.setForceRender({})
-                    props.setCurrentMarca();
-                })
-                .catch(error => { console.log(error) })
-        );
-    }
 
     function handleStringChange(e) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
@@ -42,20 +29,18 @@ export default function DetailMarca(props) {
     return (
         <div>
             <div>
-                <p>Nombre: </p>
                 {props.marca ?
-                    <p>Marca: {props.marca.nombre}</p>
+                    <p className="detail-cliente-label">Nombre: {props.marca.nombre}</p>
                     :
-                    <input id="nombre_marca" type="text" placeholder="Jeep" onChange={handleStringChange} />
+                    <div>
+                        <p className="detail-cliente-label">Nombre:</p>
+                        <input className="detail-cliente-input" id="nombre_marca" type="text" placeholder="Jeep" onChange={handleStringChange} />
+                    </div>
                 }
             </div>
 
-            {props.marca ?
-                <div>
-                    <button onClick={handleDeleteMarca}><p>Eliminar marca</p></button>
-                </div>
-                :
-                <button onClick={handleNewMarca}><p>Crear marca</p></button>
+            {!props.marca &&
+                <button className="detail-cliente-button" onClick={handleNewMarca}><p>Crear marca</p></button>
             }
         </div>
     );

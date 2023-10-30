@@ -22,12 +22,16 @@ export default function FrameClientes(props) {
             .then(response => setClientes(response));
     }
 
+    function handleSetModal() {
+        setModalCliente(false);
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <p>Cliente: </p>
                 {props.cliente && <p>{props.cliente.nombre} {props.cliente.apellido}</p>}
-                <button onClick={() => setModalCliente(true)}>+</button>
+                <button className='modal-close-button' onClick={() => setModalCliente(true)}>+</button>
             </div>
 
             <Select
@@ -37,9 +41,12 @@ export default function FrameClientes(props) {
                 setCurrentItem={props.setCliente} />
 
             {modalCliente &&
-                <div style={{ position: 'fixed', right: 0, top: 0 }}>
-                    <button onClick={() => setModalCliente(false)}>Volver</button>
-                    <DetailCliente setForceRender={setForceRender} />
+                <div class="modal-background">
+                    <div class="modal-content">
+                        <div className='row w100'>
+                            <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
+                        </div>
+                        <DetailCliente setForceRender={setForceRender} handleSetModal={setModalCliente} />                        </div>
                 </div>
             }
         </div>

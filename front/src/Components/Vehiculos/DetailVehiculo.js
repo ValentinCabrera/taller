@@ -48,10 +48,7 @@ export default function DetailVehiculo(props) {
                     .then(response => {
                         alert(`El vehiculo ${getPatente()} se creo con exito.`);
                         props.setForceRender({});
-                        setPatente(["", "", "", "", "", ""]);
-                        año.value = "";
-                        setModelo();
-                        setCliente();
+                        props.handleSetModal();
                     })
                     .catch(error => alert(`El vehiculo con la patente ${getPatente()} ya existe.`));
 
@@ -83,19 +80,6 @@ export default function DetailVehiculo(props) {
 
             }
         }
-    }
-
-    function handleDeleteVehiculo() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar el vehiculo ${props.vehiculo.patente}?`)
-
-        if (resultado) (
-            postDeleteVehiculo(props.vehiculo.patente)
-                .then(response => {
-                    props.setForceRender({})
-                    props.setCurrentVehiculo();
-                })
-                .catch(error => { console.log(error) })
-        );
     }
 
     function handleAñoChange(e) {
@@ -138,12 +122,12 @@ export default function DetailVehiculo(props) {
     return (
         <div>
             <div>
-                <p>Patente:</p>
+                <p className="detail-cliente-label" >Patente:</p>
                 <div id="patente_vehiculo" style={{ display: 'flex' }}>{props.vehiculo ? props.vehiculo.patente : <PatenteRender />}</div>
             </div>
             <div>
-                <p>Año:</p>
-                <input id="año_vehiculo" type="text" onChange={handleAñoChange} placeholder={props.vehiculo ? props.vehiculo.año : "2023"} />
+                <p className="detail-cliente-label" >Año:</p>
+                <input className="detail-cliente-input" id="año_vehiculo" type="text" onChange={handleAñoChange} placeholder={props.vehiculo ? props.vehiculo.año : "2023"} />
             </div>
 
             <FrameModelos setModelo={setModelo} modelo={modelo} />
@@ -151,11 +135,10 @@ export default function DetailVehiculo(props) {
 
             {props.vehiculo ?
                 <div>
-                    <button onClick={handleAlterVehiculo}><p>Modificar vehiculo</p></button>
-                    <button onClick={handleDeleteVehiculo}><p>Eliminar vehiculo</p></button>
+                    <button className="detail-cliente-button" onClick={handleAlterVehiculo}><p>Modificar vehiculo</p></button>
                 </div>
                 :
-                <button onClick={handleNewVehiculo}><p>Crear vehiculo</p></button>
+                <button className="detail-cliente-button" onClick={handleNewVehiculo}><p>Crear vehiculo</p></button>
             }
         </div>
     );

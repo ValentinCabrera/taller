@@ -21,28 +21,13 @@ export default function DetailModelo(props) {
                 .then(response => {
                     alert(`El modelo ${marca.nombre} ${nombre.value} se creo con exito.`);
                     props.setForceRender({});
-                    nombre.value = "";
-                    setMarca();
+                    props.handleSetModal();
                 })
                 .catch(error => alert(error));
 
         } else
             alert("Por favor, rellena todos los campos.");
     };
-
-    function handleDeleteModelo() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar el modelo ${props.modelo.marca.nombre} ${props.modelo.nombre}?`)
-
-        if (resultado) (
-            postDeleteModelo(props.modelo.id)
-                .then(response => {
-                    props.setForceRender({})
-                    props.setCurrentModelo();
-                })
-                .catch(error => { console.log(error) })
-        );
-    }
-
 
     function handleStringChange(e) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
@@ -59,20 +44,19 @@ export default function DetailModelo(props) {
 
             {props.modelo ?
                 <div>
-                    <p>Nombre: {props.modelo.nombre}</p>
-                    <p>Marca: {props.modelo.marca.nombre}</p>
-                    <button onClick={handleDeleteModelo}><p>Eliminar modelo</p></button>
+                    <p className="detail-cliente-label">Nombre: {props.modelo.nombre}</p>
+                    <p className="detail-cliente-label">Marca: {props.modelo.marca.nombre}</p>
                 </div>
                 :
                 <div>
                     <div>
-                        <p>Nombre:</p>
-                        <input id="nombre_modelo" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
+                        <p className="detail-cliente-label">Nombre:</p>
+                        <input className="detail-cliente-input" id="nombre_modelo" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
                     </div>
 
 
                     <FrameMarca setMarca={setMarca} marca={marca} />
-                    <button onClick={handleNewModelo}><p>Crear modelo</p></button>
+                    <button className="detail-cliente-button" onClick={handleNewModelo}><p>Crear modelo</p></button>
                 </div>
             }
         </div>

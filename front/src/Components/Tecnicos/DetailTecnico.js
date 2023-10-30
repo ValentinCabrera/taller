@@ -12,9 +12,7 @@ export default function DetailTecnico(props) {
                     .then(response => {
                         alert(`El tecnivo ${nombre} ${apellido} se creo con exito.`);
                         props.setForceRender({});
-                        telefono.value = "";
-                        nombre.value = "";
-                        apellido.value = "";
+                        props.handleSetModal();
                     })
                     .catch(error => alert(`El numero de telefono ${telefono} ya esta registrado.`));
 
@@ -23,19 +21,6 @@ export default function DetailTecnico(props) {
         } else
             alert("Por favor, rellena todos los campos.");
     };
-
-    function handleDeleteTecnico() {
-        let resultado = window.confirm(`¿Está seguro que desea eliminar el tecnico ${props.tecnico.nombre} ${props.tecnico.apellido}?`)
-
-        if (resultado) (
-            postDeleteTecnico(props.tecnico.telefono)
-                .then(response => {
-                    props.setForceRender({})
-                    props.setCurrentTecnico();
-                })
-                .catch(error => { console.log(error) })
-        );
-    }
 
     function handleTelefonoChange(e) {
         if (!(e.nativeEvent.inputType === "deleteContentBackward")) {
@@ -73,10 +58,7 @@ export default function DetailTecnico(props) {
             .then(response => {
                 alert(`El tecnico ${props.tecnico.id} se modifico con exito.`);
                 props.setForceRender({});
-                props.setCurrentTecnico();
-                telefono_input.value = "";
-                nombre_input.value = "";
-                apellido_input.value = "";
+                props.handleSetModal();
             })
             .catch(error => alert(`El tecnico ${props.tecnico.id} no se pudo modificar.`));
     };
@@ -84,25 +66,24 @@ export default function DetailTecnico(props) {
     return (
         <div>
             <div>
-                <p>Nombre: </p>
-                <input id="nombre_tecnico" type="text" placeholder={props.tecnico ? props.tecnico.nombre : "Valentin"} onChange={handleStringChange}></input>
+                <p className="detail-cliente-label">Nombre: </p>
+                <input className="detail-cliente-input" id="nombre_tecnico" type="text" placeholder={props.tecnico ? props.tecnico.nombre : "Valentin"} onChange={handleStringChange}></input>
             </div>
             <div>
-                <p>Apellido: </p>
-                <input id="apellido_tecnico" type="text" placeholder={props.tecnico ? props.tecnico.apellido : "Cabrera"} onChange={handleStringChange}></input>
+                <p className="detail-cliente-label">Apellido: </p>
+                <input className="detail-cliente-input" id="apellido_tecnico" type="text" placeholder={props.tecnico ? props.tecnico.apellido : "Cabrera"} onChange={handleStringChange}></input>
             </div>
             <div>
-                <p>Telefono:</p>
-                <input id="telefono_tecnico" type="text" onChange={handleTelefonoChange} placeholder={props.tecnico ? props.tecnico.telefono : "3534192373"} />
+                <p className="detail-cliente-label">Telefono:</p>
+                <input className="detail-cliente-input" id="telefono_tecnico" type="text" onChange={handleTelefonoChange} placeholder={props.tecnico ? props.tecnico.telefono : "3534192373"} />
             </div>
 
             {props.tecnico ?
                 <div>
-                    <button onClick={handleAlterTecnico}><p>Modificar tecnico</p></button>
-                    <button onClick={handleDeleteTecnico}><p>Eliminar tecnico</p></button>
+                    <button className="detail-cliente-button" onClick={handleAlterTecnico}><p>Modificar tecnico</p></button>
                 </div>
                 :
-                <button onClick={handleNewTecnico}><p>Crear tecnico</p></button>
+                <button className="detail-cliente-button" onClick={handleNewTecnico}><p>Crear tecnico</p></button>
             }
         </div>
     );

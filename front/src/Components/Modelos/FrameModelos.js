@@ -22,12 +22,16 @@ export default function FrameModelos(props) {
             .then(response => setModelos(response));
     }
 
+    function handleSetModal() {
+        setModalModelo(false);
+    }
+
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <p>Modelo: </p>
                 {props.modelo && <p>{props.modelo.nombre} {props.modelo.marca.nombre}</p>}
-                <button onClick={() => setModalModelo(true)}>+</button>
+                <button className='modal-close-button' onClick={() => setModalModelo(true)}>+</button>
             </div>
 
             <Select
@@ -37,9 +41,12 @@ export default function FrameModelos(props) {
                 setCurrentItem={props.setModelo} />
 
             {modalModelo &&
-                <div style={{ position: 'fixed', right: 0, top: 0 }}>
-                    <button onClick={() => setModalModelo(false)}>Volver</button>
-                    <DetailModelo setForceRender={setForceRender} />
+                <div class="modal-background">
+                    <div class="modal-content">
+                        <div className='row w100'>
+                            <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
+                        </div>
+                        <DetailModelo setForceRender={setForceRender} handleSetModal={setModalModelo} />                    </div>
                 </div>
             }
         </div>

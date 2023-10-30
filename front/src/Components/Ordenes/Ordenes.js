@@ -1,82 +1,19 @@
-import { useEffect, useState } from "react";
-import { getOrdenes, getOrdenesDeleted, postRecoverOrden } from "../../Utils/Orden";
-import Listar from "../Listar";
-import DetailOrden from "./DetailOrden";
-import Select from "../Select";
+import { useState } from "react";
 
-export default function Ordenes() {
-    const [activeData, setActiveData] = useState();
-    const [deletedData, setDeletedData] = useState();
-    const [frame, setFrame] = useState();
-    const [currentOrden, setCurrentOrden] = useState();
-    const [forceRender, setForceRender] = useState({});
+import OrdenTablActivos from "./OrdenTablaActivos";
+import OrdenTablaEliminados from "./OrdenTablaEliminados";
 
-    useEffect(() => {
-        updateData();
-    }, [forceRender]);
+export default function Marcas() {
+    const [frame, setFrame] = useState(true);
 
-    function updateData() {
-        getOrdenes().then(response => setActiveData(response));
-        getOrdenesDeleted().then(response => setDeletedData(response));
-    }
+    const tablaActivos = <OrdenTablActivos
+        changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>} />;
 
-    function handleSetView() {
-        setFrame(!frame);
-        setCurrentOrden();
-    }
-
-    function handleRecoverOrden() {
-        postRecoverOrden(currentOrden.id)
-            .then(response => {
-                setForceRender({});
-                setCurrentOrden();
-                alert(`Orden ${currentOrden.id} recuperada con exito.`)
-            })
-            .catch(error => console.log(error))
-    }
-
-    const listarActivos =
-        <Listar
-            data={activeData}
-            titulo="Ordenes"
-            itemName={[["id"]]}
-            itemKey="id"
-            buttonView={<button onClick={handleSetView}>Eliminados</button>}
-            buttonCurrent={<button onClick={() => { setCurrentOrden() }}>Crear orden</button>}
-            currentItem={currentOrden}
-            setCurrentItem={setCurrentOrden} />
-
-    const listarDeleted =
-        <Listar
-            data={deletedData}
-            titulo="Eliminados"
-            itemName={[["id"]]}
-            itemKey="id"
-            buttonView={<button onClick={handleSetView}>Activos</button>}
-            currentItem={currentOrden}
-            setCurrentItem={setCurrentOrden} />
-
-    function RecoverOrden() {
-        if (currentOrden) return (
-            <div>
-                <h2>Reucuperar orden</h2>
-                <p>Id: {currentOrden.id}</p>
-                <p>Cliente: {currentOrden.cliente.nombre} {currentOrden.cliente.apellido}</p>
-                <p>Vehiculo: {currentOrden.vehiculo.patente}</p>
-                <Select
-                    data={currentOrden.servicios}
-                    itemName={[["nombre"]]}
-                    itemKey="nombre" />
-                {currentOrden.descripcion ? <p>Descripcion: {currentOrden.descripcion}</p> : <p>Descripcion: Ninguna</p>}
-                <button onClick={handleRecoverOrden}>Recuperar</button>
-            </div>
-        );
-    }
+    const tablaEliminados = <OrdenTablaEliminados changeFrame={<button className="head-button" onClick={() => setFrame(true)}>Activos</button>} />;
 
     return (
-        <div className="conteiner">
-            {!frame ? activeData && listarActivos : deletedData && listarDeleted}
-            {!frame ? <DetailOrden orden={currentOrden} setForceRender={setForceRender} setCurrentOrden={setCurrentOrden} /> : <RecoverOrden />}
+        <div>
+            {frame ? tablaActivos : tablaEliminados}
         </div >
     )
 };

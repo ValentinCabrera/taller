@@ -29,6 +29,7 @@ export default function MarcaTablActivos(props) {
                 .then(response => {
                     setForceRender({})
                     setCurrentItem();
+                    alert(`La marca ${item.nombre} fue eliminada con exito.`)
                 })
                 .catch(error => { console.log(error) })
         );

@@ -28,6 +28,7 @@ export default function TecnicoTablaActivos(props) {
                 .then(response => {
                     setForceRender({})
                     setCurrentItem();
+                    alert(`El tecnico ${item.nombre} ${item.apellido} se elimino con exito.`)
                 })
                 .catch(error => alert(`Error al eliminar el tecnico ${item.nombre} ${item.apellido}.`))
         );

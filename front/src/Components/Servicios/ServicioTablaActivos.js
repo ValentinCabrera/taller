@@ -30,6 +30,7 @@ export default function ModelosTablActivos(props) {
                 .then(response => {
                     setForceRender({})
                     setCurrentItem();
+                    alert(`El servicio "${item.nombre}" se elimino con exito.`)
                 })
                 .catch(error => { console.log(error) })
         );

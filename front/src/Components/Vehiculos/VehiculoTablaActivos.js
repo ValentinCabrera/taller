@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { getVehiculos, postDeleteVehiculo } from "../../Utils/Vehiculo";
 import DetailVehiculo from "./DetailVehiculo";
+import editIcon from '../../Static/edit.png';
+import deleteIcon from '../../Static/delete.png';
 
 
 export default function VehiculoTablActivos(props) {
@@ -32,6 +34,7 @@ export default function VehiculoTablActivos(props) {
                 .then(response => {
                     setForceRender({})
                     setCurrentItem();
+                    alert(`El vehiculo ${item.patente} se elimino con exito.`)
                 })
                 .catch(error => { console.log(error) })
         );
@@ -136,8 +139,12 @@ export default function VehiculoTablActivos(props) {
                             <td>{item.cliente.nombre}</td>
                             <td>{item.cliente.apellido}</td>
                             <td className='action-box'>
-                                <button className='action-button red' onClick={() => handleDeleteItem(item)}>-</button>
-                                <button className='action-button green' onClick={() => handleSetModal(item)}>+</button>
+                                <button className='action-button delete-button' onClick={() => handleDeleteItem(item)}>
+                                    <img src={deleteIcon} title="Eliminar" />
+                                </button>
+                                <button className='action-button edit-button' onClick={() => handleSetModal(item)}>
+                                    <img src={editIcon} alt="Editar" />
+                                </button>
                             </td>
                         </tr>
                     ))}
@@ -145,5 +152,5 @@ export default function VehiculoTablActivos(props) {
             </table>
         </div >
     );
-
 };
+

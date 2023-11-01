@@ -32,6 +32,7 @@ export default function ModeloTablActivos(props) {
                 .then(response => {
                     setForceRender({})
                     setCurrentItem();
+                    alert(`El modelo ${item.marca.nombre} ${item.nombre} se elimino correctamente.`)
                 })
                 .catch(error => { console.log(error) })
         );

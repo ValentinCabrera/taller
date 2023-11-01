@@ -33,6 +33,7 @@ export default function OrdenTablActivos(props) {
                 .then(response => {
                     setForceRender({})
                     setCurrentItem();
+                    alert(`La orden numero ${item.id} se elimino con exito.`)
                 })
                 .catch(error => { console.log(error) })
         );

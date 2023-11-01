@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getVehiculosDeleted, postRecoverVehiculo } from "../../Utils/Vehiculo";
+import backIcon from '../../Static/back.png';
 
 
 export default function VehiculoTablaEliminados(props) {
@@ -108,7 +109,9 @@ export default function VehiculoTablaEliminados(props) {
                             <td>{item.cliente.nombre}</td>
                             <td>{item.cliente.apellido}</td>
                             <td className='action-box'>
-                                <button className='action-button green' onClick={() => handleRecoverItem(item)}>+</button>
+                                <button className='action-button back-button' onClick={() => handleRecoverItem(item)}>
+                                    <img src={backIcon} alt="Editar" />
+                                </button>
                             </td>
                         </tr>
                     ))}

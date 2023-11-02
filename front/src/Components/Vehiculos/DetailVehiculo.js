@@ -20,9 +20,9 @@ export default function DetailVehiculo(props) {
     })
 
     useEffect(() => {
-        if (props.vehiculo) {
-            setCliente(props.vehiculo.cliente);
-            setModelo(props.vehiculo.modelo);
+        if (props.item) {
+            setCliente(props.item.cliente);
+            setModelo(props.item.modelo);
         } else {
             setCliente();
             setModelo();
@@ -30,7 +30,7 @@ export default function DetailVehiculo(props) {
         }
 
         document.getElementById("año_vehiculo").value = "";
-    }, [props.vehiculo])
+    }, [props.item])
 
     function getPatente() {
         let pantenteStr = "";
@@ -102,7 +102,7 @@ export default function DetailVehiculo(props) {
 
     function handleAlterVehiculo() {
         let año_input = document.getElementById("año_vehiculo");
-        let año = props.vehiculo.año;
+        let año = props.item.año;
 
         if (año_input.value) {
             if (2024 >= parseInt(año_input.value) && parseInt(año_input.value) >= 1886) {
@@ -110,30 +110,30 @@ export default function DetailVehiculo(props) {
             } else return alert("El año del vehiculo debe ser entre 1886 y 2023.")
         }
 
-        postAlterVehiculo({ "patente": props.vehiculo.patente, "modelo": { "id": modelo.id }, "cliente": { "id": cliente.id }, "año": año })
+        postAlterVehiculo({ "patente": props.item.patente, "modelo": { "id": modelo.id }, "cliente": { "id": cliente.id }, "año": año })
             .then(response => {
-                alert(`El vehiculo ${props.vehiculo.patente} se modifico con exito.`);
+                alert(`El vehiculo ${props.item.patente} se modifico con exito.`);
                 props.setForceRender({});
                 props.setCurrentVehiculo();
             })
-            .catch(error => alert(`El vehiculo con la patente ${props.vehiculo.patente} no se pudo modificar.`));
+            .catch(error => alert(`El vehiculo con la patente ${props.item.patente} no se pudo modificar.`));
     };
 
     return (
         <div>
             <div>
                 <p className="detail-cliente-label" >Patente:</p>
-                <div id="patente_vehiculo" style={{ display: 'flex' }}>{props.vehiculo ? props.vehiculo.patente : <PatenteRender />}</div>
+                <div id="patente_vehiculo" style={{ display: 'flex' }}>{props.item ? props.item.patente : <PatenteRender />}</div>
             </div>
             <div>
                 <p className="detail-cliente-label" >Año:</p>
-                <input className="detail-cliente-input" id="año_vehiculo" type="text" onChange={handleAñoChange} placeholder={props.vehiculo ? props.vehiculo.año : "2023"} />
+                <input className="detail-cliente-input" id="año_vehiculo" type="text" onChange={handleAñoChange} placeholder={props.item ? props.item.año : "2023"} />
             </div>
 
             <FrameModelos setModelo={setModelo} modelo={modelo} />
             <FrameClientes setCliente={setCliente} cliente={cliente} />
 
-            {props.vehiculo ?
+            {props.item ?
                 <div>
                     <button className="detail-cliente-button" onClick={handleAlterVehiculo}><p>Modificar vehiculo</p></button>
                 </div>

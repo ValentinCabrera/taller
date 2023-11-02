@@ -22,6 +22,7 @@ import menuIcon from './Static/navIcons/menu.png';
 export default function App() {
   const [currentApp, setCurrentApp] = useState(<Vehiculos />);
   const [navOpen, setNavOpen] = useState(true);
+
   const secciones = [
     { componente: <Clientes />, largo: "Clientes", corto: <img src={clienteIcon} className='nav-icon' /> },
     { componente: <Marcas />, largo: "Marcas", corto: <img src={marcaIcon} className='nav-icon' /> },
@@ -39,11 +40,13 @@ export default function App() {
           <div className='nav-bar-menu' onClick={() => setNavOpen(!navOpen)}>{navOpen ? "Colapsar" : <img src={menuIcon} className='nav-icon' />}</div>
           <hr className='nav-sep' />
           {secciones.map(seccion => (
-            <div onClick={() => setCurrentApp(seccion.componente)}>{navOpen ? seccion.largo : seccion.corto}</div>
+            <div className={currentApp.type === seccion.componente.type && "nav-selected"} onClick={() => setCurrentApp(seccion.componente)}>
+              {navOpen ? seccion.largo : seccion.corto}
+            </div>
           ))}
         </div>
       </div>
-      <div className={`content-${!navOpen}`}>
+      <div className={`content-conteiner content-${!navOpen}`}>
         {currentApp}
       </div>
     </div >

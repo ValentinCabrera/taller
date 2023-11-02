@@ -1,23 +1,22 @@
-.nav-div-true {
-  width: 15%;
+.nav-div-true,
+.nav-div-false {
   position: fixed;
   top: 0;
   bottom: 0;
   background-color: #b3b3b3;
   overflow: hidden;
+  transition: width 0.8s ease;
+}
+
+.nav-div-true {
+  width: 15%;
 }
 
 .nav-div-false {
-  width: 5%;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  background-color: #b3b3b3;
-  overflow: hidden;
+  width: 6%;
 }
 
 .nav-div-false div {
-  padding: 0px;
   padding-top: 10px;
 }
 
@@ -29,6 +28,7 @@
 
 .nav-bar {
   padding: 10px;
+  font-size: 25px;
 }
 
 .nav-bar div {
@@ -45,16 +45,21 @@
   background-color: #ddd;
 }
 
+.content-conteiner {
+  transition: margin 0.8s ease;
+  position: relative;
+}
+
 .content-false {
   margin-left: 15%;
 }
 
 .content-true {
-  margin-left: 5%;
+  margin-left: 6%;
 }
 
 .nav-icon {
-  width: 40px;
+  width: 35px;
 }
 
 .nav-icon-menu {
@@ -63,6 +68,10 @@
 }
 
 .nav-sep {
-  border: 2px solid black;
+  border: 3px solid black;
   margin: 10px 0;
+}
+
+.nav-selected {
+  background-color: #eee;
 }

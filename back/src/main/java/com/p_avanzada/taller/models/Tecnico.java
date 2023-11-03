@@ -1,11 +1,11 @@
 package com.p_avanzada.taller.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
 
 @Entity
 @Table(name = "Tecnico", schema = "public")
@@ -16,14 +16,14 @@ public class Tecnico {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "telefono")
+    private Long telefono;
+
     @Column(name = "nombre", length = 30)
     private String nombre;
 
     @Column(name = "apellido", length = 30)
     private String apellido;
-
-    @Column(name = "telefono")
-    private int telefono;
 
     @Column(name = "estado")
     private boolean estado = true;
@@ -32,15 +32,15 @@ public class Tecnico {
         estado = false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void recover() {
+        estado = true;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 
@@ -56,19 +56,23 @@ public class Tecnico {
         return apellido;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
-    public int getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
     public boolean getEstado() {
         return estado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

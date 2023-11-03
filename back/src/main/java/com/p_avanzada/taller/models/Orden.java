@@ -1,11 +1,16 @@
 package com.p_avanzada.taller.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import java.util.List;
 
 @Entity
 @Table(name = "Orden", schema = "public")
@@ -16,26 +21,30 @@ public class Orden {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "numeroDeOrden")
-    private Long numeroDeOrden;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
-    @Column(name = "cliente_id")
-    private Long cliente_id;
+    @ManyToOne
+    @JoinColumn(name = "vehiculo_patente")
+    private Vehiculo vehiculo;
 
-    @Column(name = "vehiculo_id")
-    private Long vehiculo_id;
+    @ManyToMany
+    @JoinTable(name = "OrdenServicio", joinColumns = @JoinColumn(name = "orden_id"), inverseJoinColumns = @JoinColumn(name = "servicio_id"))
+    private List<Servicio> servicios;
 
-    @Column(name = "servicio", length = 30)
-    private String servicio;
-
-    @Column(name = "informacion_adicional", length = 100)
-    private String informacion_adicional;
+    @Column(name = "descripcion", length = 1000)
+    private String descripcion;
 
     @Column(name = "estado")
     private boolean estado = true;
 
     public void delete() {
         estado = false;
+    }
+
+    public void recover() {
+        estado = true;
     }
 
     public boolean getEstado() {
@@ -54,42 +63,35 @@ public class Orden {
         this.id = id;
     }
 
-    public Long getNumeroDeOrden() {
-        return numeroDeOrden;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public void setNumeroDeOrden(Long numeroDeOrden) {
-        this.numeroDeOrden = numeroDeOrden;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public Long getIdCliente() {
-        return cliente_id;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setIdCliente(Long cliente_id) {
-        this.cliente_id = cliente_id;
+    public Vehiculo getVehiculo() {
+        return vehiculo;
     }
 
-    public Long getIdVehiculo() {
-        return vehiculo_id;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public void setIdVehiculo(Long vehiculo_id) {
-        this.vehiculo_id = vehiculo_id;
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
     }
 
-    public String getServicio() {
-        return servicio;
+    public List<Servicio> getServicios() {
+        return servicios;
     }
 
-    public void setServicio(String servicio) {
-        this.servicio = servicio;
-    }
-
-    public String getInformacion() {
-        return informacion_adicional;
-    }
-    public void setInformacion(String informacion_adicional) {
-        this.informacion_adicional = informacion_adicional;
+    public void setServicios(List<Servicio> servicios) {
+        this.servicios = servicios;
     }
 }

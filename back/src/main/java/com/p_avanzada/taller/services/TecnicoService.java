@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.p_avanzada.taller.models.Tecnico;
+import com.p_avanzada.taller.models.Vehiculo;
 
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class TecnicoService {
     }
 
     public List<Tecnico> getAll() {
-        List<Tecnico> tecnicos = tecnicoRepository.findAll();
+        List<Tecnico> tecnicos = tecnicoRepository.findAllActive();
         return tecnicos;
     }
 
@@ -31,32 +32,42 @@ public class TecnicoService {
         return tecnicoRepository.save(tecnico);
     }
 
-    public void delete(Tecnico tecnico) {
-        tecnico.delete();
-        save(tecnico);
+    public List<Tecnico> getAllDeleted() {
+        List<Tecnico> tecnico = tecnicoRepository.findAllDeleted();
+        return tecnico;
     }
 
     public Tecnico alter(Tecnico alterTecnico) {
-        String nombre = alterTecnico.getNombre();
-        String apellido = alterTecnico.getApellido();
-        int telefono = alterTecnico.getTelefono();
+        Tecnico tecnico = getById(alterTecnico.getId()).get();
+        tecnico.setApellido(alterTecnico.getApellido());
+        tecnico.setNombre(alterTecnico.getNombre());
+        tecnico.setTelefono(alterTecnico.getTelefono());
+        save(tecnico);
 
-        Optional<Tecnico> optionalTecnico = getById(alterTecnico.getId());
+        return tecnico;
+    }
+
+    public Optional<Tecnico> getByTelefono(Long telefono) {
+        return tecnicoRepository.findByTelefono(telefono);
+    }
+
+    public void delete(Tecnico tecnico) {
+        Optional<Tecnico> optionalTecnico = getByTelefono(tecnico.getTelefono());
 
         if (optionalTecnico.isPresent()) {
-            Tecnico tecnico = optionalTecnico.get();
-
-            if (nombre != null)
-                tecnico.setNombre(nombre);
-            if (apellido != null)
-                tecnico.setApellido(apellido);
-            if (telefono != 0)
-                tecnico.setTelefono(telefono);
-
-            return tecnicoRepository.save(tecnico);
+            optionalTecnico.get().delete();
+            tecnicoRepository.save(optionalTecnico.get());
         }
+    }
 
-        return alterTecnico;
+    public Tecnico recoverTecnico(Tecnico recoverTecnico) {
+        Optional<Tecnico> optionalTecnico = getByTelefono(recoverTecnico.getTelefono());
+
+        Tecnico tecnico = optionalTecnico.get();
+        tecnico.recover();
+        tecnicoRepository.save(tecnico);
+
+        return tecnico;
     }
 
 }

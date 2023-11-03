@@ -1,11 +1,13 @@
 package com.p_avanzada.taller.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Cliente", schema = "public")
@@ -16,14 +18,23 @@ public class Cliente {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "telefono")
+    private Long telefono;
+
     @Column(name = "nombre", length = 30)
     private String nombre;
 
     @Column(name = "apellido", length = 30)
     private String apellido;
 
-    @Column(name = "telefono")
-    private int telefono;
+    @Column(name = "mail", length = 100)
+    private String mail;
+
+    @Column(name = "direccion", length = 200)
+    private String direccion;
+
+    @Column(name = "ultima_visita")
+    private LocalDateTime ultima_visita;
 
     @Column(name = "estado")
     private boolean estado = true;
@@ -32,15 +43,39 @@ public class Cliente {
         estado = false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void recover() {
+        estado = true;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public LocalDateTime getUltima_visita() {
+        return ultima_visita;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public void setUltima_visita(LocalDateTime ultima_visita) {
+        this.ultima_visita = ultima_visita;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 
@@ -56,19 +91,23 @@ public class Cliente {
         return apellido;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
-    public int getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
     public boolean getEstado() {
         return estado;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

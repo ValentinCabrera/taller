@@ -38,8 +38,20 @@ public class ModeloController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<Modelo> deleteCleinte(@RequestBody Modelo modelo) {
+    public ResponseEntity<String> deleteCleinte(@RequestBody Modelo modelo) {
         modeloService.delete(modelo);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("{}");
+    }
+
+    @GetMapping("/listar/deleted")
+    public ResponseEntity<List<Modelo>> getAllModelosDeleted() {
+        List<Modelo> modelos = modeloService.getAllDeleted();
+        return ResponseEntity.ok(modelos);
+    }
+
+    @PostMapping("/recover")
+    public ResponseEntity<Modelo> recoverModelo(@RequestBody Modelo recoverModelo) {
+        Modelo modelo = modeloService.recoverModelo(recoverModelo);
+        return ResponseEntity.ok(modelo);
     }
 }

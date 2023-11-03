@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.p_avanzada.taller.models.Cliente;
+
 import java.util.List;
+import java.util.Optional;
 
 import com.p_avanzada.taller.services.ClienteService;
 
@@ -31,21 +33,38 @@ public class ClienteController {
         return ResponseEntity.ok(clientes);
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<Cliente> newCliente(@RequestBody Cliente newCliente) {
-        Cliente cliente = clienteService.save(newCliente);
+    @GetMapping("/listar/deleted")
+    public ResponseEntity<List<Cliente>> getAllClienteDeleted() {
+        List<Cliente> cliente = clienteService.getAllDeleted();
         return ResponseEntity.ok(cliente);
     }
 
+    @PostMapping("/new")
+    public ResponseEntity<Cliente> newCliente(@RequestBody Cliente newCliente) {
+        Optional<Cliente> clienteOptional = clienteService.newCliente(newCliente);
+
+        if (clienteOptional.isPresent()) {
+            return ResponseEntity.ok(clienteOptional.get());
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping("/delete")
-    public ResponseEntity<Cliente> deleteCleinte(@RequestBody Cliente cliente) {
+    public ResponseEntity<String> deleteCleinte(@RequestBody Cliente cliente) {
         clienteService.delete(cliente);
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("{}");
     }
 
     @PostMapping("/alter")
-    public ResponseEntity<Cliente> alterCliente(@RequestBody Cliente newCliente) {
-        Cliente alterCliente = clienteService.alter(newCliente);
-        return ResponseEntity.ok(alterCliente);
+    public ResponseEntity<Cliente> alterCliente(@RequestBody Cliente alterCliente) {
+        Cliente cliente = clienteService.alter(alterCliente);
+        return ResponseEntity.ok(cliente);
+    }
+
+    @PostMapping("/recover")
+    public ResponseEntity<Cliente> recoverCliente(@RequestBody Cliente recoverCliente) {
+        Cliente cliente = clienteService.recoverCliente(recoverCliente);
+        return ResponseEntity.ok(cliente);
     }
 }

@@ -1,6 +1,7 @@
 package com.p_avanzada.taller.services;
 
 import com.p_avanzada.taller.models.Marca;
+import com.p_avanzada.taller.models.Vehiculo;
 import com.p_avanzada.taller.repositories.MarcaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +20,50 @@ public class MarcaService {
     }
 
     public List<Marca> getAll() {
-        List<Marca> marcas = marcaRepository.findAll();
+        List<Marca> marcas = marcaRepository.findAllActive();
         return marcas;
     }
 
-    public Optional<Marca> getById(String id) {
-        return marcaRepository.findById(id);
+    public Optional<Marca> getByName(String nombre) {
+        return marcaRepository.findByNombre(nombre);
+    }
+
+    public List<Marca> getAllDeleted() {
+        List<Marca> marca = marcaRepository.findAllDeleted();
+        return marca;
     }
 
     public Marca save(Marca marca) {
         return marcaRepository.save(marca);
     }
 
+    public Optional<Marca> newMarca(Marca marca) {
+        Optional<Marca> marOptional = getByName(marca.getNombre());
+        if (marOptional.isPresent())
+            return Optional.empty();
+        else {
+            Marca newMarca = marcaRepository.save(marca);
+            return Optional.of(newMarca);
+        }
+    }
+
+    public Marca recoverMarca(Marca recoverMarca) {
+        Optional<Marca> optionalMarca = getByName(recoverMarca.getNombre());
+
+        Marca marca = optionalMarca.get();
+        marca.recover();
+        save(marca);
+
+        return marca;
+    }
+
     public void delete(Marca deleteMarca) {
-        Optional<Marca> optionalMarca = getById(deleteMarca.getNombre());
+        Optional<Marca> optionalMarca = getByName(deleteMarca.getNombre());
 
         if (optionalMarca.isPresent()) {
             Marca marca = optionalMarca.get();
             marca.delete();
-            marcaRepository.save(marca);
+            save(marca);
         }
     }
 }

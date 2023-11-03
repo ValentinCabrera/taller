@@ -20,7 +20,12 @@ public class ModeloService {
     }
 
     public List<Modelo> getAll() {
-        List<Modelo> modelos = modeloRepository.findAll();
+        List<Modelo> modelos = modeloRepository.findAllActive();
+        return modelos;
+    }
+
+    public List<Modelo> getAllDeleted() {
+        List<Modelo> modelos = modeloRepository.findAllDeleted();
         return modelos;
     }
 
@@ -32,9 +37,23 @@ public class ModeloService {
         return modeloRepository.save(modelo);
     }
 
-    public void delete(Modelo modelo) {
-        modelo.delete();
+    public Modelo recoverModelo(Modelo recoverModelo) {
+        Optional<Modelo> optionalModelo =  getById(recoverModelo.getId());
+
+        Modelo modelo = optionalModelo.get();
+        modelo.recover();
         save(modelo);
+
+        return modelo;
+    }
+
+    public void delete(Modelo modelo) {
+        Optional<Modelo> modeloOptional = getById(modelo.getId());
+
+        if (modeloOptional.isPresent()) {
+            modeloOptional.get().delete();
+            save(modeloOptional.get());
+        }
     }
 
     public Modelo alter(Modelo alterModelo) {

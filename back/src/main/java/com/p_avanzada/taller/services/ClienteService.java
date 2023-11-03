@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import com.p_avanzada.taller.models.Cliente;
+import com.p_avanzada.taller.models.Vehiculo;
 
 import java.util.Optional;
 
@@ -18,8 +19,12 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
+    public Optional<Cliente> getByTelefono(Long telefono) {
+        return clienteRepository.findByTelefono(telefono);
+    }
+
     public List<Cliente> getAll() {
-        List<Cliente> clientes = clienteRepository.findAll();
+        List<Cliente> clientes = clienteRepository.findAllActive();
         return clientes;
     }
 
@@ -27,41 +32,53 @@ public class ClienteService {
         return clienteRepository.findById(id);
     }
 
-    public Cliente save(Cliente cliente) {
-        return clienteRepository.save(cliente);
+    public List<Cliente> getAllDeleted() {
+        List<Cliente> clientes = clienteRepository.findAllDeleted();
+        return clientes;
     }
 
-    public void delete(Cliente deleteCliente) {
-        Optional<Cliente> optionalCliente = getById(deleteCliente.getId());
+    public void delete(Cliente cliente) {
+        Optional<Cliente> optionalCliente = getByTelefono(cliente.getTelefono());
 
         if (optionalCliente.isPresent()) {
-            Cliente cliente = optionalCliente.get();
-            cliente.delete();
-            clienteRepository.save(cliente);
+            optionalCliente.get().delete();
+            clienteRepository.save(optionalCliente.get());
         }
     }
 
     public Cliente alter(Cliente alterCliente) {
-        String nombre = alterCliente.getNombre();
-        String apellido = alterCliente.getApellido();
-        int telefono = alterCliente.getTelefono();
+        Cliente cliente = getById(alterCliente.getId()).get();
 
-        Optional<Cliente> optionalCliente = getById(alterCliente.getId());
+        cliente.setNombre(alterCliente.getNombre());
+        cliente.setApellido(alterCliente.getApellido());
+        cliente.setTelefono(alterCliente.getTelefono());
+        cliente.setMail(alterCliente.getMail());
+        cliente.setDireccion(alterCliente.getDireccion());
+        cliente.setUltima_visita(alterCliente.getUltima_visita());
 
-        if (optionalCliente.isPresent()) {
-            Cliente cliente = optionalCliente.get();
+        clienteRepository.save(cliente);
 
-            if (nombre != null)
-                cliente.setNombre(nombre);
-            if (apellido != null)
-                cliente.setApellido(apellido);
-            if (telefono != 0)
-                cliente.setTelefono(telefono);
+        return cliente;
+    }
 
-            return clienteRepository.save(cliente);
+    public Optional<Cliente> newCliente(Cliente cliente) {
+        Optional<Cliente> clienteOptional = getByTelefono(cliente.getTelefono());
+        if (clienteOptional.isPresent())
+            return Optional.empty();
+        else {
+            Cliente nuevoCliente = clienteRepository.save(cliente);
+            return Optional.of(nuevoCliente);
         }
+    }
 
-        return alterCliente;
+    public Cliente recoverCliente(Cliente recoverCliente) {
+        Optional<Cliente> optionalCliente = getByTelefono(recoverCliente.getTelefono());
+
+        Cliente cliente = optionalCliente.get();
+        cliente.recover();
+        clienteRepository.save(cliente);
+
+        return cliente;
     }
 
 }

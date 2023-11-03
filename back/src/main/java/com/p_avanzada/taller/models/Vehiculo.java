@@ -18,23 +18,22 @@ public class Vehiculo {
     @JoinColumn(name = "modelo_id")
     private Modelo modelo;
 
+    @Column(name = "año")
+    private int año;
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(name = "tecnico_id")
-    private Tecnico tecnico;
-
-    @ManyToOne
-    @JoinColumn(name = "año")
-    private int año;
 
     @Column(name = "estado")
     private boolean estado = true;
 
     public void delete() {
         this.estado = false;
+    }
+
+    public void recover() {
+        this.estado = true;
     }
 
     public Cliente getCliente() {
@@ -49,15 +48,23 @@ public class Vehiculo {
         return patente;
     }
 
-    public Tecnico getTecnico() {
-        return tecnico;
-    }
-
     public boolean getEstado() {
         return estado;
     }
 
     public int getAño() {
         return año;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
     }
 }

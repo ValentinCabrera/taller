@@ -1,99 +1,29 @@
-async function getFetch(url, token) {
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Token'] = token;
-
-    const response = await fetch(url, { headers: headers });
-    const data = await response.json();
-    return data;
-};
-
-async function postFetch(url, body, token) {
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Token'] = token;
-
-    const response = await fetch(url, { method: 'POST', headers: headers, body: JSON.stringify(body) });
-
-    try {
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        return {};
-    };
-};
-
 export const host = "http://localhost:8080/";
 
-export async function postNewCliente(nombre, apellido, telefono) {
-    return postFetch(`${host}api/cliente/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono });
+async function customFetch(url, requestInit) {
+    try {
+        const response = await fetch(url, requestInit);
+        const responseText = await response.text();
+
+        try {
+            return JSON.parse(responseText);
+        } catch (error) {
+            console.log(error);
+            return [];
+        };
+    } catch (error) { throw new Error(error) };
 };
 
-export async function getClientes() {
-    return getFetch(`${host}api/cliente/listar`)
-}
+export async function getFetch(url, token) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Token'] = token;
 
-export async function postAlterCliente(data) {
-    return postFetch(`${host}api/cliente/alter`, data);
-}
-
-export async function postDeleteCliente(clienteId) {
-    return postFetch(`${host}api/cliente/delete`, { "id": clienteId });
-}
-
-
-export async function postNewTecnico(nombre, apellido, telefono) {
-    return postFetch(`${host}api/tecnico/new`, { "nombre": nombre, "apellido": apellido, "telefono": telefono });
+    return customFetch(url, { headers: headers });
 };
 
-export async function getTecnicos() {
-    return getFetch(`${host}api/tecnico/listar`)
-}
+export async function postFetch(url, body, token) {
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Token'] = token;
 
-export async function postAlterTecnico(data) {
-    return postFetch(`${host}api/tecnico/alter`, data);
-}
-
-export async function postDeleteTecnico(clienteId) {
-    return postFetch(`${host}api/tecnico/delete`, { "id": clienteId });
-}
-
-
-export async function postNewMarca(nombre) {
-    return postFetch(`${host}api/marca/new`, { "nombre": nombre });
+    return customFetch(url, { method: 'POST', headers: headers, body: JSON.stringify(body) });
 };
-
-export async function getMarcas() {
-    return getFetch(`${host}api/marca/listar`)
-}
-
-export async function postDeleteMarca(marcaNombre) {
-    return postFetch(`${host}api/marca/delete`, { "nombre": marcaNombre });
-}
-
-
-export async function postNewModelo(nombre, marca_nombre) {
-    return postFetch(`${host}api/modelo/new`, { "nombre": nombre, "marca": { "nombre": marca_nombre } });
-};
-
-export async function getModelos() {
-    return getFetch(`${host}api/modelo/listar`)
-}
-
-export async function postAlterModelo(data) {
-    return postFetch(`${host}api/modelo/alter`, data);
-}
-
-export async function postDeleteModelo(modeloId) {
-    return postFetch(`${host}api/modelo/delete`, { "id": modeloId });
-}
-
-export async function postNewVehiculo(patente, modelo, cliente, tecnico) {
-    return postFetch(`${host}api/vehiculo/new`, { "patente": patente, "modelo": { "id": modelo }, "cliente": { "id": cliente }, "tecnico": { "id": tecnico } });
-};
-
-export async function getVehiculos() {
-    return getFetch(`${host}api/vehiculo/listar`)
-}
-
-export async function postDeleteVehiculo(patente) {
-    return postFetch(`${host}api/vehiculo/delete`, { "patente": patente });
-}

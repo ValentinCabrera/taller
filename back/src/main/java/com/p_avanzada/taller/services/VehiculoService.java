@@ -5,9 +5,9 @@ import com.p_avanzada.taller.repositories.VehiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import com.p_avanzada.taller.models.Vehiculo;
-
 import java.util.Optional;
+
+import com.p_avanzada.taller.models.Vehiculo;
 
 @Service
 public class VehiculoService {
@@ -19,12 +19,27 @@ public class VehiculoService {
     }
 
     public List<Vehiculo> getAll() {
-        List<Vehiculo> vehiculos = vehiculoRepository.findAll();
+        List<Vehiculo> vehiculos = vehiculoRepository.findAllActive();
         return vehiculos;
     }
 
-    public Optional<Vehiculo> getById(String id) {
-        return vehiculoRepository.findById(id);
+    public Vehiculo recoverVehiculo(Vehiculo recoverVehiculo) {
+        Optional<Vehiculo> optionalVehiculo = getByPatente(recoverVehiculo.getPatente());
+
+        Vehiculo vehiculo = optionalVehiculo.get();
+        vehiculo.recover();
+        save(vehiculo);
+
+        return vehiculo;
+    }
+
+    public Optional<Vehiculo> getByPatente(String patente) {
+        return vehiculoRepository.findByPatente(patente);
+    }
+
+    public List<Vehiculo> getAllDeleted() {
+        List<Vehiculo> vehiculos = vehiculoRepository.findAllDeleted();
+        return vehiculos;
     }
 
     public Vehiculo save(Vehiculo vehiculo) {
@@ -32,7 +47,31 @@ public class VehiculoService {
     }
 
     public void delete(Vehiculo vehiculo) {
-        vehiculo.delete();
+        Optional<Vehiculo> vehiculoOptional = getByPatente(vehiculo.getPatente());
+
+        if (vehiculoOptional.isPresent()) {
+            vehiculoOptional.get().delete();
+            save(vehiculoOptional.get());
+        }
+    }
+
+    public Vehiculo alter(Vehiculo alterVehiculo) {
+        Vehiculo vehiculo = getByPatente(alterVehiculo.getPatente()).get();
+        vehiculo.setModelo(alterVehiculo.getModelo());
+        vehiculo.setAño(alterVehiculo.getAño());
+        vehiculo.setCliente(alterVehiculo.getCliente());
         save(vehiculo);
+
+        return vehiculo;
+    }
+
+    public Optional<Vehiculo> newVehiculo(Vehiculo vehiculo) {
+        Optional<Vehiculo> vehiculoOptional = getByPatente(vehiculo.getPatente());
+        if (vehiculoOptional.isPresent())
+            return Optional.empty();
+        else {
+            Vehiculo nuevoVehiculo = vehiculoRepository.save(vehiculo);
+            return Optional.of(nuevoVehiculo);
+        }
     }
 }

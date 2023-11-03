@@ -28,7 +28,6 @@ export default function Table(props) {
                         for (let k of valueToSearch) {
                             if (k[j].toString().toLowerCase().includes(searchTerm.toLowerCase())) return true
                         }
-                        break
                     }
                     valueToSearch = valueToSearch[j];
                 }

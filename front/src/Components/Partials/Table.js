@@ -24,6 +24,12 @@ export default function Table(props) {
                 let valueToSearch = item;
 
                 for (let j of i) {
+                    if (valueToSearch instanceof Array) {
+                        for (let k of valueToSearch) {
+                            if (k[j].toString().toLowerCase().includes(searchTerm.toLowerCase())) return true
+                        }
+                        break
+                    }
                     valueToSearch = valueToSearch[j];
                 }
 
@@ -35,8 +41,21 @@ export default function Table(props) {
 
     function getAtributte(item, index) {
         for (let i of index) {
+            if (item instanceof Array) {
+                let array = [];
+                for (let j of item) array.push(j[i]);
+                return (
+                    <select>
+                        {array.map(option => (
+                            <option>{option}</option>
+                        ))}
+                    </select>
+                );
+            }
+
             item = item[i];
-        } return item;
+        }
+        return item;
     }
 
     return (

@@ -12,7 +12,8 @@ export default function Marcas() {
         [
             { column: "Vehiculo", filter: ["vehiculo", "patente"], row: ["vehiculo", "patente"] },
             { column: "Cliente nombre", filter: ["cliente", "nombre"], row: ["cliente", "nombre"] },
-            { column: "Cliente apellido", filter: ["cliente", "apellido"], row: ["cliente", "apellido"] }
+            { column: "Cliente apellido", filter: ["cliente", "apellido"], row: ["cliente", "apellido"] },
+            { column: "Servicios", filter: ["servicios", "nombre"], row: ["servicios", "nombre"] }
         ];
 
     const vocabulary = {

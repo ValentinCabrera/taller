@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MarcaTablaEliminados from "./MarcaTablaEliminados";
-import MarcaTablActivos from "./MarcaTablaActivos";
+import MarcaTablaActivos from "./MarcaTablaActivos";
 
 export default function Marcas() {
     const [frame, setFrame] = useState(true);
@@ -18,7 +18,7 @@ export default function Marcas() {
         pronombre: "la"
     };
 
-    const tablaActivos = <MarcaTablActivos
+    const tablaActivos = <MarcaTablaActivos
         changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>}
         vocabulary={vocabulary}
         id={id}

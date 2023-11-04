@@ -1,14 +1,36 @@
 import { useState } from "react";
-import ModeloTablActivos from "./ModeloTablaActivos";
+import ModeloTablaActivos from "./ModeloTablaActivos";
 import ModeloTablaEliminados from "./ModeloTablaEliminados";
 
-export default function Marcas() {
+
+export default function Modelos() {
     const [frame, setFrame] = useState(true);
 
-    const tablaActivos = <ModeloTablActivos
-        changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>} />;
+    const id = "id";
 
-    const tablaEliminados = <ModeloTablaEliminados changeFrame={<button className="head-button" onClick={() => setFrame(true)}>Activos</button>} />;
+    const table =
+        [
+            { column: "Nombre", filter: ["nombre"], row: ["nombre"] },
+            { column: "Marca", filter: ["marca","nombre"], row: ["marca","nombre"] },
+        ];
+
+    const vocabulary = {
+        singular: "modelo",
+        id: ["id"],
+        pronombre: "el"
+    };
+
+    const tablaActivos = <ModeloTablaActivos
+        changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>}
+        vocabulary={vocabulary}
+        id={id}
+        table={table} />;
+
+    const tablaEliminados = <ModeloTablaEliminados
+        changeFrame={<button className="head-button" onClick={() => setFrame(true)}>Activos</button>}
+        vocabulary={vocabulary}
+        id={id}
+        table={table} />;
 
     return (
         <div>

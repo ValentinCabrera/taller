@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import OrdenTablActivos from "./OrdenTablaActivos";
+import OrdenTablaActivos from "./OrdenTablaActivos";
 import OrdenTablaEliminados from "./OrdenTablaEliminados";
 
 export default function Marcas() {
@@ -22,7 +21,7 @@ export default function Marcas() {
         pronombre: "la"
     };
 
-    const tablaActivos = <OrdenTablActivos
+    const tablaActivos = <OrdenTablaActivos
         changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>}
         vocabulary={vocabulary}
         id={id}

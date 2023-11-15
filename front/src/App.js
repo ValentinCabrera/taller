@@ -1,4 +1,4 @@
-import { useState, version } from 'react';
+import { useState, useRef } from 'react';
 import Clientes from './Components/Clientes/Clientes';
 import Marcas from './Components/Marcas/Marcas';
 import Modelos from './Components/Modelos/Modelos';
@@ -16,12 +16,11 @@ import ordenIcon from './Static/navIcons/orden.png';
 import servicioIcon from './Static/navIcons/servicio.png';
 import tecnicoIcon from './Static/navIcons/tecnico.png';
 import vehiculoIcon from './Static/navIcons/vehiculo.png';
-import menuIcon from './Static/navIcons/menu.png';
-
 
 export default function App() {
   const [currentApp, setCurrentApp] = useState(<Vehiculos />);
-  const [navOpen, setNavOpen] = useState(true);
+  const [navOpen, setNavOpen] = useState(false);
+  const timeoutRef = useRef(null)
 
   const secciones = [
     { componente: <Clientes />, largo: "Clientes", corto: <img src={clienteIcon} className='nav-icon' /> },
@@ -35,20 +34,30 @@ export default function App() {
 
   return (
     <div className='app'>
-      <div className={`nav-div-${navOpen}`}>
+      <div className='nav-div'
+        onMouseEnter={() => {
+          clearTimeout(timeoutRef.current);
+          setNavOpen(true);
+        }}
+        onMouseLeave={() => {
+          timeoutRef.current = setTimeout(() => setNavOpen(false), 400);
+        }}
+      >
         <div className={`nav-bar`}>
-          <div className='nav-bar-menu' onClick={() => setNavOpen(!navOpen)}>{navOpen ? "Colapsar" : <img src={menuIcon} className='nav-icon' />}</div>
           <hr className='nav-sep' />
           {secciones.map(seccion => (
-            <div className={currentApp.type === seccion.componente.type && "nav-selected"} onClick={() => setCurrentApp(seccion.componente)}>
+            <div
+              className={currentApp.type === seccion.componente.type && "nav-selected"}
+              onClick={() => setCurrentApp(seccion.componente)}
+            >
               {navOpen ? seccion.largo : seccion.corto}
             </div>
           ))}
         </div>
       </div>
-      <div className={`content-conteiner content-${!navOpen}`}>
+      <div className={`content`}>
         {currentApp}
       </div>
     </div >
   );
-};
+}

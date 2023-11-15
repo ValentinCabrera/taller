@@ -1,29 +1,24 @@
-.nav-div-true,
-.nav-div-false {
+.nav-div {
   position: fixed;
   top: 0;
   bottom: 0;
   background-color: #b3b3b3;
   overflow: hidden;
   transition: width 0.8s ease;
-}
-
-.nav-div-true {
-  width: 15%;
-}
-
-.nav-div-false {
   width: 6%;
 }
 
-.nav-div-false div {
-  padding-top: 10px;
+.nav-div:hover {
+  width: 15%;
 }
 
-.nav-div-false div div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.content {
+  margin-left: 6%;
+  transition: margin 0.8s ease;
+}
+
+.nav-div:hover~.content {
+  margin-left: 15%;
 }
 
 .nav-bar {
@@ -39,23 +34,11 @@
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.2s;
+  overflow: hidden;
 }
 
 .nav-bar div:hover {
   background-color: #ddd;
-}
-
-.content-conteiner {
-  transition: margin 0.8s ease;
-  position: relative;
-}
-
-.content-false {
-  margin-left: 15%;
-}
-
-.content-true {
-  margin-left: 6%;
 }
 
 .nav-icon {

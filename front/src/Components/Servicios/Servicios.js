@@ -15,7 +15,7 @@ export default function Servicios() {
     const vocabulary = {
         singular: "servicio",
         id: ["id"],
-        pronombre: "la"
+        pronombre: "el"
     };
 
     const tablaActivos = <ServicioTablActivos

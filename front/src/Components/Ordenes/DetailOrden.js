@@ -4,11 +4,13 @@ import { postNewOrden, postDeleteOrden, postAlterModelo } from "../../Utils/Orde
 import FrameClientes from "../Clientes/FrameClientes";
 import FrameVehiculos from "../Vehiculos/FrameVehiculos";
 import { FrameServicios } from "../Servicios/FrameServicios";
+import { FrameTecnicos } from "../Tecnicos/FrameTecnicos";
 
 export default function DetailOrden(props) {
     const [cliente, setCliente] = useState();
     const [vehiculo, setVehiculo] = useState();
     const [servicios, setServicios] = useState([])
+    const [tecnicos, setTecnicos] = useState([])
 
     useEffect(() => {
         if (props.orden) {
@@ -71,6 +73,7 @@ export default function DetailOrden(props) {
             <FrameClientes setCliente={setCliente} cliente={cliente} />
             <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
             <FrameServicios setServicios={setServicios} servicios={servicios} />
+            <FrameTecnicos setTecnicos={setTecnicos} tecnicos={tecnicos} />
             <div>
                 <p className='modal-close-label'>Descripcion:</p>
                 <input className='modal-close-input' id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} onChange={handleStringChange} />

@@ -67,6 +67,9 @@ public class OrdenService {
         orden.setDescripcion(alterOrden.getDescripcion());
         orden.setServicios(alterOrden.getServicios());
         orden.setVehiculo(alterOrden.getVehiculo());
+        orden.setEstado(alterOrden.getEstado());
+        orden.setTecnico(alterOrden.getTecnico());
+        orden.setFecha(alterOrden.getFecha());
 
         save(orden);
         return orden;

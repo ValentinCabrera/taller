@@ -2,7 +2,7 @@ import { useState } from "react";
 import OrdenTablaActivos from "./OrdenTablaActivos";
 import OrdenTablaEliminados from "./OrdenTablaEliminados";
 
-export default function Marcas() {
+export default function Ordenes() {
     const [frame, setFrame] = useState(true);
 
     const id = "id";
@@ -13,9 +13,9 @@ export default function Marcas() {
             { column: "Cliente nombre", filter: ["cliente", "nombre"], row: ["cliente", "nombre"] },
             { column: "Cliente apellido", filter: ["cliente", "apellido"], row: ["cliente", "apellido"] },
             { column: "Servicios", filter: ["servicios", "nombre"], row: ["servicios", "nombre"] },
-            //{ column: "Tecnico", filter: ["tecnicos", "nombre"], row: ["tecnicos", "nombre"] },
-            //{ column: "Fecha", filter: ["fecha"], row: ["fecha"] },
-            //{ column: "Estado", filter: ["estado"], row: ["estado"] }
+            { column: "Tecnico", filter: ["tecnicos", "nombre"], row: ["tecnicos", "nombre"] },
+            { column: "Fecha", filter: ["fecha"], row: ["fecha"] },
+            { column: "Estado", filter: ["estado"], row: ["estado"] }
         ];
 
     const vocabulary = {

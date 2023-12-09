@@ -6,6 +6,7 @@ import Tecnicos from './Components/Tecnicos/Tecnicos';
 import Vehiculos from './Components/Vehiculos/Vehiculos';
 import Ordenes from './Components/Ordenes/Ordenes';
 import Servicios from './Components/Servicios/Servicios';
+import GestionOrdenes from './Components/GestionOrdenes/GestionOrdenes';
 import './Styles/App.css';
 import './Styles/cliente.css';
 
@@ -16,6 +17,7 @@ import ordenIcon from './Static/navIcons/orden.png';
 import servicioIcon from './Static/navIcons/servicio.png';
 import tecnicoIcon from './Static/navIcons/tecnico.png';
 import vehiculoIcon from './Static/navIcons/vehiculo.png';
+//import gestionOrdenIcon from './Static/navIcons/gestionOrdenes.png';
 
 export default function App() {
   const [currentApp, setCurrentApp] = useState(<Vehiculos />);
@@ -29,7 +31,8 @@ export default function App() {
     { componente: <Ordenes />, largo: "Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> },
     { componente: <Servicios />, largo: "Servicios", corto: <img src={servicioIcon} className='nav-icon' /> },
     { componente: <Tecnicos />, largo: "Tecnicos", corto: <img src={tecnicoIcon} className='nav-icon' /> },
-    { componente: <Vehiculos />, largo: "Vehiculos", corto: <img src={vehiculoIcon} className='nav-icon' /> }
+    { componente: <Vehiculos />, largo: "Vehiculos", corto: <img src={vehiculoIcon} className='nav-icon' /> },
+    { componente: <GestionOrdenes />, largo: "Gestion Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> }
   ];
 
   return (
@@ -53,7 +56,7 @@ export default function App() {
               {navOpen ? seccion.largo : seccion.corto}
             </div>
           ))}
-        </div>
+        </div>        
       </div>
       <div className={`content`}>
         {currentApp}

@@ -11,6 +11,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.util.List;
+import java.util.Date;
 
 @Entity
 @Table(name = "Orden", schema = "public")
@@ -26,6 +27,10 @@ public class Orden {
     private Cliente cliente;
 
     @ManyToOne
+    @JoinColumn(name = "tecnico_id")
+    private Tecnico tecnico;
+
+    @ManyToOne
     @JoinColumn(name = "vehiculo_patente")
     private Vehiculo vehiculo;
 
@@ -35,9 +40,13 @@ public class Orden {
 
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
-
+    
     @Column(name = "estado")
     private boolean estado = true;
+    
+    @Column(name = "fecha")
+    private Date fecha;
+
 
     public void delete() {
         estado = false;
@@ -71,6 +80,14 @@ public class Orden {
         return cliente;
     }
 
+    public Tecnico getTecnico() {
+        return tecnico;
+    }
+    
+    public void setTecnico(Tecnico tecnico) {
+        this.tecnico = tecnico;
+    }
+    
     public String getDescripcion() {
         return descripcion;
     }
@@ -94,4 +111,12 @@ public class Orden {
     public void setServicios(List<Servicio> servicios) {
         this.servicios = servicios;
     }
+    public Date getFecha() {
+        return fecha;
+    }
+    
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+    
 }

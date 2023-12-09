@@ -2,7 +2,7 @@ import { useState } from "react";
 import VehiculoTablActivos from "./VehiculoTablaActivos";
 import VehiculoTablaEliminados from "./VehiculoTablaEliminados";
 
-export default function Marcas() {
+export default function Vehiculos() {
     const [frame, setFrame] = useState(true);
 
     const table =

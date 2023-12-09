@@ -11,6 +11,8 @@ export default function DetailOrden(props) {
     const [vehiculo, setVehiculo] = useState();
     const [servicios, setServicios] = useState([])
     const [tecnicos, setTecnicos] = useState([])
+    const [estado, setEstado] = useState([])
+    const [fecha, setFecha] = useState([])
 
     useEffect(() => {
         if (props.orden) {
@@ -74,6 +76,9 @@ export default function DetailOrden(props) {
             <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <FrameTecnicos setTecnicos={setTecnicos} tecnicos={tecnicos} />
+            <div>Fecha Igual a lo de Cliente</div>
+            <div>Agregar el Estado</div>
+
             <div>
                 <p className='modal-close-label'>Descripcion:</p>
                 <input className='modal-close-input' id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} onChange={handleStringChange} />

@@ -44,6 +44,9 @@ public class Orden {
     @Column(name = "estado")
     private boolean estado = true;
     
+    @Column(name = "estado_gestion")
+    private boolean estado_gestion = true;
+    
     @Column(name = "fecha")
     private Date fecha;
 
@@ -55,13 +58,20 @@ public class Orden {
     public void recover() {
         estado = true;
     }
-
-    public boolean getEstado() {
+ public boolean getEstado() {
         return estado;
     }
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public boolean getEstado_gestion() {
+        return estado_gestion;
+    }
+
+    public void setEstado_gestion(boolean estado_gestion) {
+        this.estado_gestion = estado_gestion;
     }
 
     public Long getId() {

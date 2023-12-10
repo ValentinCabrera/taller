@@ -77,7 +77,18 @@ export default function DetailOrden(props) {
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <FrameTecnicos setTecnicos={setTecnicos} tecnicos={tecnicos} />
             <div>Fecha Igual a lo de Cliente</div>
-            <div>Agregar el Estado</div>
+            
+            <div>
+                <p htmlFor="estado_orden" className='modal-close-label'>Estado:</p>
+                <select
+                    id="estado_orden"
+                    className='modal-close-input'
+                >
+                    <option value="Guardada">Guardada</option>
+                    <option value="EnProceso">En Proceso</option>
+                    <option value="Finalizada">Finalizada</option>
+                </select>
+            </div>
 
             <div>
                 <p className='modal-close-label'>Descripcion:</p>

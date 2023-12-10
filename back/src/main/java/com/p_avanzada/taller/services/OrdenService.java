@@ -70,6 +70,7 @@ public class OrdenService {
         orden.setEstado(alterOrden.getEstado());
         orden.setTecnico(alterOrden.getTecnico());
         orden.setFecha(alterOrden.getFecha());
+        orden.setEstado_gestion(alterOrden.getEstado_gestion());
 
         save(orden);
         return orden;

@@ -13,7 +13,7 @@ export default function Vehiculos() {
             { column: "Marca", filter: ["modelo", "marca", "nombre"], row: ["modelo", "marca", "nombre"] },
             { column: "Cliente nombre", filter: ["cliente", "nombre"], row: ["cliente", "nombre"] },
             { column: "Cliente apellido", filter: ["cliente", "apellido"], row: ["cliente", "apellido"] },
-            //{ column: "Tecnico", filter: ["tecnico", "nombre"], row: ["tecnico", "nombre"] }
+            { column: "Tecnico", filter: ["tecnico", "nombre"], row: ["tecnico", "nombre"] }
         ];
 
     const id = "patente";

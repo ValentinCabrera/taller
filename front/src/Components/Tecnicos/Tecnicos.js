@@ -12,6 +12,7 @@ export default function Tecnicos() {
             { column: "Nombre", filter: ["nombre"], row: ["nombre"] },
             { column: "Apellido", filter: ["apellido"], row: ["apellido"] },
             { column: "Telefono", filter: ["telefono"], row: ["telefono"] },
+            //{ column: "Vehiculos", filter: ["telefono"], row: ["telefono"] } -- boton que abre un modals
         ];
 
     const vocabulary = {

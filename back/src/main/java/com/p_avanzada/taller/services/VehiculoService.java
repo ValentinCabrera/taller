@@ -60,6 +60,7 @@ public class VehiculoService {
         vehiculo.setModelo(alterVehiculo.getModelo());
         vehiculo.setAño(alterVehiculo.getAño());
         vehiculo.setCliente(alterVehiculo.getCliente());
+        vehiculo.setTecnico(alterVehiculo.getTecnico());
         save(vehiculo);
 
         return vehiculo;

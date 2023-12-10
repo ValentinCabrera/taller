@@ -32,7 +32,7 @@ export default function App() {
     { componente: <Servicios />, largo: "Servicios", corto: <img src={servicioIcon} className='nav-icon' /> },
     { componente: <Tecnicos />, largo: "Tecnicos", corto: <img src={tecnicoIcon} className='nav-icon' /> },
     { componente: <Vehiculos />, largo: "Vehiculos", corto: <img src={vehiculoIcon} className='nav-icon' /> },
-    { componente: <GestionOrdenes />, largo: "Gestion Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> }
+    { componente: <GestionOrdenes />, largo: "Gestion de Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> }
   ];
 
   return (
@@ -48,12 +48,14 @@ export default function App() {
       >
         <div className={`nav-bar`}>
           <hr className='nav-sep' />
-          {secciones.map(seccion => (
+          {secciones.map((seccion, index) => (
             <div
-              className={currentApp.type === seccion.componente.type && "nav-selected"}
+              key={index}
+              className={currentApp.type === seccion.componente.type && "nav-selected"}  
               onClick={() => setCurrentApp(seccion.componente)}
             >
               {navOpen ? seccion.largo : seccion.corto}
+              {index === secciones.length - 2 && <hr className='nav-sep' />}
             </div>
           ))}
         </div>        

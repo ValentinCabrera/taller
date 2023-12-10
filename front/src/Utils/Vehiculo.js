@@ -1,7 +1,7 @@
 import { getFetch, postFetch, host } from "./Fetchs";
 
-export async function postNewVehiculo(patente, modelo, cliente, año) {
-    return postFetch(`${host}api/vehiculo/new`, { patente: patente, modelo: { "id": modelo }, cliente: { "id": cliente }, año: año });
+export async function postNewVehiculo(patente, modelo, cliente, año, tecnico) {
+    return postFetch(`${host}api/vehiculo/new`, { patente: patente, modelo: { "id": modelo }, cliente: { "id": cliente }, año: año, tecnico: { "id": tecnico } });
 };
 
 export async function postAlterVehiculo(data) {

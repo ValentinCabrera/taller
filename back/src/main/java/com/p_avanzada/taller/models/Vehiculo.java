@@ -17,6 +17,10 @@ public class Vehiculo {
     @ManyToOne
     @JoinColumn(name = "modelo_id")
     private Modelo modelo;
+    
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
+    private Tecnico tecnico;
 
     @Column(name = "año")
     private int año;
@@ -44,6 +48,14 @@ public class Vehiculo {
         return modelo;
     }
 
+    public Tecnico getTecnico() {
+        return tecnico;
+    }
+    
+    public void setTecnico(Tecnico tecnico) {
+        this.tecnico = tecnico;
+    }
+    
     public String getPatente() {
         return patente;
     }

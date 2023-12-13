@@ -32,8 +32,11 @@ export default function App() {
     { componente: <Servicios />, largo: "Servicios", corto: <img src={servicioIcon} className='nav-icon' /> },
     { componente: <Tecnicos />, largo: "Tecnicos", corto: <img src={tecnicoIcon} className='nav-icon' /> },
     { componente: <Vehiculos />, largo: "Vehiculos", corto: <img src={vehiculoIcon} className='nav-icon' /> },
-    { componente: <GestionOrdenes />, largo: "Gestion de Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> }
   ];
+
+  const secciones2 = [
+    { componente: <GestionOrdenes />, largo: "Gestion de Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> },
+  ]
 
   return (
     <div className='app'>
@@ -48,17 +51,25 @@ export default function App() {
       >
         <div className={`nav-bar`}>
           <hr className='nav-sep' />
-          {secciones.map((seccion, index) => (
+          {secciones.map((seccion) => (
             <div
-              key={index}
               className={currentApp.type === seccion.componente.type && "nav-selected"}  
               onClick={() => setCurrentApp(seccion.componente)}
             >
               {navOpen ? seccion.largo : seccion.corto}
-              {index === secciones.length - 2 && <hr className='nav-sep' />}
             </div>
           ))}
-        </div>        
+          <hr className='nav-sep' />
+          {secciones2.map((seccion) => (
+            <div
+              className={currentApp.type === seccion.componente.type && "nav-selected"}  
+              onClick={() => setCurrentApp(seccion.componente)}
+              style={{ height: 65 }}
+              >
+              {navOpen ? seccion.largo : seccion.corto}
+            </div>
+          ))}
+        </div>     
       </div>
       <div className={`content`}>
         {currentApp}

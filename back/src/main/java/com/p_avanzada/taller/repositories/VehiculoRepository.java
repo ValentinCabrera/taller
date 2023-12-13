@@ -18,4 +18,5 @@ public interface VehiculoRepository extends JpaRepository<Vehiculo, String> {
     List<Vehiculo> findAllDeleted();
 
     Optional<Vehiculo> findByPatente(String patente);
+    List<Vehiculo> findByTecnicoId(Long tecnico_id);
 }

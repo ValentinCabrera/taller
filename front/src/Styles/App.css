@@ -24,6 +24,7 @@
 .nav-bar {
   padding: 10px;
   font-size: 25px;
+  
 }
 
 .nav-bar div {
@@ -46,7 +47,7 @@
 }
 
 .nav-icon-menu {
-  width: 20px;
+  width: 30px;
   padding-bottom: 20px;
 }
 

@@ -32,13 +32,13 @@ public class TecnicoController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<Tecnico> newtecnico(@RequestBody Tecnico newTecnico) {
+    public ResponseEntity<Tecnico> newTecnico(@RequestBody Tecnico newTecnico) {
         Tecnico tecnico = tecnicoService.save(newTecnico);
         return ResponseEntity.ok(tecnico);
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<String> deleteCleinte(@RequestBody Tecnico tecnico) {
+    public ResponseEntity<String> deleteTecnico(@RequestBody Tecnico tecnico) {
         tecnicoService.delete(tecnico);
         return ResponseEntity.ok("{}");
     }

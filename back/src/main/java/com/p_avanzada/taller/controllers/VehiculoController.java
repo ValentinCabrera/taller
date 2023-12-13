@@ -27,7 +27,7 @@ public class VehiculoController {
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Vehiculo>> getAllvehiculos() {
+    public ResponseEntity<List<Vehiculo>> getAllVehiculos() {
         List<Vehiculo> vehiculos = vehiculoService.getAll();
         return ResponseEntity.ok(vehiculos);
     }
@@ -35,6 +35,12 @@ public class VehiculoController {
     @GetMapping("/listar/deleted")
     public ResponseEntity<List<Vehiculo>> getAllVehiculosDeleted() {
         List<Vehiculo> vehiculos = vehiculoService.getAllDeleted();
+        return ResponseEntity.ok(vehiculos);
+    }
+
+    @GetMapping("/listar/porTecnico")
+    public ResponseEntity<List<Vehiculo>> getVehiculosPorTecnico(@RequestBody Long tecnico_id) {
+        List<Vehiculo> vehiculos = vehiculoService.getByTecnico(tecnico_id);
         return ResponseEntity.ok(vehiculos);
     }
 

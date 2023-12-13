@@ -1,64 +1,53 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import Select from "../Select";
-import DetailTecnico from "./DetailTecnico"
 import { getTecnicos } from "../../Utils/Tecnico";
+import DetailTecnico from "./DetailTecnico";
 
-export function FrameTecnicos(props) {
+export default function FrameTecnicos(props) {
     const [tecnicos, setTecnicos] = useState();
-    const [modal, setModal] = useState(false);
+    const [modalTecnico, setModalTecnico] = useState();
+    const [forceRender, setForceRender] = useState();
 
     useEffect(() => {
-        getTecnicos().then(response => setTecnicos(response));
+        updateData();
+        setModalTecnico(false);
+    }, [forceRender])
+
+    useEffect(() => {
+        updateData();
     }, [])
 
-    function handleAddTecnico(newTecnico) {
-        let existe = props.tecnicos.some(tecnico => tecnico.nombre === newTecnico.nombre);
-
-        if (!existe) {
-            let newTecnicos = [...props.tecnicos, newTecnico];
-            props.setTecnicos(newTecnicos);
-            setModal(false);
-        } else alert(`El tecnico "${newTecnico.nombre}" ya esta en la orden.`)
-    }
-
-    function handleRemoveTecnico(removeTecnico) {
-        let result = window.confirm(`¿Estas seguro de eliminar el tecnico "${removeTecnico.nombre}" de la orden?`);
-
-        if (result) {
-            let newTecnicos = [...props.tecnicos].filter(item => item !== removeTecnico);
-            props.setTecnicos(newTecnicos);
-        }
+    function updateData() {
+        getTecnicos()
+            .then(response => setTecnicos(response));
     }
 
     function handleSetModal() {
-        setModal(false);
+        setModalTecnico(false);
     }
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <p>Tecnicos: </p>
-                <div>{props.tecnicos.length > 0 ? <p>{props.tecnicos.length} seleccionados</p> : <p>Ninguno</p>}</div>
-                <button className='modal-close-button' onClick={() => setModal(true)}>+</button>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <p>Tecnico: </p>
+                {props.tecnico && <p>{props.tecnico.nombre} {props.tecnico.apellido}</p>}
+                <button className='modal-close-button' onClick={() => setModalTecnico(true)}>+</button>
             </div>
-            <Select
-                data={props.tecnicos}
-                itemName={[["nombre"]]}
-                itemKey="nombre"
-                setCurrentItem={handleRemoveTecnico} />
 
-            {modal &&
+            <Select
+                data={tecnicos}
+                itemName={[["nombre"], ["apellido"]]}
+                itemKey="telefono"
+                setCurrentItem={props.setTecnicos} 
+            />
+
+            {modalTecnico &&
                 <div class="modal-background">
-                    <div class="modal-content scroll h100">
+                    <div class="modal-content">
                         <div className='row w100'>
                             <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
                         </div>
-                        <Select
-                            data={tecnicos}
-                            itemName={[["nombre"]]}
-                            itemKey="nombre"
-                            setCurrentItem={handleAddTecnico} />
-                    </div>
+                        <DetailTecnico setForceRender={setForceRender} handleSetModal={setModalTecnico} />                        </div>
                 </div>
             }
         </div>

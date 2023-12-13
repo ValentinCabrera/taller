@@ -15,7 +15,7 @@ export default function Ordenes() {
             { column: "Servicios", filter: ["servicios", "nombre"], row: ["servicios", "nombre"] },
             { column: "Tecnico", filter: ["tecnicos", "nombre"], row: ["tecnicos", "nombre"] },
             { column: "Fecha", filter: ["fecha"], row: ["fecha"] },
-            { column: "Estado", filter: ["estado"], row: ["estado"] }
+            { column: "Estado", filter: ["estadoGestion","nombre"], row: ["estadoGestion","nombre"] }
         ];
 
     const vocabulary = {

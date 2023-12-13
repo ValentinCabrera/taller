@@ -4,44 +4,51 @@ import { postNewOrden, postDeleteOrden, postAlterModelo } from "../../Utils/Orde
 import FrameClientes from "../Clientes/FrameClientes";
 import FrameVehiculos from "../Vehiculos/FrameVehiculos";
 import { FrameServicios } from "../Servicios/FrameServicios";
-import { FrameTecnicos } from "../Tecnicos/FrameTecnicos";
+import FrameTecnicos from "../Tecnicos/FrameTecnicos";
+import FrameEstadoGestion from "../GestionOrdenes/FrameEstadoGestion";
 
 export default function DetailOrden(props) {
     const [cliente, setCliente] = useState();
     const [vehiculo, setVehiculo] = useState();
     const [servicios, setServicios] = useState([])
-    const [tecnicos, setTecnicos] = useState([])
-    const [estado, setEstado] = useState([])
-    const [fecha, setFecha] = useState([])
+    const [tecnico, setTecnicos] = useState([])
+    const [estadoGestion, setEstadoGestion] = useState([])
+
+    var now = new Date();
+    var localDatetime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+    var maxDatetime = localDatetime.toISOString().slice(0, 16);
 
     useEffect(() => {
         if (props.orden) {
             setCliente(props.orden.cliente);
             setVehiculo(props.orden.vehiculo);
             setServicios(props.orden.servicios);
+            setTecnicos(props.orden.tecnico);
+            setEstadoGestion(props.orden.estadoGestion);
         } else {
             setCliente();
             setVehiculo();
             setServicios([]);
+            setTecnicos();
+            setEstadoGestion();
         }
+        document.getElementById("fecha_orden").value ="";
         document.getElementById("descripcion_orden").value = "";
-
 
     }, [props.orden])
 
     function handleNewOrden() {
+        let fecha = document.getElementById("fecha_orden");
         let descripcion = document.getElementById("descripcion_orden");
 
-
-        if (cliente && vehiculo && servicios) {
-            postNewOrden(cliente.id, vehiculo.patente, servicios, descripcion.value)
+        if (cliente && vehiculo && servicios && tecnico && fecha && estadoGestion) {
+            postNewOrden(cliente.id, vehiculo.patente, servicios, tecnico.id , descripcion.value, fecha.value, estadoGestion.id)
                 .then(response => {
                     alert(`La orden ${response.id} se creo con exito.`);
                     props.setForceRender({});
                     props.handleSetModal();
                 })
                 .catch(error => alert(error));
-
         } else
             alert("Por favor, rellena todos los campos.");
     };
@@ -75,20 +82,14 @@ export default function DetailOrden(props) {
             <FrameClientes setCliente={setCliente} cliente={cliente} />
             <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
             <FrameServicios setServicios={setServicios} servicios={servicios} />
-            <FrameTecnicos setTecnicos={setTecnicos} tecnicos={tecnicos} />
-            <div>Fecha Igual a lo de Cliente</div>
+            <FrameTecnicos setTecnicos={setTecnicos} tecnico={tecnico} />
             
             <div>
-                <p htmlFor="estado_orden" className='modal-close-label'>Estado:</p>
-                <select
-                    id="estado_orden"
-                    className='modal-close-input'
-                >
-                    <option value="Guardada">Guardada</option>
-                    <option value="EnProceso">En Proceso</option>
-                    <option value="Finalizada">Finalizada</option>
-                </select>
+                <label className="detail-cliente-label">Fecha: </label>
+                <input id="fecha_orden" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />
             </div>
+
+            <FrameEstadoGestion setEstadoGestion={setEstadoGestion} estadoGestion={estadoGestion} />
 
             <div>
                 <p className='modal-close-label'>Descripcion:</p>

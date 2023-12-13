@@ -23,16 +23,5 @@ services:
     depends_on:
       - db
 
-  front:
-    build:
-      context: ./front
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./front/src:/app/src
-    depends_on:
-      - back
-
 volumes:
   utn:

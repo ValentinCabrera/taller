@@ -1,13 +1,12 @@
 package com.p_avanzada.taller.services;
 
 import com.p_avanzada.taller.models.Servicio;
-import com.p_avanzada.taller.models.Vehiculo;
+import com.p_avanzada.taller.models.Tecnico;
 import com.p_avanzada.taller.repositories.ServicioRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,14 +36,27 @@ public class ServicioService {
         return servicioRepository.save(servicio);
     }
 
-    public Servicio recoverServicio(Servicio recoverServicio) {
-        Optional<Servicio> optionalServicio = getByName(recoverServicio.getNombre());
-
-        Servicio servicio = optionalServicio.get();
-        servicio.recover();
+    public Servicio alter(Servicio alterServicio) {
+        Servicio servicio = getByName(alterServicio.getNombre()).get();
+        servicio.setNombre(alterServicio.getNombre());
+        servicio.setPrecio(alterServicio.getPrecio());
         save(servicio);
 
         return servicio;
+    }
+
+    public Servicio recoverServicio(Servicio recoverServicio) {
+        Optional<Servicio> optionalServicio = getByName(recoverServicio.getNombre());
+
+        if (optionalServicio.isPresent()) {
+            Servicio servicio = optionalServicio.get();
+            servicio.recover();
+            save(servicio);
+
+            return servicio;
+        }
+
+        return null;
     }
 
     public void delete(Servicio deleteServicio) {
@@ -59,9 +71,12 @@ public class ServicioService {
 
     public Optional<Servicio> newServicio(Servicio servicio) {
         Optional<Servicio> serOptional = getByName(servicio.getNombre());
-        if (serOptional.isPresent())
+
+        if (serOptional.isPresent()) {
             return Optional.empty();
-        else {
+        } else {
+            servicio.setPrecio(servicio.getPrecio());
+
             Servicio newServicio = servicioRepository.save(servicio);
             return Optional.of(newServicio);
         }

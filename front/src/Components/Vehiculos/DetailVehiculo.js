@@ -3,10 +3,12 @@ import { postNewVehiculo, postDeleteVehiculo, postAlterVehiculo } from "../../Ut
 
 import FrameModelos from "../Modelos/FrameModelos";
 import FrameClientes from "../Clientes/FrameClientes";
+import FrameTecnicos from "../Tecnicos/FrameTecnicos";
 
 export default function DetailVehiculo(props) {
     const [cliente, setCliente] = useState();
     const [modelo, setModelo] = useState();
+    const [tecnico, setTecnicos] = useState();
     const [patente, setPatente] = useState(["", "", "", "", "", ""]);
     const [focus, setFocus] = useState();
 
@@ -42,9 +44,9 @@ export default function DetailVehiculo(props) {
     function handleNewVehiculo() {
         let año = document.getElementById("año_vehiculo");
 
-        if (getPatente().length === 6 && modelo && cliente && año.value) {
+        if (getPatente().length === 6 && modelo && cliente && año.value && tecnico) {
             if (2024 >= parseInt(año.value) && parseInt(año.value) >= 1886) {
-                postNewVehiculo(getPatente(), modelo.id, cliente.id, año.value)
+                postNewVehiculo(getPatente(), modelo.id, cliente.id, año.value, tecnico.id)
                     .then(response => {
                         alert(`El vehiculo ${getPatente()} se creo con exito.`);
                         props.setForceRender({});
@@ -110,7 +112,7 @@ export default function DetailVehiculo(props) {
             } else return alert("El año del vehiculo debe ser entre 1886 y 2023.")
         }
 
-        postAlterVehiculo({ "patente": props.item.patente, "modelo": { "id": modelo.id }, "cliente": { "id": cliente.id }, "año": año })
+        postAlterVehiculo({ "patente": props.item.patente, "modelo": { "id": modelo.id }, "cliente": { "id": cliente.id }, "año": año, "tecnico": { "id": tecnico.id } })
             .then(response => {
                 alert(`El vehiculo ${props.item.patente} se modifico con exito.`);
                 props.setForceRender({});
@@ -132,6 +134,7 @@ export default function DetailVehiculo(props) {
 
             <FrameModelos setModelo={setModelo} modelo={modelo} />
             <FrameClientes setCliente={setCliente} cliente={cliente} />
+            <FrameTecnicos setTecnicos={setTecnicos} tecnico={tecnico} />
 
             {props.item ?
                 <div>

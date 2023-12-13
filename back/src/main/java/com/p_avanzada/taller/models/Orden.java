@@ -43,10 +43,11 @@ public class Orden {
     
     @Column(name = "estado")
     private boolean estado = true;
-    
-    @Column(name = "estado_gestion")
-    private boolean estado_gestion = true;
-    
+ 
+    @ManyToOne
+    @JoinColumn(name = "estadoGestion")
+    private EstadoGestion estadoGestion;
+
     @Column(name = "fecha")
     private Date fecha;
 
@@ -58,7 +59,8 @@ public class Orden {
     public void recover() {
         estado = true;
     }
- public boolean getEstado() {
+    
+    public boolean getEstado() {
         return estado;
     }
 
@@ -66,12 +68,12 @@ public class Orden {
         this.estado = estado;
     }
 
-    public boolean getEstado_gestion() {
-        return estado_gestion;
+    public EstadoGestion getEstadoGestion() {
+        return estadoGestion;
     }
 
-    public void setEstado_gestion(boolean estado_gestion) {
-        this.estado_gestion = estado_gestion;
+    public void setEstadoGestion(EstadoGestion estadoGestion) {
+        this.estadoGestion = estadoGestion;
     }
 
     public Long getId() {

@@ -2,7 +2,7 @@ import CreateTable from '../Partials/CreateTable';
 import DetailVehiculo from './DetailVehiculo';
 import { getVehiculos, postDeleteVehiculo } from '../../Utils/Vehiculo';
 
-export default function VehiculoTablActivos(props) {
+export default function VehiculoTablaActivos(props) {
     const { table, id, vocabulary, changeFrame } = props;
     return (
         <CreateTable

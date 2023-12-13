@@ -20,6 +20,10 @@ export async function getVehiculosDeleted() {
     return getFetch(`${host}api/vehiculo/listar/deleted`);
 }
 
+export async function getVehiculosPorTecnico(tecnico) {
+    return getFetch(`${host}api/vehiculo/listar/porTecnico`, { tecnico: { "id": tecnico }});
+}
+
 export async function postDeleteVehiculo(patente) {
     return postFetch(`${host}api/vehiculo/delete`, { "patente": patente });
 }

@@ -37,6 +37,10 @@ public class VehiculoService {
         return vehiculoRepository.findByPatente(patente);
     }
 
+    public List<Vehiculo> getByTecnico(Long tecnico_id) {
+        return vehiculoRepository.findByTecnicoId(tecnico_id);
+    }
+
     public List<Vehiculo> getAllDeleted() {
         List<Vehiculo> vehiculos = vehiculoRepository.findAllDeleted();
         return vehiculos;

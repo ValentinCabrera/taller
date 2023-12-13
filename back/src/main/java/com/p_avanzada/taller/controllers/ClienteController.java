@@ -51,7 +51,7 @@ public class ClienteController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<String> deleteCleinte(@RequestBody Cliente cliente) {
+    public ResponseEntity<String> deleteCliente(@RequestBody Cliente cliente) {
         clienteService.delete(cliente);
         return ResponseEntity.ok("{}");
     }

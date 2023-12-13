@@ -1,5 +1,5 @@
 import { useState } from "react";
-import VehiculoTablActivos from "./VehiculoTablaActivos";
+import VehiculoTablaActivos from "./VehiculoTablaActivos";
 import VehiculoTablaEliminados from "./VehiculoTablaEliminados";
 
 export default function Vehiculos() {
@@ -13,7 +13,8 @@ export default function Vehiculos() {
             { column: "Marca", filter: ["modelo", "marca", "nombre"], row: ["modelo", "marca", "nombre"] },
             { column: "Cliente nombre", filter: ["cliente", "nombre"], row: ["cliente", "nombre"] },
             { column: "Cliente apellido", filter: ["cliente", "apellido"], row: ["cliente", "apellido"] },
-            { column: "Tecnico", filter: ["tecnico", "nombre"], row: ["tecnico", "nombre"] }
+            { column: "Tecnico nombre", filter: ["tecnico", "nombre"], row: ["tecnico", "nombre"] },
+            { column: "Tecnico apellido", filter: ["tecnico", "apellido"], row: ["tecnico", "apellido"] },
         ];
 
     const id = "patente";
@@ -25,7 +26,7 @@ export default function Vehiculos() {
     };
 
 
-    const tablaActivos = <VehiculoTablActivos
+    const tablaActivos = <VehiculoTablaActivos
         changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>}
         table={table}
         vocabulary={vocabulary}

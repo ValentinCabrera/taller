@@ -1,7 +1,7 @@
 import { postFetch, getFetch, host } from "./Fetchs";
 
-export async function postNewServicio(nombre) {
-    return postFetch(`${host}api/servicio/new`, { nombre: nombre });
+export async function postNewServicio(nombre, precio) {
+    return postFetch(`${host}api/servicio/new`, { nombre: nombre, precio: precio });
 };
 
 export async function getServicios() {

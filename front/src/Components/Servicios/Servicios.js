@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ServicioTablActivos from "./ServicioTablaActivos";
+import ServicioTablaActivos from "./ServicioTablaActivos";
 import ServicioTablaEliminados from "./ServicioTablaEliminados";
 
 export default function Servicios() {
@@ -10,6 +10,7 @@ export default function Servicios() {
     const table =
         [
             { column: "Nombre", filter: ["nombre"], row: ["nombre"] },
+            { column: "Precio", filter: ["precio"], row: ["precio"] },
         ];
 
     const vocabulary = {
@@ -18,7 +19,7 @@ export default function Servicios() {
         pronombre: "el"
     };
 
-    const tablaActivos = <ServicioTablActivos
+    const tablaActivos = <ServicioTablaActivos
         changeFrame={<button className="head-button" onClick={() => setFrame(false)}>Recuperar</button>}
         vocabulary={vocabulary}
         id={id}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import '../../Styles/App.css';
 
 export default function Table(props) {
     const { items, title, table, changeFrame, acciones, modalState, ModalButton, Modal } = props;
@@ -7,6 +8,8 @@ export default function Table(props) {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [filterColumn, setFilterColumn] = useState([]);
+    const [modal, setModal] = useState(false);
+    const [modalArray, setModalArray] = useState([]);
 
     const handleColumnButtonClick = (columnName) => {
         if (filterColumn.includes(columnName)) {
@@ -39,20 +42,20 @@ export default function Table(props) {
 
     });
 
+    function handleModal(array) {
+        setModalArray(array);
+        setModal(!modal)
+    }
+
     function getAtributte(item, index) {
         for (let i of index) {
             if (item instanceof Array) {
                 let array = [];
                 for (let j of item) array.push(j[i]);
                 return (
-                    <select>
-                        {array.map(option => (
-                            <option>{option}</option>
-                        ))}
-                    </select>
+                    <button onClick={() => handleModal(array)}> Detalle </button>
                 );
             }
-
             item = item[i];
         }
         return item;
@@ -60,6 +63,15 @@ export default function Table(props) {
 
     return (
         <div>
+            {modal && (
+                <div className="modal" onClick={handleModal}>
+                    <div className="modal-content">
+                        {modalArray.map((item, index) => (
+                            <p key={index}>{item}</p>
+                        ))}
+                    </div>
+                </div>
+            )}
             {modalState && Modal && <Modal />}
             <div className='head-table'>
                 <div className='row row-line'>

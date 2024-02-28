@@ -26,11 +26,14 @@ public class ItemOrden {
     @Column(name = "descuento")
     private Integer descuento;
 
+    @Column(name = "recargo")
+    private Integer recargo;
+
     @ManyToOne
     @JoinColumn(name = "orden_id")
     private Orden orden;
 
-    public void setServicio_id(Servicio servicio) {
+    public void setServicio(Servicio servicio) {
         this.servicio = servicio;
     }
 
@@ -60,5 +63,13 @@ public class ItemOrden {
     
     public void setDescuento(Integer descuento) {
         this.descuento = descuento;
+    }
+    
+    public Integer getRecargo() {
+        return descuento;
+    }
+    
+    public void setRecargo(Integer recargo) {
+        this.recargo = recargo;
     }
 }

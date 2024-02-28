@@ -1,6 +1,5 @@
 import { postFetch, getFetch, host } from "./Fetchs";
 
-
-export async function getEstadosGestion() {
+export async function getEstadoGestion() {
     return getFetch(`${host}api/estadoGestion/listar`)
 }

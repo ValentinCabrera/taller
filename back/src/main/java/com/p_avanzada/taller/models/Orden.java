@@ -11,6 +11,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 @Entity
@@ -40,17 +43,17 @@ public class Orden {
 
     @Column(name = "descripcion", length = 1000)
     private String descripcion;
-    
+
     @Column(name = "estado")
     private boolean estado = true;
- 
+
     @ManyToOne
-    @JoinColumn(name = "estadoGestion")
+    @JoinColumn(name = "estadoGestion_id")
     private EstadoGestion estadoGestion;
 
     @Column(name = "fecha")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm", timezone = "GMT")
     private Date fecha;
-
 
     public void delete() {
         estado = false;
@@ -59,7 +62,7 @@ public class Orden {
     public void recover() {
         estado = true;
     }
-    
+
     public boolean getEstado() {
         return estado;
     }
@@ -95,11 +98,11 @@ public class Orden {
     public Tecnico getTecnico() {
         return tecnico;
     }
-    
+
     public void setTecnico(Tecnico tecnico) {
         this.tecnico = tecnico;
     }
-    
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -123,12 +126,13 @@ public class Orden {
     public void setServicios(List<Servicio> servicios) {
         this.servicios = servicios;
     }
+
     public Date getFecha() {
         return fecha;
     }
-    
+
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
+
 }

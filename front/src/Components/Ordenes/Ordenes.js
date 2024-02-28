@@ -13,9 +13,9 @@ export default function Ordenes() {
             { column: "Cliente nombre", filter: ["cliente", "nombre"], row: ["cliente", "nombre"] },
             { column: "Cliente apellido", filter: ["cliente", "apellido"], row: ["cliente", "apellido"] },
             { column: "Servicios", filter: ["servicios", "nombre"], row: ["servicios", "nombre"] },
-            { column: "Tecnico", filter: ["tecnicos", "nombre"], row: ["tecnicos", "nombre"] },
+            { column: "Tecnico", filter: ["tecnico", "nombre"], row: ["tecnico", "nombre"] },
             { column: "Fecha", filter: ["fecha"], row: ["fecha"] },
-            { column: "Estado", filter: ["estadoGestion","nombre"], row: ["estadoGestion","nombre"] }
+            { column: "Estado", filter: ["estadoGestion", "nombre"], row: ["estadoGestion", "nombre"] }
         ];
 
     const vocabulary = {

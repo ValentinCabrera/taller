@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { getEstadosGestion } from "../../Utils/EstadoGestion";
+import { getEstadoGestion } from "../../Utils/EstadoGestion";
 
 export default function FrameEstadoGestion(props) {
-    const [estadoGestions, setEstadosGestion] = useState();
-    const [modalEstadoGestion, setModalEstadoGestion] = useState();
     const [forceRender, setForceRender] = useState();
     const [opciones, setOpciones] = useState([]);
 
@@ -16,40 +14,30 @@ export default function FrameEstadoGestion(props) {
     }, [])
 
     function updateData() {
-        getEstadosGestion()
-            .then(response => setEstadosGestion(response));
-    }
-
-    function updateData() {
-        getEstadosGestion().then(response => {
-            setEstadosGestion(response);
-
-            const nombresEstados = response.map(estado => estado.nombre);
-            setOpciones(nombresEstados);
+        getEstadoGestion().then(response => {
+            setOpciones(response);
         });
     }
 
-    function handleSetModal() {
-        setModalEstadoGestion(false);
+    const actualizarEstado = (event) => {
+        const selectedEstado = event.target.value;
+        console.log(opciones);
+        props.setEstadoGestion(selectedEstado);
     }
 
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 <p className="detail-cliente-label">Estado: </p>
-                {props.estadoGestion && <p>{props.estadoGestion.nombre}</p>}
-
-                <select id="estadoGestion_orden" className='modal-close-input'>
-                    <option value="">...</option>
-
-                    {opciones.map((opcion, index) => (
-                        <option key={index} value={opcion}>
-                            {opcion}
+                <select id="estadoGestion_orden" className='modal-close-input' onChange={actualizarEstado} defaultValue="">
+                    <option value="" disabled>Selecciona un estado</option>
+                    {opciones.map((opcion) => (
+                        <option key={opcion.id} value={opcion.id}>
+                            {opcion.nombre}
                         </option>
                     ))}
                 </select>
             </div>
-           
         </div>
     )
 }

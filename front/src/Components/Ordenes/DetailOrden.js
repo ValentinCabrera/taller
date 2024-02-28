@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { postNewOrden, postDeleteOrden, postAlterModelo } from "../../Utils/Orden";
+import { postNewOrden, postDeleteOrden, postAlterOrden } from "../../Utils/Orden";
 
 import FrameClientes from "../Clientes/FrameClientes";
 import FrameVehiculos from "../Vehiculos/FrameVehiculos";
@@ -12,7 +12,7 @@ export default function DetailOrden(props) {
     const [vehiculo, setVehiculo] = useState();
     const [servicios, setServicios] = useState([])
     const [tecnico, setTecnicos] = useState([])
-    const [estadoGestion, setEstadoGestion] = useState([])
+    const [estadoGestion, setEstadoGestion] = useState()
 
     var now = new Date();
     var localDatetime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
@@ -32,25 +32,37 @@ export default function DetailOrden(props) {
             setTecnicos();
             setEstadoGestion();
         }
-        document.getElementById("fecha_orden").value ="";
+        document.getElementById("fecha_orden").value = "";
         document.getElementById("descripcion_orden").value = "";
 
     }, [props.orden])
 
+    const formatDate = (date) => {
+        const day = ("0" + date.getDate()).slice(-2);
+        const month = ("0" + (date.getMonth() + 1)).slice(-2);
+        const year = date.getFullYear();
+        const hours = ("0" + date.getHours()).slice(-2);
+        const minutes = ("0" + date.getMinutes()).slice(-2);
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    };
+
     function handleNewOrden() {
-        let fecha = document.getElementById("fecha_orden");
+        let fechaInput = document.getElementById("fecha_orden");
+        let fecha = new Date(fechaInput.value); // Convertir el valor del input a un objeto Date
+        let fechaFormateada = formatDate(fecha); // Formatear la fecha
         let descripcion = document.getElementById("descripcion_orden");
 
-        if (cliente && vehiculo && servicios && tecnico && fecha && estadoGestion) {
-            postNewOrden(cliente.id, vehiculo.patente, servicios, tecnico.id , descripcion.value, fecha.value, estadoGestion.id)
+        if (cliente && vehiculo && servicios && descripcion && tecnico && fechaInput && estadoGestion) {
+            postNewOrden(cliente.id, vehiculo.patente, servicios, descripcion.value, tecnico.id, fechaFormateada, estadoGestion)
                 .then(response => {
                     alert(`La orden ${response.id} se creo con exito.`);
                     props.setForceRender({});
                     props.handleSetModal();
                 })
                 .catch(error => alert(error));
-        } else
+        } else {
             alert("Por favor, rellena todos los campos.");
+        }
     };
 
     function handleAlterOrden() {
@@ -59,7 +71,7 @@ export default function DetailOrden(props) {
 
         if (descripcion_input.value) descripcion = descripcion_input.value;
 
-        postAlterModelo({ "id": props.orden.id, servicios: servicios, "cliente": { "id": cliente.id }, vehiculo: { patente: vehiculo.patente }, descripcion: descripcion })
+        postAlterOrden({ "id": props.orden.id, servicios: servicios, "cliente": { "id": cliente.id }, vehiculo: { patente: vehiculo.patente }, descripcion: descripcion, "estadoGestion": { "id": estadoGestion.id } })
             .then(response => {
                 alert(`La orden ${props.orden.id} se modifico con exito.`);
                 props.setForceRender({});
@@ -83,7 +95,7 @@ export default function DetailOrden(props) {
             <FrameVehiculos setVehiculo={setVehiculo} vehiculo={vehiculo} />
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <FrameTecnicos setTecnicos={setTecnicos} tecnico={tecnico} />
-            
+
             <div>
                 <label className="detail-cliente-label">Fecha: </label>
                 <input id="fecha_orden" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />

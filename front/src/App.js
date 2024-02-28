@@ -7,6 +7,7 @@ import Vehiculos from './Components/Vehiculos/Vehiculos';
 import Ordenes from './Components/Ordenes/Ordenes';
 import Servicios from './Components/Servicios/Servicios';
 import GestionOrdenes from './Components/GestionOrdenes/GestionOrdenes';
+import Estadisticas from './Components/Estadisticas/Estadisticas';
 import './Styles/App.css';
 import './Styles/cliente.css';
 
@@ -36,6 +37,7 @@ export default function App() {
 
   const secciones2 = [
     { componente: <GestionOrdenes />, largo: "Gestion de Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> },
+    { componente: <Estadisticas />, largo: "Estadisticas", corto: <img src={ordenIcon} className='nav-icon' /> },
   ]
 
   return (

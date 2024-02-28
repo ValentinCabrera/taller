@@ -8,7 +8,7 @@ import jakarta.persistence.Column;
 @Entity
 @Table(name = "Servicio", schema = "public")
 public class Servicio {
-    
+
     @Id
     @Column(name = "nombre", length = 100)
     private String nombre;

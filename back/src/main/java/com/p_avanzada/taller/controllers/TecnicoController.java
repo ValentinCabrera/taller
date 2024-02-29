@@ -41,9 +41,6 @@ public class TecnicoController {
         List<Map<String, Object>> tecnicosConVehiculos = new ArrayList<>();
 
         for (Tecnico tecnico : tecnicos) {
-            Map<String, Object> tecnicoConVehiculos = new HashMap<>();
-
-            // Crear un mapa para almacenar los atributos del técnico
             Map<String, Object> datosTecnico = new HashMap<>();
             datosTecnico.put("id", tecnico.getId());
             datosTecnico.put("telefono", tecnico.getTelefono());
@@ -56,7 +53,7 @@ public class TecnicoController {
                     Map<String, Object> datosVehiculo = new HashMap<>();
                     datosVehiculo.put("patente", vehiculo.getPatente());
                     datosVehiculo.put("modelo", vehiculo.getModelo());
-                    // Puedes agregar más atributos del vehículo si lo necesitas
+
                     vehiculosTecnico.add(datosVehiculo);
                 }
             }

@@ -16,7 +16,8 @@ export default function DetailOrden(props) {
 
     var now = new Date();
     var localDatetime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-    var maxDatetime = localDatetime.toISOString().slice(0, 16);
+    var maxDatetime = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate()).toISOString().slice(0, 16);
+    var minDatetime = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate()).toISOString().slice(0, 16);
 
     useEffect(() => {
         if (props.orden) {
@@ -98,7 +99,7 @@ export default function DetailOrden(props) {
 
             <div>
                 <label className="detail-cliente-label">Fecha: </label>
-                <input id="fecha_orden" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />
+                <input id="fecha_orden" type="datetime-local" min={minDatetime} max={maxDatetime} className="detail-cliente-input" />
             </div>
 
             <FrameEstadoGestion setEstadoGestion={setEstadoGestion} estadoGestion={estadoGestion} />

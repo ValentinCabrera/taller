@@ -12,7 +12,9 @@ export default function CreateTable(props) {
     const [currentItem, setCurrentItem] = useState();
 
     useEffect(() => {
-        fetchGet().then(response => setItems(response));
+        fetchGet().then(response => {
+            console.log(response)
+            setItems(response)});
     }, [forceRender])
 
     const accionModificar = {

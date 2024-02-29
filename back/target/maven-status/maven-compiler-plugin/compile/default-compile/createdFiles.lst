@@ -27,8 +27,8 @@ com/p_avanzada/taller/models/Vehiculo.class
 com/p_avanzada/taller/repositories/VehiculoRepository.class
 com/p_avanzada/taller/services/ItemOrdenService.class
 com/p_avanzada/taller/controllers/VehiculoController.class
-com/p_avanzada/taller/controllers/ServicioController.class
 com/p_avanzada/taller/TallerApplication.class
+com/p_avanzada/taller/controllers/ServicioController.class
 com/p_avanzada/taller/repositories/OrdenRepository.class
 com/p_avanzada/taller/models/Tecnico.class
 com/p_avanzada/taller/controllers/OrdenController.class

@@ -10,6 +10,10 @@ import java.util.Optional;
 import com.p_avanzada.taller.models.Orden;
 import com.p_avanzada.taller.models.Vehiculo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class OrdenService {
     private final OrdenRepository ordenRepository;
@@ -74,4 +78,19 @@ public class OrdenService {
         save(orden);
         return orden;
     }
+
+    public List<Map<String, String>> getEstadisticas() {
+        List<Orden> ordenes = getAll();
+        List<Map<String, String>> estadisticas = new ArrayList<Map<String, String>>();
+
+        for (Orden orden : ordenes) {
+            Map<String, String> estadistica = new HashMap<String, String>();
+            estadistica.put("tiempoProceso", orden.getTiempoProceso().toString());
+            estadistica.put("tiempoFinalizada", orden.getTiempoFinalizada().toString());
+            estadisticas.add(estadistica);
+        }
+
+        return estadisticas;
+    }
+
 }

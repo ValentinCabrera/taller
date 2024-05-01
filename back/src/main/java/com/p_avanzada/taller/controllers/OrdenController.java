@@ -1,5 +1,6 @@
 package com.p_avanzada.taller.controllers;
 
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.p_avanzada.taller.models.Orden;
 import com.p_avanzada.taller.models.Vehiculo;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,5 +65,11 @@ public class OrdenController {
     public ResponseEntity<Orden> alterOrden(@RequestBody Orden alterOrden) {
         Orden orden = ordenService.alter(alterOrden);
         return ResponseEntity.ok(orden);
+    }
+
+    @GetMapping("/estadisticas")
+    public ResponseEntity<List<java.util.Map<String, String>>> getEstadisticasResponse() {
+        List<java.util.Map<String, String>> estadisticas = ordenService.getEstadisticas();
+        return ResponseEntity.ok(estadisticas);
     }
 }

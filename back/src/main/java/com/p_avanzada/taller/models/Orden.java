@@ -55,8 +55,50 @@ public class Orden {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm", timezone = "GMT")
     private Date fecha;
 
+    @Column(name = "fechaProceso")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm", timezone = "GMT")
+    private Date fechaProceso;
+
+    @Column(name = "fechaEntrega")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm", timezone = "GMT")
+    private Date fechaEntrega;
+
     public void delete() {
         estado = false;
+    }
+
+    public Date getFechaProceso() {
+        return fechaProceso;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public String getTiempoProceso() {
+        if (fechaProceso == null) {
+            return "0";
+        }
+
+        long diff = fechaProceso.getTime() - fecha.getTime();
+        long diffSeconds = diff / 1000 % 60;
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000);
+
+        return String.valueOf(diffHours);
+    }
+
+    public String getTiempoFinalizada() {
+        if (fechaEntrega == null) {
+            return "0";
+        }
+
+        long diff = fechaEntrega.getTime() - fechaProceso.getTime();
+        long diffSeconds = diff / 1000 % 60;
+        long diffMinutes = diff / (60 * 1000) % 60;
+        long diffHours = diff / (60 * 60 * 1000);
+
+        return String.valueOf(diffHours);
     }
 
     public void recover() {
@@ -77,6 +119,12 @@ public class Orden {
 
     public void setEstadoGestion(EstadoGestion estadoGestion) {
         this.estadoGestion = estadoGestion;
+
+        if (estadoGestion.getId() == 1) {
+            fechaProceso = new Date();
+        } else if (estadoGestion.getId() == 2) {
+            fechaEntrega = new Date();
+        }
     }
 
     public Long getId() {

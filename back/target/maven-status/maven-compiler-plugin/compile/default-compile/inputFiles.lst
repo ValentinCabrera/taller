@@ -1,5 +1,4 @@
 /app/src/main/java/com/p_avanzada/taller/repositories/ClienteRepository.java
-/app/src/main/java/com/p_avanzada/taller/controllers/ItemOrdenController.java
 /app/src/main/java/com/p_avanzada/taller/controllers/TecnicoController.java
 /app/src/main/java/com/p_avanzada/taller/services/VehiculoService.java
 /app/src/main/java/com/p_avanzada/taller/controllers/VehiculoController.java
@@ -9,13 +8,10 @@
 /app/src/main/java/com/p_avanzada/taller/models/Modelo.java
 /app/src/main/java/com/p_avanzada/taller/models/Orden.java
 /app/src/main/java/com/p_avanzada/taller/services/TecnicoService.java
-/app/src/main/java/com/p_avanzada/taller/services/ItemOrdenService.java
-/app/src/main/java/com/p_avanzada/taller/repositories/ServicioRepository.java
 /app/src/main/java/com/p_avanzada/taller/TallerApplication.java
-/app/src/main/java/com/p_avanzada/taller/repositories/ItemOrdenRepository.java
+/app/src/main/java/com/p_avanzada/taller/repositories/ServicioRepository.java
 /app/src/main/java/com/p_avanzada/taller/repositories/TecnicoRepository.java
 /app/src/main/java/com/p_avanzada/taller/services/OrdenService.java
-/app/src/main/java/com/p_avanzada/taller/models/ItemOrden.java
 /app/src/main/java/com/p_avanzada/taller/models/Marca.java
 /app/src/main/java/com/p_avanzada/taller/models/Tecnico.java
 /app/src/main/java/com/p_avanzada/taller/controllers/ServicioController.java

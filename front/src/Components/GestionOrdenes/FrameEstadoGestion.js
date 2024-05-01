@@ -21,7 +21,6 @@ export default function FrameEstadoGestion(props) {
 
     const actualizarEstado = (event) => {
         const selectedEstado = event.target.value;
-        console.log(opciones);
         props.setEstadoGestion(selectedEstado);
     }
 

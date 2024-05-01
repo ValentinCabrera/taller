@@ -7,7 +7,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 
-import java.time.LocalDateTime;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "Cliente", schema = "public")
@@ -34,7 +36,8 @@ public class Cliente {
     private String direccion;
 
     @Column(name = "ultima_visita")
-    private LocalDateTime ultima_visita;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm", timezone = "GMT")
+    private Date ultima_visita;
 
     @Column(name = "estado")
     private boolean estado = true;
@@ -55,7 +58,7 @@ public class Cliente {
         return mail;
     }
 
-    public LocalDateTime getUltima_visita() {
+    public Date getUltima_visita() {
         return ultima_visita;
     }
 
@@ -67,7 +70,7 @@ public class Cliente {
         this.mail = mail;
     }
 
-    public void setUltima_visita(LocalDateTime ultima_visita) {
+    public void setUltima_visita(Date ultima_visita) {
         this.ultima_visita = ultima_visita;
     }
 

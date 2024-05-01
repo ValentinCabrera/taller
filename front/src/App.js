@@ -18,7 +18,7 @@ import ordenIcon from './Static/navIcons/orden.png';
 import servicioIcon from './Static/navIcons/servicio.png';
 import tecnicoIcon from './Static/navIcons/tecnico.png';
 import vehiculoIcon from './Static/navIcons/vehiculo.png';
-//import gestionOrdenIcon from './Static/navIcons/gestionOrdenes.png';
+import { BarChart } from '@mui/icons-material';
 
 export default function App() {
   const [currentApp, setCurrentApp] = useState(<Vehiculos />);
@@ -37,7 +37,7 @@ export default function App() {
 
   const secciones2 = [
     { componente: <GestionOrdenes />, largo: "Gestion de Ordenes", corto: <img src={ordenIcon} className='nav-icon' /> },
-    { componente: <Estadisticas />, largo: "Estadisticas", corto: <img src={ordenIcon} className='nav-icon' /> },
+    { componente: <Estadisticas />, largo: "Estadisticas", corto: <BarChart style={{ fontSize: '35px' }} className='nav-icon' /> }
   ]
 
   return (
@@ -55,7 +55,7 @@ export default function App() {
           <hr className='nav-sep' />
           {secciones.map((seccion) => (
             <div
-              className={currentApp.type === seccion.componente.type && "nav-selected"}  
+              className={currentApp.type === seccion.componente.type && "nav-selected"}
               onClick={() => setCurrentApp(seccion.componente)}
             >
               {navOpen ? seccion.largo : seccion.corto}
@@ -64,14 +64,14 @@ export default function App() {
           <hr className='nav-sep' />
           {secciones2.map((seccion) => (
             <div
-              className={currentApp.type === seccion.componente.type && "nav-selected"}  
+              className={currentApp.type === seccion.componente.type && "nav-selected"}
               onClick={() => setCurrentApp(seccion.componente)}
               style={{ height: 65 }}
-              >
+            >
               {navOpen ? seccion.largo : seccion.corto}
             </div>
           ))}
-        </div>     
+        </div>
       </div>
       <div className={`content`}>
         {currentApp}

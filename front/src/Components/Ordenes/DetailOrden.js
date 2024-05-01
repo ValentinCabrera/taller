@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { postNewOrden, postDeleteOrden, postAlterOrden } from "../../Utils/Orden";
+import { postNewOrden, postAlterOrden } from "../../Utils/Orden";
 
 import FrameClientes from "../Clientes/FrameClientes";
 import FrameVehiculos from "../Vehiculos/FrameVehiculos";
@@ -14,11 +14,12 @@ export default function DetailOrden(props) {
     const [tecnico, setTecnicos] = useState([])
     const [estadoGestion, setEstadoGestion] = useState()
 
-    var now = new Date();
-    var localDatetime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-    var maxDatetime = localDatetime.toISOString().slice(0, 16);
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
 
+    const maxDatetime = oneYearAgo.toISOString().slice(0, 10);
     useEffect(() => {
+        console.log("HOLA " + props.orden);
         if (props.orden) {
             setCliente(props.orden.cliente);
             setVehiculo(props.orden.vehiculo);

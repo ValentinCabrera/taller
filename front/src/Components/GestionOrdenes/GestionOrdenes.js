@@ -10,9 +10,9 @@ export default function GestionOrdenes() {
     const table =
         [
             { column: "Patente", filter: ["vehiculo", "patente"], row: ["vehiculo", "patente"] },
-            { column: "Servicio", filter: ["servicio", "nombre"], row: ["servicio", "nombre"] },
+            { column: "Servicios", filter: ["servicios", "nombre"], row: ["servicios", "nombre"] },
             { column: "Tecnico", filter: ["tecnico", "nombre"], row: ["tecnico", "nombre"] },
-            { column: "Estado", filter: ["orden","estado"], row: ["orden","estado"] },            
+            { column: "Estado", filter: ["estadoGestion", "nombre"], row: ["estadoGestion", "nombre"] }
         ];
 
     const vocabulary = {

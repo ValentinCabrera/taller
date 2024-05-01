@@ -32,4 +32,3 @@ export default function RecoverTable(props) {
             .catch(error => console.log(error))
     }
 };
-

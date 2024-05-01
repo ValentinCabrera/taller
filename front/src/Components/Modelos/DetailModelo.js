@@ -20,11 +20,9 @@ export default function DetailModelo(props) {
             postNewModelo(nombre.value, marca.nombre)
                 .then(response => {
                     alert(`El modelo ${marca.nombre} ${nombre.value} se creo con exito.`);
-                    props.setForceRender({});
                     props.handleSetModal();
                 })
                 .catch(error => alert(error));
-
         } else
             alert("Por favor, rellena todos los campos.");
     };
@@ -38,10 +36,8 @@ export default function DetailModelo(props) {
         }
     }
 
-
     return (
         <div>
-
             {props.modelo ?
                 <div>
                     <p className="detail-cliente-label">Nombre: {props.modelo.nombre}</p>
@@ -53,7 +49,6 @@ export default function DetailModelo(props) {
                         <p className="detail-cliente-label">Nombre:</p>
                         <input className="detail-cliente-input" id="nombre_modelo" type="text" placeholder={props.modelo ? props.modelo.nombre : "Hilux"} onChange={handleStringChange}></input>
                     </div>
-
 
                     <FrameMarca setMarca={setMarca} marca={marca} />
                     <button className="detail-cliente-button" onClick={handleNewModelo}><p>Crear modelo</p></button>

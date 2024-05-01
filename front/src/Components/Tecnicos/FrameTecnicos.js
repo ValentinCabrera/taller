@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "../Select";
 import { getTecnicos } from "../../Utils/Tecnico";
 import DetailTecnico from "./DetailTecnico";
@@ -38,16 +38,18 @@ export default function FrameTecnicos(props) {
                 data={tecnicos}
                 itemName={[["nombre"], ["apellido"]]}
                 itemKey="telefono"
-                setCurrentItem={props.setTecnicos} 
+                setCurrentItem={props.setTecnicos}
+                selectedItem={props.tecnico ? [props.tecnico] : []}
             />
 
             {modalTecnico &&
-                <div class="modal-background">
-                    <div class="modal-content">
+                <div className="modal-background">
+                    <div className="modal-content">
                         <div className='row w100'>
                             <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
                         </div>
-                        <DetailTecnico setForceRender={setForceRender} handleSetModal={setModalTecnico} />                        </div>
+                        <DetailTecnico setForceRender={setForceRender} handleSetModal={setModalTecnico} />
+                    </div>
                 </div>
             }
         </div>

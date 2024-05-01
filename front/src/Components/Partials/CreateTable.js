@@ -34,14 +34,13 @@ export default function CreateTable(props) {
     };
 
     function Modal() {
-        console.log(currentItem);
         return (
             <div class="modal-background">
                 <div class="modal-content h100 scroll">
                     <div className='row w100'>
                         <button className='modal-close-button' onClick={handleSetModal}>Volver</button>
                     </div>
-                    <DetailComponent item={currentItem} setForceRender={props.setForceRender} />
+                    <DetailComponent orden={currentItem} />
                 </div>
             </div>
         );

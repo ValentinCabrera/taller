@@ -16,10 +16,9 @@ export default function DetailOrden(props) {
 
     const oneYearAgo = new Date();
     oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
-
     const maxDatetime = oneYearAgo.toISOString().slice(0, 10);
+
     useEffect(() => {
-        console.log("HOLA " + props.orden);
         if (props.orden) {
             setCliente(props.orden.cliente);
             setVehiculo(props.orden.vehiculo);
@@ -39,25 +38,25 @@ export default function DetailOrden(props) {
     }, [props.orden])
 
     const formatDate = (date) => {
-        const day = ("0" + date.getDate()).slice(-2);
-        const month = ("0" + (date.getMonth() + 1)).slice(-2);
+        date = new Date(date);
         const year = date.getFullYear();
-        const hours = ("0" + date.getHours()).slice(-2);
-        const minutes = ("0" + date.getMinutes()).slice(-2);
-        return `${day}/${month}/${year} ${hours}:${minutes}`;
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const hours = ('0' + date.getHours()).slice(-2);
+        const minutes = ('0' + date.getMinutes()).slice(-2);
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
     };
 
     function handleNewOrden() {
         let fechaInput = document.getElementById("fecha_orden");
-        let fecha = new Date(fechaInput.value); // Convertir el valor del input a un objeto Date
-        let fechaFormateada = formatDate(fecha); // Formatear la fecha
+        let fecha = new Date(fechaInput.value);
+        let fechaFormateada = formatDate(fecha);
         let descripcion = document.getElementById("descripcion_orden");
 
         if (cliente && vehiculo && servicios && descripcion && tecnico && fechaInput && estadoGestion) {
             postNewOrden(cliente.id, vehiculo.patente, servicios, descripcion.value, tecnico.id, fechaFormateada, estadoGestion)
                 .then(response => {
                     alert(`La orden ${response.id} se creo con exito.`);
-                    props.setForceRender({});
                     props.handleSetModal();
                 })
                 .catch(error => alert(error));
@@ -69,16 +68,16 @@ export default function DetailOrden(props) {
     function handleAlterOrden() {
         let descripcion = props.orden.descripcion;
         let descripcion_input = document.getElementById("descripcion_orden");
+        let fechaInput = document.getElementById("fecha_orden");
+        let fecha = new Date(fechaInput.value);
+        let fechaFormateada = formatDate(fecha);
 
         if (descripcion_input.value) descripcion = descripcion_input.value;
 
-        postAlterOrden({ "id": props.orden.id, servicios: servicios, "cliente": { "id": cliente.id }, vehiculo: { patente: vehiculo.patente }, descripcion: descripcion, "estadoGestion": { "id": estadoGestion.id } })
+        postAlterOrden({ "id": props.orden.id, servicios: servicios, "cliente": { "id": cliente.id }, "tecnico": { "id": tecnico.id }, vehiculo: { patente: vehiculo.patente }, descripcion: descripcion, fecha: fechaFormateada, "estadoGestion": { "id": estadoGestion.id } })
             .then(response => {
                 alert(`La orden ${props.orden.id} se modifico con exito.`);
-                props.setForceRender({});
-                props.setCurrentOrden();
             })
-            .catch(error => alert(`La orden ${props.orden.id} no se pudo modificar.`));
     };
 
     function handleStringChange(e) {
@@ -90,6 +89,43 @@ export default function DetailOrden(props) {
         }
     }
 
+    function parseDateFromString(dateString) {
+        const datePattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2})$/;
+
+        const match = dateString.match(datePattern);
+
+        if (match) {
+            const day = parseInt(match[1]);
+            const month = parseInt(match[2]) - 1;
+            const year = parseInt(match[3]);
+            const hour = parseInt(match[4]);
+            const minute = parseInt(match[5]);
+
+            if (isValidDate(year, month, day, hour, minute)) {
+                return new Date(year, month, day, hour, minute);
+            }
+        }
+
+        return null;
+    }
+
+    function isValidDate(year, month, day, hour, minute) {
+        const date = new Date(year, month, day, hour, minute);
+        return (
+            date.getFullYear() === year &&
+            date.getMonth() === month &&
+            date.getDate() === day &&
+            date.getHours() === hour &&
+            date.getMinutes() === minute
+        );
+    }
+
+    let formattedDate = '';
+    if (props.orden && props.orden.fecha) {
+        const parsedDate = parseDateFromString(props?.orden?.fecha);
+        formattedDate = formatDate(parsedDate);
+    }
+
     return (
         <div>
             <FrameClientes setCliente={setCliente} cliente={cliente} />
@@ -97,10 +133,23 @@ export default function DetailOrden(props) {
             <FrameServicios setServicios={setServicios} servicios={servicios} />
             <FrameTecnicos setTecnicos={setTecnicos} tecnico={tecnico} />
 
-            <div>
-                <label className="detail-cliente-label">Fecha: </label>
-                <input id="fecha_orden" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />
-            </div>
+            {props?.orden?.fecha ?
+                <div>
+                    <label className="detail-cliente-label">Fecha: </label>
+                    <input
+                        id="fecha_orden"
+                        type="datetime-local"
+                        max={maxDatetime}
+                        className="detail-cliente-input"
+                        value={formattedDate}
+                    />
+                </div>
+                :
+                <div>
+                    <label className="detail-cliente-label">Fecha: </label>
+                    <input id="fecha_orden" type="datetime-local" max={maxDatetime} className="detail-cliente-input" />
+                </div>
+            }
 
             <FrameEstadoGestion setEstadoGestion={setEstadoGestion} estadoGestion={estadoGestion} />
 
@@ -109,7 +158,7 @@ export default function DetailOrden(props) {
                 <input className='modal-close-input' id="descripcion_orden" type="text" placeholder={props.orden && props.orden.descripcion ? props.orden.descripcion : "El motor tiene una falla"} onChange={handleStringChange} />
             </div>
 
-            {props.orden ?
+            {props?.orden ?
                 <div>
                     <button className='modal-close-button' onClick={handleAlterOrden}><p>Modificar orden</p></button>
                 </div>
